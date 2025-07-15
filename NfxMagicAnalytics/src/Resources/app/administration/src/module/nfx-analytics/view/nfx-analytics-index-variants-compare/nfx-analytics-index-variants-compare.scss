@@ -1,0 +1,19 @@
+.nfx-analytics-variants-compare-head-selections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .nfx-analytics-variants-compare-property-group-select {
+        width: 40%;
+    }
+
+    .nfx-analytics-variants-compare-category-select {
+        width: 36%;
+    }
+}
+
+.nfx-analytics-variants-compare-overall {
+    font-size: 14px;
+    height: 36px;
+}

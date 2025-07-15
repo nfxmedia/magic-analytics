@@ -1,0 +1,120 @@
+{% block cbax_analytics_lexicon_impressions %}
+    <div>
+        {% block cbax_analytics_lexicon_impressions_noplugin %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-noplugin cbax-analytics-lexicon-impressions-noplugin"
+                     v-if="noPlugin && (!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1)"
+                     :isLoading="isLoading">
+                <sw-alert
+                        :appearance="'notification'"
+                        :showIcon="false"
+                        :variant="'info'"
+                >
+                    <div class="cbax-analytics-content-card-noplugin-alert">
+                        {{  $tc('cbax-analytics.view.lexiconImpressions.nolplugin.alert') }}
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://store.shopware.com/cbax547914511276/lexikon/glossar-professionell-pro.html'">
+                            {{  $tc('cbax-analytics.view.lexiconImpressions.nolplugin.swLink') }}
+                        </sw-external-link>
+
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://www.coolbax.de/shopware-plugins/storefront/64/lexikon/glossar-professionell-sw6'">
+                            {{  $tc('cbax-analytics.view.lexiconImpressions.nolplugin.cbaxLink') }}
+                        </sw-external-link>
+                    </div>
+
+
+                </sw-alert>
+            </sw-card>
+
+
+        {% endblock %}
+
+        {% block cbax_analytics_lexicon_impressions_chart %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-chart cbax-analytics-lexicon-impressions-chart"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1">
+
+                {% block cbax_analytics_lexicon_impressions_chart_data %}
+                    <sw-chart
+                            v-if="isLoading == false && chartType != null"
+                            :type="chartType"
+                            :series="chartSeriesData"
+                            :options="chartOptions"
+                            sort>
+                    </sw-chart>
+                {% endblock %}
+
+                <div class = "cbax-analytics-charttype-select-container">
+                    {% block cbax_analytics_lexicon_impressions_select_box %}
+                        <sw-select-field class="cbax-analytics-charttype-select"
+                                         :label="$tc('cbax-analytics.view.chartSelection.selectLabel')"
+                                         :placeholder="$tc('cbax-analytics.view.chartSelection.placeholder')"
+                                         :value="chartType"
+                                         @update:value="onChangeField($event, 'chartType')">
+                            <option value="bar">{{  $tc('cbax-analytics.view.chartSelection.bar') }}</option>
+                            <option value="pie">{{ $tc('cbax-analytics.view.chartSelection.pie') }}</option>
+                            <option value="donut">{{ $tc('cbax-analytics.view.chartSelection.donut') }}</option>
+                        </sw-select-field>
+                    {% endblock %}
+
+                    {% block cbax_analytics_manufacturer_impressions_overall_box %}
+                        <div v-if="overallData != null" class="cbax-analytics-lexicon-impressions-grid-sums">
+                            <span>{{ $tc('cbax-analytics.view.lexiconImpressions.total') }} {{ overallData }}</span>
+                        </div>
+                    {% endblock %}
+                </div>
+
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_lexicon_impressions_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-lexicon-impressions-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block cbax_analytics_lexicon_impressions_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :sort-by="sortBy"
+                            :sort-direction="sortDirection"
+                            @column-sort="onColumnSort"
+                            :showActions="false">
+
+                        <template #column-sum="{ item }">
+                            {{ currencyFilter(item.sum, systemCurrency.isoCode) }}
+                        </template>
+
+                        <template #pagination>
+                            {% block analytics_lexicon_impressions_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block cbax_analytics_lexicon_impressions_help %}
+
+            {% endblock %}
+
+        {% endblock %}
+
+    </div>
+{% endblock %}

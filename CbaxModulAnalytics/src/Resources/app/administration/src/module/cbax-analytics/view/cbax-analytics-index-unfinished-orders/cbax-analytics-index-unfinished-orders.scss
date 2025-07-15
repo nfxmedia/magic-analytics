@@ -1,0 +1,14 @@
+.sw-modal.cbax-analytics-unfinished-orders-modal.sw-modal--default {
+    .sw-modal__dialog {
+        max-width: 1000px;
+    }
+}
+
+.cbax-analytics-unfinished-orders-grid {
+    .cbax-analytics-unfinished-orders-position {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        width: 100%;
+    }
+}

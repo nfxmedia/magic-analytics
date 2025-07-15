@@ -1,0 +1,95 @@
+@import './../../view/cbax-analytics-general';
+
+.cbax-analytics-index {
+
+    .cbax_analytics-manuallinks {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    &.sw-page {
+        .sw-page__content.has--side-content {
+            grid-template-columns: 400px 1fr auto;
+        }
+        &.is--mobile {
+            .sw-page__content.has--side-content {
+                grid-template-columns: 1fr auto;
+            }
+
+            .cbax-analytics-smart_bar_back {
+                margin: 5px;
+            }
+
+            .sw-page__main-content {
+                display: none;
+            }
+
+            &.has--category {
+                .sw-page__back-btn-container {
+                    display: block;
+                }
+
+                .sw-page__main-content {
+                    display: block;
+                }
+
+                .sw-page__side-content {
+                    display: none;
+                }
+            }
+        }
+    }
+
+	.sw-card-view__content {
+		padding: 26px;
+	}
+
+	.sw-card {
+
+		max-width: 100%;
+
+		.sw-card__title {
+			width: inherit;
+			position: inherit;
+			left: inherit;
+			top: 0;
+			text-align: left;
+		}
+	}
+
+	.cbax-analytics-content-card-grid {
+		.sw-card__content {
+			padding: 0;
+		}
+	}
+
+	.cbax-analytics-smart-bar-header {
+
+		.cbax-analytics-smart-bar-header-title {
+			display: inline;
+			margin-right: 10px;
+		}
+
+		.cbax-analytics-smart-bar-header-start {
+			margin-right: 10px;
+			margin-left: 5px;
+
+		}
+		.cbax-analytics-smart-bar-header-end {
+			margin-right: 10px;
+			margin-left: 5px;
+
+		}
+	}
+
+	.cbax-analytics-display-options-sidebar-item {
+		margin-left: 25px;
+		width: 275px;
+	}
+
+	.cbax-analytics-display-options-download-link {
+		display: none;
+	}
+
+}

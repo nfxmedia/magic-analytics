@@ -1,0 +1,89 @@
+{% block nfx_analytics_cross_selling %}
+    <div>
+
+        {% block nfx_analytics_cross_selling_noplugin %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-content-card-noplugin nfx-analytics-cross-selling-noplugin"
+                     v-if="noPlugin"
+                     :isLoading="isLoading">
+                <sw-alert
+                    :appearance="'notification'"
+                    :showIcon="false"
+                    :variant="'info'"
+                >
+                    <div class="nfx-analytics-content-card-noplugin-alert">
+                        {{  $tc('nfx-analytics.view.crossSelling.nolplugin.alert') }}
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://store.shopware.com/nfx670444287112/cross-selling/zubehoer-professionell-pro.html'">
+                            {{  $tc('nfx-analytics.view.crossSelling.nolplugin.swLink') }}
+                        </sw-external-link>
+
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://www.coolbax.de/shopware-plugins/storefront/89/cross-selling/zubehoer-professionall-pro'">
+                            {{  $tc('nfx-analytics.view.crossSelling.nolplugin.nfxLink') }}
+                        </sw-external-link>
+                    </div>
+                </sw-alert>
+            </sw-card>
+        {% endblock %}
+
+        {% block nfx_analytics_cross_selling_head %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-cross-selling-head" :isLoading="isLoading">
+                {% block nfx_analytics_cross_selling_select %}
+                    <sw-entity-single-select class="nfx-analytics-cross-selling-select"
+                         :label="$tc('nfx-analytics.view.singleProduct.productSelect.label')"
+                         :placeholder="$tc('nfx-analytics.view.singleProduct.productSelect.placeholder')"
+                         :labelProperty="labelProperty"
+                         valueProperty="id"
+                         :error="errors.productId"
+                         entity="product"
+                         v-model:value="productId"
+                         @update:value="onChangeProductSelectField">
+                    </sw-entity-single-select>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block nfx_analytics_variants_compare_content_empty %}
+            <sw-empty-state v-if="productId == '' || !productId" :title="$tc('nfx-analytics.index.emptyProductHeadline')"></sw-empty-state>
+        {% endblock %}
+
+        {% block nfx_analytics_cross_selling_grid %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-content-card-grid nfx-analytics-cross-selling-grids"
+                     v-if="productId != ''"
+                     :isLoading="isLoading">
+
+                {% block nfx_analytics_cross_selling_grid_data %}
+                    <h2 class="nfx-analytics-cross-selling-productname">
+                        {{ productName }}
+                    </h2>
+                    <div class="nfx-analytics-cross-selling-double-grid-wrapper">
+                        <nfx-grid-viewed :data="alsoViewed">
+                        </nfx-grid-viewed>
+                        <nfx-grid-bought :data="alsoBought">
+                        </nfx-grid-bought>
+                    </div>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block nfx_analytics_cross_selling_help %}
+                <sw-alert
+                    v-if="!displayOptions.dashboard"
+                    :appearance="'notification'"
+                    :showIcon="false"
+                    :closable="false"
+                    :variant="'neutral'"
+                    :title="$tc('nfx-analytics.general.help')"
+                >
+                    <div class="nfx-analytics-description">
+                        {{ $tc('nfx-analytics.view.crossSelling.description') }}
+                    </div>
+                </sw-alert>
+            {% endblock %}
+
+        {% endblock %}
+
+    </div>
+{% endblock %}

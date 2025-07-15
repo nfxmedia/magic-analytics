@@ -1,0 +1,73 @@
+{% block cbax_analytics_content_options %}
+    <div class="cbax-analytics-display-options">
+
+        {% block cbax_analytics_content_options_sales_channel %}
+                <sw-entity-multi-id-select
+                    class="cbax-analytics-display-options-saleschannels"
+                    v-model:value="filterOptions.salesChannelIds"
+                    :label="$tc('cbax-analytics.component.displayOptions.saleschannel.label')"
+                    :placeholder="$tc('cbax-analytics.component.displayOptions.saleschannel.placeholder')"
+                    :repository="salesChannelRepository"
+                    :criteria="salesChannelCriteria"
+                    :isLoading="isLoading"
+                    :context="context">
+                </sw-entity-multi-id-select>
+        {% endblock %}
+
+        {% block cbax_analytics_content_options_customer_group %}
+            <sw-entity-multi-id-select
+                    class="cbax-analytics-display-options-saleschannels"
+                    v-model:value="filterOptions.customerGroupIds"
+                    :label="$tc('cbax-analytics.component.displayOptions.customerGroup.label')"
+                    :placeholder="$tc('cbax-analytics.component.displayOptions.customerGroup.placeholder')"
+                    :repository="customerGroupRepository"
+                    :isLoading="isLoading"
+                    :context="context">
+            </sw-entity-multi-id-select>
+        {% endblock %}
+
+        {% block cbax_analytics_content_options_date_range %}
+            <div class="cbax-analytics-display-options-daterange">
+                <sw-select-field
+                        :isLoading="isLoading"
+                        v-model:value="filterOptions.dateRange"
+                        :label="$tc('cbax-analytics.component.displayOptions.dateRanges.label')"
+                        @update:value="onDateRangeChange">
+                    <option
+                            v-for="(value, option) in statisticDateRanges.options"
+                            :key="option"
+                            :value="value">
+                        {{ $tc(`cbax-analytics.component.displayOptions.dateRanges.${option}`) }}
+                    </option>
+                </sw-select-field>
+            </div>
+        {% endblock %}
+
+        {% block cbax_analytics_content_options_date_from %}
+            <sw-datepicker class="cbax-analytics-display-options-startdate start_date"
+                   :label="$tc('cbax-analytics.component.displayOptions.dateFrom')"
+                   dateType="date"
+                   :config="datePickerConfig"
+                   v-model:value="filterOptions.start"
+                   required
+                   validation="required"
+                   :isLoading="isLoading"
+                   :disabled="datePickerDisabled">
+            </sw-datepicker>
+        {% endblock %}
+
+        {% block cbax_analytics_content_options_date_to %}
+            <sw-datepicker class="cbax-analytics-display-options-enddate end_date"
+                   :label="$tc('cbax-analytics.component.displayOptions.dateTo')"
+                   dateType="date"
+                   :config="datePickerConfig"
+                   v-model:value="filterOptions.end"
+                   required
+                   validation="required"
+                   :isLoading="isLoading"
+                   :disabled="datePickerDisabled">
+            </sw-datepicker>
+        {% endblock %}
+
+    </div>
+{% endblock %}

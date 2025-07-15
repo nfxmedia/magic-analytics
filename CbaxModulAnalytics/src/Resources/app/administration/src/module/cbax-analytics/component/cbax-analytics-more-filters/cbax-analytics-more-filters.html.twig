@@ -1,0 +1,100 @@
+{% block cbax_analytics_content_more_filters %}
+    <div class="cbax-analytics-more-filters">
+
+        <div class="cbax-analytics-more-filters-resetall-wrap">
+            <a v-if="activeMoreFilterNumber && activeMoreFilterNumber > 0"
+               class="cbax-analytics-more-filters-resetall"
+               @click="resetAll">
+                {{ $tc('sw-sidebar-filter-panel.resetButton') }}
+            </a>
+        </div>
+
+        {% block cbax_analytics_content_more_filters_affiliate %}
+            <sw-multi-select
+                v-if="affiliateFilter.options && showAffiliateFilter && !isLoading  && affiliateFilter.options.length > 0"
+                :options="affiliateFilter.options"
+                :value-property="affiliateFilter.valueProperty"
+                :label-property="affiliateFilter.labelProperty"
+                :label="$tc('cbax-analytics.component.displayOptions.affiliate.label')"
+                :placeholder="$tc('cbax-analytics.component.displayOptions.affiliate.placeholder')"
+                v-model:value="filterOptions.affiliateCodes"
+                @update:value="changeMultiSelectValue"
+            />
+        {% endblock %}
+
+        {% block cbax_analytics_content_more_filters_notaffiliate %}
+            <sw-multi-select
+                v-if="notaffiliateFilter.options && showNotaffiliateFilter && !isLoading  && notaffiliateFilter.options.length > 0"
+                :options="notaffiliateFilter.options"
+                :value-property="notaffiliateFilter.valueProperty"
+                :label-property="notaffiliateFilter.labelProperty"
+                :label="$tc('cbax-analytics.component.displayOptions.notaffiliate.label')"
+                :placeholder="$tc('cbax-analytics.component.displayOptions.affiliate.placeholder')"
+                v-model:value="filterOptions.notaffiliateCodes"
+                @update:value="changeMultiSelectValue"
+            />
+        {% endblock %}
+
+        {% block cbax_analytics_content_more_filters_campaign %}
+            <sw-multi-select
+                v-if="campaignFilter.options && showCampaignFilter && !isLoading && campaignFilter.options.length > 0"
+                :options="campaignFilter.options"
+                :value-property="campaignFilter.valueProperty"
+                :label-property="campaignFilter.labelProperty"
+                :label="$tc('cbax-analytics.component.displayOptions.campaign.label')"
+                :placeholder="$tc('cbax-analytics.component.displayOptions.campaign.placeholder')"
+                v-model:value="filterOptions.campaignCodes"
+                @update:value="changeMultiSelectValue"
+            />
+        {% endblock %}
+
+        {% block cbax_analytics_content_more_filters_promotion %}
+            <sw-multi-select
+                    v-if="promotionFilter.options && showPromotionFilter && !isLoading && promotionFilter.options.length > 0"
+                    :options="promotionFilter.options"
+                    :value-property="promotionFilter.valueProperty"
+                    :label-property="promotionFilter.labelProperty"
+                    :label="$tc('cbax-analytics.component.displayOptions.promotion.label')"
+                    :placeholder="$tc('cbax-analytics.component.displayOptions.promotion.placeholder')"
+                    v-model:value="filterOptions.promotionCodes"
+                    @update:value="changeMultiSelectValue"
+            />
+        {% endblock %}
+
+        {% block cbax_analytics_content_more_filters_product %}
+            <sw-entity-multi-id-select
+                v-if="showProductFilter && !isLoading"
+                class="cbax-analytics-more-filters-sidebar-item"
+                v-model:value="filterOptions.productSearchIds"
+                :labelProperty="productFilter.labelProperty"
+                :label="$tc('cbax-analytics.component.displayOptions.product.label')"
+                :placeholder="$tc('cbax-analytics.component.displayOptions.product.placeholder')"
+                advanced-selection-component="sw-advanced-selection-product"
+                :criteria="productFilterCriteria"
+                :repository="productRepository">
+            </sw-entity-multi-id-select>
+        {% endblock %}
+
+        {% block cbax_analytics_content_more_filters_manufacturer %}
+            <sw-entity-multi-id-select
+                v-if="showManufacturerFilter && !isLoading"
+                class="cbax-analytics-more-filters-sidebar-item"
+                v-model:value="filterOptions.manufacturerSearchIds"
+                :label="$tc('cbax-analytics.component.displayOptions.manufacturer.label')"
+                :placeholder="$tc('cbax-analytics.component.displayOptions.manufacturer.placeholder')"
+                :repository="manufacturerRepository">
+            </sw-entity-multi-id-select>
+        {% endblock %}
+
+        {% block cbax_analytics_content_options_variantParent %}
+            <sw-switch-field
+                v-if="showVariantParentSwitch && !isLoading"
+                v-model:value="filterOptions.showVariantParent"
+                :label="$tc('cbax-analytics.component.displayOptions.showVariantParent')"
+                @update:value="onChangeShowParents"
+            >
+            </sw-switch-field>
+        {% endblock %}
+
+    </div>
+{% endblock %}

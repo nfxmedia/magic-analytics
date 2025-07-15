@@ -1,0 +1,45 @@
+{
+    "name": "nfx/magic-analytics",
+    "description": "Umfangreiche Shop Statistik über viele Vorkommnisse im Shop.",
+    "version": "0.0.1",
+    "type": "shopware-platform-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "nfx:MEDIA"
+        }
+    ],
+    "require": {
+        "shopware/core": ">=6.6.0, <6.7"
+    },
+    "extra": {
+        "shopware-plugin-class": "Nfx\\MagicAnalytics\\NfxMagicAnalytics",
+        "copyright": "(c) by nfx:MEDIA",
+        "label": {
+            "de-DE": "nfx MAGIC Analytics",
+            "en-GB": "nfx MAGIC Analytics"
+        },
+        "description": {
+            "de-DE": "Umfangreiche Shop Statistik über viele Vorkommnisse im Shop.",
+            "en-GB": "Comprehensive shop statistics about many occurrences in the shop."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://nfx-media.de",
+            "en-GB": "https://nfx-media.de"
+        },
+        "supportLink": {
+            "de-DE": "https://nfx-media.de/magic-analytics",
+            "en-GB": "https://nfx-media.de/magic-analytics"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Nfx\\MagicAnalytics\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    }
+}

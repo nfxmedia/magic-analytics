@@ -1,0 +1,40 @@
+{% block cbax_analytics_content_options %}
+    <div>
+
+        <div class="cbax_analytics-tree">
+            <sw-tree class="cbax_analytics-tree__inner"
+                     v-if="showTree && !isLoading"
+                     :searchable="false"
+                     :disableContextMenu="true"
+                     :onChangeRoute="changeSelectedStatistic"
+                     :items="treeItems"
+                     :activeTreeItemId="statisticId"
+                     :translationContext="'cbax-analytics'"
+            >
+                <template #items="{ treeItems, sortable, draggedItem, disableContextMenu, onChangeRoute }">
+                    <cbax-analytics-tree-item
+                            v-for="(item, index) in treeItems"
+                            :ref="`treeGroup${item.id}`"
+                            :class="{'is--active' : item.data.active}"
+                            :key="item.id"
+                            :item="item"
+                            :active="item.data.active"
+                            :displayCheckbox="false"
+                            :onChangeRoute="onChangeRoute"
+                            :sortable="true"
+                            @cbax-analytics-addFavorite="addFavorite"
+                            @cbax-analytics-deleteFavorite="deleteFavorite"
+                    >
+                    </cbax-analytics-tree-item>
+                </template>
+            </sw-tree>
+        </div>
+
+        <div class="cbax_analytics-coolbaxlinks">
+            <a :href="coolbaxLink" target="_blank" rel="noopener">{{ $t('cbax-analytics.general.coolbaxLink') }}</a>
+        </div>
+
+    </div>
+
+{% endblock %}
+

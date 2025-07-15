@@ -1,0 +1,309 @@
+
+{% block cbax_analytics_order_list %}
+<sw-page class="sw-order-list cbax-analytics-order-list">
+    {% block cbax_analytics_order_list_search_bar %}
+        <template #search-bar>
+            <sw-search-bar
+                    initial-search-type="order"
+                    :initial-search="term"
+                    @search="onSearch"
+            />
+        </template>
+    {% endblock %}
+
+    {% block cbax_analytics_order_list_smart_bar_header %}
+        <template #smart-bar-header>
+            {% block cbax_analytics_order_list_smart_bar_header_title %}
+                <h2>
+                    {% block cbax_analytics_order_list_smart_bar_header_title_text %}
+                        {{ $tc('cbax-analytics.index.orderGridTitle') }}<span v-if="activeStatisticLabel">{{ activeStatisticLabel }}</span>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_smart_bar_header_amount %}
+                        <span
+                                v-if="!isLoading"
+                                class="sw-page__smart-bar-amount"
+                        >
+                            ({{ total }})
+                        </span>
+                    {% endblock %}
+                </h2>
+            {% endblock %}
+        </template>
+    {% endblock %}
+
+    {% block cbax_analytics_order_list_smart_bar_actions %}
+        <template #smart-bar-actions>
+            {% block cbax_analytics_order_list_smart_bar_actions_slot %}
+                <sw-button
+                        class="cbax-analytics-smart-bar-header-export-button"
+                        @click="exportCSV"
+                        variant="primary">
+                    {{ $tc('cbax-analytics.index.labelActionExport') }}
+                </sw-button>
+            {% endblock %}
+        </template>
+    {% endblock %}
+
+    {% block cbax_analytics_order_list_content %}
+    <template #content>
+
+        {% block cbax_analytics_order_list_content_slot %}
+        <div class="sw-order-list__content">
+
+            {% block cbax_analytics_order_list_grid %}
+            <sw-data-grid
+                    v-if="entitySearchable"
+                    ref="orderGrid"
+                    :data-source="orders"
+                    :columns="orderColumns"
+                    :show-settings="true"
+                    :sort-by="sortBy"
+                    :sort-direction="sortDirection"
+                    :is-loading="isLoading"
+                    identifier="cbax-analytics-order"
+                    :disable-data-fetching="true"
+                    @column-sort="onSortColumn"
+                    @page-change="onPageChange"
+                    :showSelection="false"
+            >
+
+                {% block cbax_analytics_order_list_grid_columns %}
+                    {% block cbax_analytics_order_list_grid_columns_order_number %}
+                        <template #column-orderNumber="{ item }">
+                            {% block cbax_analytics_order_list_grid_order_number_link %}
+                                <router-link :to="{ name: 'sw.order.detail', params: { id: item.id } }">
+                                    {{ item.orderNumber }}
+                                </router-link>
+                            {% endblock %}
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_customer_name %}
+                        <template #column-orderCustomer.firstName="{ item }">
+                            <router-link :to="{ name: 'sw.customer.detail', params: { id: item.orderCustomer.customerId } }">
+                                {{ item.orderCustomer.lastName }}, {{ item.orderCustomer.firstName }}
+                            </router-link>
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_profit %}
+                        <template #column-id="{ item }">
+                            <cbax-analytics-order-profit
+                                :orderId="item.id"
+                                :isLoading="isLoading"
+                                :systemCurrency="systemCurrency"
+                            />
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_billing_address %}
+                        <template #column-billingAddressId="{ item }">
+                            {{ item.billingAddress.street }},
+                            {{ item.billingAddress.zipcode }}
+                            {{ item.billingAddress.city }}
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_delivery_address %}
+                        <template #column-deliveries.id="{ item }">
+                            <template v-if="item.deliveries && item.deliveries[0] && item.deliveries[0].shippingOrderAddress">
+                                <div
+                                    v-tooltip="{
+                                showDelay: 300,
+                                width: 400,
+                                disabled: item.deliveries.length <= 1,
+                                message: deliveryTooltip(item.deliveries)
+                            }"
+                                    class="sw-order-list__delivery_address"
+                                >
+                                    <span v-if="item.deliveries[0].shippingOrderAddress.company">{{ item.deliveries[0].shippingOrderAddress.company }}<span v-if="item.deliveries[0].shippingOrderAddress.department"> - {{ item.deliveries[0].shippingOrderAddress.department }}</span>,</span>
+                                    {{ item.deliveries[0].shippingOrderAddress.street }},
+                                    {{ item.deliveries[0].shippingOrderAddress.zipcode }}
+                                    {{ item.deliveries[0].shippingOrderAddress.city }}
+                                </div>
+                            </template>
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_amountt %}
+                        <template #column-amountTotal="{ item }">
+                            {{ currencyFilter(item.amountTotal, item.currency.isoCode) }}
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_amountn %}
+                        <template #column-amountNet="{ item }">
+                            {{ currencyFilter(item.amountNet, item.currency.isoCode) }}
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_state %}
+                        <template #column-stateMachineState.name="{ item }">
+                            <div
+                                    class="sw-order-list__state"
+                            >
+                                <sw-color-badge
+                                        :color="getVariantFromOrderState(item)"
+                                        rounded
+                                />
+
+                                {{ item.stateMachineState.translated.name }}
+                            </div>
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_transaction_state %}
+                        <template #column-transactions.last().stateMachineState.name="{ item }">
+                            <div
+                                    v-if="item.transactions && item.transactions[0]"
+                                    class="sw-order-list__state"
+                            >
+                                <sw-color-badge
+                                        v-if="item.transactions && item.transactions[0]"
+                                        :color="getVariantFromPaymentState(item)"
+                                        rounded
+                                />
+
+                                {{ transaction(item).stateMachineState.translated.name }}
+                            </div>
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_delivery_state %}
+                        <template #column-deliveries[0].stateMachineState.name="{ item }">
+                            <div
+                                    v-if="item.deliveries && item.deliveries[0]"
+                                    class="sw-order-list__state"
+                            >
+                                <sw-color-badge
+                                        v-if="item.deliveries && item.deliveries[0]"
+                                        :color="getVariantFromDeliveryState(item)"
+                                        rounded
+                                />
+
+                                {{ item.deliveries[0].stateMachineState.translated.name }}
+                            </div>
+                        </template>
+                    {% endblock %}
+
+                    {% block cbax_analytics_order_list_grid_columns_order_date %}
+                        <template #column-orderDateTime="{ item }">
+                            <sw-time-ago :date="item.orderDateTime" />
+                        </template>
+                    {% endblock %}
+                {% endblock %}
+
+                {% block cbax_analytics_order_list_grid_columns_actions %}
+                    <template #actions="{ item }">
+                        {% block cbax_analytics_order_list_grid_columns_actions_view %}
+                            <sw-context-menu-item
+                                    class="sw-order-list__order-view-action"
+                                    :router-link="{ name: 'sw.order.detail', params: { id: item.id } }"
+                            >
+                                {{ $tc('cbax-analytics.index.goToOrderDetail') }}
+                            </sw-context-menu-item>
+                        {% endblock %}
+                    </template>
+                {% endblock %}
+
+                <template #pagination>
+                    {% block cbax_analytics_order_list_grid_pagination %}
+                        <sw-pagination
+                                :page="page"
+                                :limit="limit"
+                                :total="total"
+                                :total-visible="7"
+                                @page-change="onPageChange"
+                        />
+                    {% endblock %}
+                </template>
+
+            </sw-data-grid>
+            {% endblock %}
+
+            {% block cbax_analytics_order_list_empty_state %}
+                <template v-if="!isLoading && !total">
+                    <sw-empty-state
+                            v-if="filterCriteria.length || isValidTerm(term)"
+                            :title="$tc('sw-empty-state.messageNoResultTitle')"
+                    >
+                        <template #icon>
+                            <img
+                                    :src="'/administration/static/img/empty-states/order-empty-state.svg' | asset"
+                                    :alt="$tc('sw-empty-state.messageNoResultTitle')"
+                            >
+                        </template>
+
+                        <template #default>
+                            {{ $tc('sw-empty-state.messageNoResultSublineBefore') }}
+                            <router-link
+                                    class="sw-empty-state__description-link"
+                                    :to="{ name: 'sw.profile.index.searchPreferences' }"
+                            >
+                                {{ $tc('sw-empty-state.messageNoResultSublineLink') }}
+                            </router-link>
+                            {{ $tc('sw-empty-state.messageNoResultSublineAfter') }}
+                        </template>
+                    </sw-empty-state>
+                    <sw-empty-state
+                            v-else
+                            :title="$tc('sw-order.list.messageEmpty')"
+                    >
+                        <template #icon>
+                            <img
+                                    :src="'/administration/static/img/empty-states/order-empty-state.svg' | asset"
+                                    :alt="$tc('sw-order.list.messageEmpty')"
+                            >
+                        </template>
+                    </sw-empty-state>
+                </template>
+            {% endblock %}
+
+            {% block cbax_analytics_order_alert %}
+                <div style="margin:20px;">
+                    <sw-alert
+                        v-if="!isLoading && total"
+                        :appearance="'notification'"
+                        :showIcon="false"
+                        :closable="false"
+                        :variant="'neutral'"
+                        :title="$tc('cbax-analytics.general.help')"
+                    >
+                        <div class="cbax-analytics-description">
+                            {{ $tc('cbax-analytics.order.info') }}
+                        </div>
+                    </sw-alert>
+                </div>
+            {% endblock %}
+        </div>
+        {% endblock %}
+    </template>
+
+    {% block cbax_analytics_order_list_sidebar %}
+        <template #sidebar>
+            <sw-sidebar class="sw-order-list__sidebar cbax-analytics-order-list__sidebar">
+                {% block cbax_analytics_order_list_sidebar_refresh %}
+                    <sw-sidebar-item
+                            icon="regular-undo"
+                            :title="$tc('sw-order.list.titleSidebarItemRefresh')"
+                            @click="onRefresh"
+                    />
+                {% endblock %}
+
+                {% block cbax_analytics_order_list_sidebar_filter %}
+                    <sw-sidebar-filter-panel
+                            entity="customer"
+                            :store-key="storeKey"
+                            :filters="listFilters"
+                            :defaults="defaultFilters"
+                            :active-filter-number="activeFilterNumber"
+                            @criteria-changed="updateCriteria"
+                    />
+                {% endblock %}
+            </sw-sidebar>
+        </template>
+    {% endblock %}
+    {% endblock %}
+</sw-page>
+{% endblock %}

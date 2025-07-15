@@ -1,0 +1,61 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body_script %}
+
+    {{ parent() }}
+
+    {% set visitorTime = config('CbaxModulAnalytics.config.visitorTime') %}
+    {% set visitorTime = visitorTime ?? 12 %}
+    {% set referer = null %}
+
+    {# referer has to be put through #}
+    {% if app.request.headers.has('referer') and (app.request.host not in app.request.headers.get('referer')) %}
+        {% set referer = app.request.headers.get('referer') %}
+    {% elseif app.request.query.has('referer') %}
+        {# alternative for referer in query #}
+        {% set referer = app.request.query.get('referer') %}
+    {% endif %}
+
+    {% if config('CbaxModulAnalytics.config.recordSearch') and
+        controllerName === 'Search' and page.searchTerm
+    %}
+        {% set searchT = page.searchTerm|url_encode %}
+        <div style="display: none;"
+             data-cbax-analytics-visitors="{{ path('frontend.cbax.analytics.visitors', { controller: 'Search', parameter1: searchT, parameter2: page.listing.total, isNew: 0 }) }}"
+             data-cbax-analytics-visitor-time="{{ visitorTime }}"
+             {% if referer %}data-cbax-analytics-referer="{{ referer }}"{% endif %}>
+        </div>
+
+    {% elseif config('CbaxModulAnalytics.config.recordVisitors') %}
+
+        {% if controllerName === 'Product' and page.product.id %}
+            {% set manufId = page.product.manufacturerId ?? 1 %}
+            <div style="display: none;"
+                 data-cbax-analytics-visitors="{{ path('frontend.cbax.analytics.visitors', { controller: 'Product', parameter1: page.product.id, parameter2: manufId, isNew: 0 }) }}"
+                 data-cbax-analytics-visitor-time="{{ visitorTime }}"
+                 {% if referer %}data-cbax-analytics-referer="{{ referer }}"{% endif %}>
+            </div>
+        {% endif %}
+
+        {% if controllerName === 'Navigation' and page.navigationId %}
+            <div style="display: none;"
+                 data-cbax-analytics-visitors="{{ path('frontend.cbax.analytics.visitors', { controller: 'Navigation', parameter1: page.navigationId, parameter2: 1, isNew: 0 }) }}"
+                 data-cbax-analytics-visitor-time="{{ visitorTime }}"
+                 {% if referer %}data-cbax-analytics-referer="{{ referer }}"{% endif %}>
+            </div>
+        {% endif %}
+
+        {% if controllerName === 'Landing' %}
+            <div style="display: none;"
+                 data-cbax-analytics-visitors="{{ path('frontend.cbax.analytics.visitors', { controller: 'Landing', parameter1: 1, parameter2: 1, isNew: 0 }) }}"
+                 data-cbax-analytics-visitor-time="{{ visitorTime }}"
+                 {% if referer %}data-cbax-analytics-referer="{{ referer }}"{% endif %}>
+            </div>
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}
+
+
+

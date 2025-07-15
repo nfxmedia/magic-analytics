@@ -1,0 +1,136 @@
+{% block cbax_analytics_dashboard_settings %}
+
+    <sw-card positionIdentifier="'test'" :isLoading="isLoading">
+
+        {% block cbax_analytics_dashboard_settings_header %}
+            <div class="cbax-analytics-dashboard-headline">
+                <h1>
+                    {{ $tc('cbax-analytics.dashboard.title') }}
+                </h1>
+                <span class="cbax-analytics-dashboard-headline-timerange">
+                    ({{ dateFilter(dateAgo.toUTCString(), { minute: undefined, hour: undefined, month: 'short', year: undefined }) }}
+                    -
+                    {{ dateFilter(today.toUTCString(), { minute: undefined, hour: undefined, month: 'short', year: undefined }) }})
+                </span>
+
+                {% block cbax_analytics_dashboard_settings_open %}
+                    <sw-button
+                        :disabled="!acl.can('cbaxAnalyticsDashboard.editor')"
+                        class="cbax-analytics-dashboard-settings-open"
+                        @click="onOpenSettings"
+                        :isLoading="isLoading"
+                        variant="primary">
+                        {{ $tc('cbax-analytics.dashboard.settingsTitel') }}
+                    </sw-button>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block cbax_analytics_dashboard_settings_modal %}
+            <sw-modal
+                v-if="settingsOpen"
+                class="cbax-analytics-dashboard-settings-modal"
+                :title="$tc('cbax-analytics.dashboard.settingsTitel')"
+                :is-loading="isLoading"
+                @modal-close="onCloseSettings">
+
+                {% block cbax_analytics_dashboard_settings_modalheader %}
+
+                    <sw-container columns="repeat(auto-fit, minmax(150px, 1fr))" gap="0px 30px">
+
+                        {% block cbax_analytics_dashboard_settings_date %}
+                            <div class="cbax-analytics-dashboard-settings-date">
+                                <sw-select-field
+                                    v-model:value="statisticDateRanges.value"
+                                    size="small">
+                                    <option
+                                        v-for="(value, option) in statisticDateRanges.options"
+                                        :key="option"
+                                        :value="value">
+                                        {{ $tc(`cbax-analytics.dashboard.dateRanges.${option}`) }}
+                                    </option>
+                                </sw-select-field>
+                            </div>
+                        {% endblock %}
+
+                        {% block cbax_analytics_dashboard_settings_save %}
+                            <sw-button
+                                :disabled="!acl.can('cbaxAnalyticsDashboard.editor')"
+                                class="cbax-analytics-dashboard-settings-save"
+                                @click="onSave"
+                                variant="primary">
+                                {{ $tc('cbax-analytics.dashboard.save') }}
+                            </sw-button>
+                        {% endblock %}
+
+                    </sw-container>
+
+                {% endblock %}
+
+                {% block cbax_analytics_dashboard_settings_stats %}
+
+                    <div class="cbax-analytics-dashboard-settings" v-if="groups.length > 0">
+
+                        <div class="cbax-analytics-dashboard-settings-groups" v-for="group in groups">
+
+                            <sw-collapse>
+                                <template #header="{ expanded }">
+                                    <div class="cbax-analytics-dashboard-settings-groupheader">
+                                        <h3 class="cbax-analytics-dashboard-settings-grouplabel" v-if="group.label">
+                                            {{ $tc(group.label) }}
+                                        </h3>
+                                        <sw-icon
+                                            v-if="expanded"
+                                            key="filter-collapse-expanded-indicator"
+                                            class="cbax-analytics-dashboard-settings-groupexpanded"
+                                            name="regular-chevron-down"
+                                        />
+                                        <sw-icon
+                                            v-else
+                                            key="filter-collapse-expanded-indicator"
+                                            class="cbax-analytics-dashboard-settings-groupexpanded"
+                                            name="regular-chevron-right"
+                                        />
+                                    </div>
+                                </template>
+                                <template #content>
+                                    <div class="cbax-analytics-dashboard-settings-statistics" v-for="stat in group.statistics">
+                                        <sw-container columns="repeat(auto-fit, minmax(130px, 1fr))" gap="0px 10px">
+                                            <span class="cbax-analytics-dashboard-settings-statslabel">
+                                                {{ $tc(stat.label) }}
+                                            </span>
+                                            <sw-switch-field
+                                                      :label="$tc('cbax-analytics.dashboard.showChart')"
+                                                      name="showChart"
+                                                      :disabled="stat.parameter.dashboard.hasChart == 0"
+                                                      v-model:value="stat.parameter.dashboard.showChart">
+                                            </sw-switch-field>
+                                            <sw-switch-field
+                                                      :label="$tc('cbax-analytics.dashboard.showTable')"
+                                                      name="showTable"
+                                                      :disabled="stat.parameter.dashboard.hasTable == 0"
+                                                      v-model:value="stat.parameter.dashboard.showTable">
+                                            </sw-switch-field>
+                                            <sw-number-field
+                                                      class="cbax-analytics-dashboard-settings-position"
+                                                      :label="$tc('cbax-analytics.dashboard.position')"
+                                                      :min="1"
+                                                      v-model:value="stat.parameter.dashboard.position">
+                                            </sw-number-field>
+                                        </sw-container>
+                                    </div>
+                                </template>
+                            </sw-collapse>
+
+                        </div>
+
+                    </div>
+
+                {% endblock %}
+
+            </sw-modal>
+        {% endblock %}
+
+    </sw-card>
+
+{% endblock %}

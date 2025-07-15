@@ -1,0 +1,19 @@
+.cbax-analytics-variants-compare-head-selections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .cbax-analytics-variants-compare-property-group-select {
+        width: 40%;
+    }
+
+    .cbax-analytics-variants-compare-category-select {
+        width: 36%;
+    }
+}
+
+.cbax-analytics-variants-compare-overall {
+    font-size: 14px;
+    height: 36px;
+}

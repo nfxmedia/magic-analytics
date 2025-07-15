@@ -1,0 +1,40 @@
+{% block nfx_analytics_content_options %}
+    <div>
+
+        <div class="nfx_analytics-tree">
+            <sw-tree class="nfx_analytics-tree__inner"
+                     v-if="showTree && !isLoading"
+                     :searchable="false"
+                     :disableContextMenu="true"
+                     :onChangeRoute="changeSelectedStatistic"
+                     :items="treeItems"
+                     :activeTreeItemId="statisticId"
+                     :translationContext="'nfx-analytics'"
+            >
+                <template #items="{ treeItems, sortable, draggedItem, disableContextMenu, onChangeRoute }">
+                    <nfx-analytics-tree-item
+                            v-for="(item, index) in treeItems"
+                            :ref="`treeGroup${item.id}`"
+                            :class="{'is--active' : item.data.active}"
+                            :key="item.id"
+                            :item="item"
+                            :active="item.data.active"
+                            :displayCheckbox="false"
+                            :onChangeRoute="onChangeRoute"
+                            :sortable="true"
+                            @nfx-analytics-addFavorite="addFavorite"
+                            @nfx-analytics-deleteFavorite="deleteFavorite"
+                    >
+                    </nfx-analytics-tree-item>
+                </template>
+            </sw-tree>
+        </div>
+
+        <div class="nfx_analytics-coolbaxlinks">
+            <a :href="coolbaxLink" target="_blank" rel="noopener">{{ $t('nfx-analytics.general.coolbaxLink') }}</a>
+        </div>
+
+    </div>
+
+{% endblock %}
+

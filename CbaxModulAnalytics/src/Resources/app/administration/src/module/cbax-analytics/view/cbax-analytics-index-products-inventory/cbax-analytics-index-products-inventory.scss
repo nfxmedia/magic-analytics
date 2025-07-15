@@ -1,0 +1,24 @@
+.cbax-analytics-products-inventory-head {
+    .sw-card__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        .cbax-analytics-products-inventory-sorting {
+            width: 40%;
+        }
+
+        .cbax-analytics-products-inventory-overall {
+            font-size: 14px;
+            height: 36px;
+        }
+    }
+}
+
+.cbax-analytics-products-inventory-grid {
+    .sw-data-grid .sw-data-grid__header .sw-data-grid__cell-content {
+        white-space: unset;
+    }
+}
+

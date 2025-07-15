@@ -1,0 +1,49 @@
+@import "~scss/variables";
+
+.cbax-analytics-cross-selling-grids {
+
+    .cbax-analytics-cross-selling-productname {
+        width: fit-content;
+        margin: 20px auto;
+    }
+
+    .cbax-analytics-cross-selling-double-grid-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 6px;
+
+        .cbax-analytics-cross-selling-grid {
+            padding: 8px;
+
+            .sw-data-grid .sw-data-grid__cell-content {
+                box-sizing: content-box;
+                white-space: unset;
+            }
+
+            .sw-data-grid .sw-data-grid__cell-content
+
+            .cbax-analytics-cross-selling-grid-column {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+
+                .cbax-analytics-cross-selling-grid-csname {
+                    padding-left: 6px;
+                }
+            }
+        }
+
+        .sw-data-grid__wrapper {
+            border: 1px solid $color-gray-100;
+
+        }
+
+        .sw-pagination .sw-pagination__per-page {
+            display: block;
+            position: unset;
+        }
+    }
+}
+
+

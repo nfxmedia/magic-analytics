@@ -1,0 +1,876 @@
+{
+    "cbax-analytics": {
+		"general": {
+			"name": "cbax-analytics",
+			"title": "Magic Analytics",
+			"description": "Administration of Statistic entries",
+			"navigationLabel": "Magic Analytics",
+			"treeHeadline": "Navigation",
+            "placeholderSearchBar": "Search all statistics entries ...",
+            "help": "Help",
+            "favorites": "Favorites",
+            "manualLink": "Manual",
+            "coolbaxLink": "More nfx:MEDIA Plugins"
+		},
+        "index": {
+			"labelActionExport": "CSV Export",
+			"noData": "No data available",
+			"title": "Magic Analytics",
+			"orderGridTitle": "Orders Of The Statistics: ",
+            "productGridTitle": "Products Of The Statistcs: ",
+			"goToOrderDetail": "To the SW order detail view",
+            "goToProductDetail": "To the SW product detail view",
+			"emptyStateHeadline": "Select a statistics on the left",
+			"emptyPropertyGroupHeadline": "Please, select a property group!",
+			"emptyStreamHeadline": "Please, select a dynamic product group!",
+			"emptyProductHeadline": "Please, select a product!",
+            "emptyCategoryHeadline": "Please, select a category!",
+			"labelSidebarFilter": "Filters",
+			"labelSidebarMoreFilter": "Additional Specific Filters",
+			"labelSidebarFilterOptions": "Main Filters",
+			"labelSidebarExport": "Start Export",
+			"labelSidebarExportBar": "CSV Export",
+			"labelSidebarProductSearchBar": "Product Search",
+			"labelSidebarProductSearch": "Select products",
+			"labelSidebarProductSearchStart": "Search",
+			"dates": {
+				"from": "from:",
+				"to": "to:"
+			},
+			"sums": "Sumeries"
+        },
+		"dashboard": {
+			"settingsTitel": "Settings",
+            "save": "Save",
+            "showChart": "Show chart",
+            "showTable": "Show grid",
+            "position": "Position",
+            "title": "Statistics",
+            "dateRanges": {
+				"90Days": "Last 90 days",
+                "30Days": "Last 30 days",
+                "14Days": "Last 14 days",
+                "7Days": "Last 7 days",
+                "yesterday": "Since yesterday"
+            }
+        },
+		"product": {
+			"avPrice": "Ø Price",
+			"sales": "Turnover",
+			"productNumber": "Productnumber"
+		},
+        "order": {
+            "profitColumn": "Profit",
+            "info": "Profit is calculated based on the net prices of the products in the order (minus promotional discounts) and the net purchase prices, so it will not work if purchase prices are not maintained for all products. Shipping costs are not considered."
+        },
+		"component": {
+			"displayOptions": {
+				"showVariantParent": "Sum up variants",
+				"dateFrom": "From",
+				"dateTo": "To",
+				"dateRanges": {
+					"label": "Time period",
+					"365Days": "Last 365 days",
+					"180Days": "Last 180 days",
+					"90Days": "Last 90 days",
+					"30Days": "Last 30 days",
+					"14Days": "Last 14 days",
+					"7Days": "Last 7 days",
+					"yesterday": "Since yesterday",
+					"userdefined": "User defined",
+					"currentWeek": "Current week",
+					"lastWeek": "Last week",
+					"currentMonth": "Current month",
+					"lastMonth": "Last month",
+					"currentQuarter": "Current quarter",
+					"lastQuarter": "Last quarter",
+					"currentYear": "Current year",
+					"lastYear": "Last year"
+				},
+				"refreshButton": "Refresh",
+				"saleschannel": {
+					"label": "Sales Channels",
+					"placeholder": "All Sales Channels"
+				},
+				"customerGroup": {
+					"label": "Customer Groups",
+					"placeholder": "Alle Customer Groups"
+				},
+                "product": {
+                    "label": "Products",
+                    "placeholder": "Select a product"
+                },
+                "manufacturer": {
+                    "label": "Manufacturer",
+                    "placeholder": "Select a manufacturer"
+                },
+                "affiliate": {
+                    "label": "Affiliate Code",
+                    "placeholder": "Select an affiliate code"
+                },
+				"notaffiliate": {
+					"label": "Has NOT affiliate code"
+				},
+                "campaign": {
+                    "label": "Campaign Code",
+                    "placeholder": "Select a campaign code"
+                },
+				"promotion": {
+					"label": "Promotion-Code",
+					"placeholder": "Select a promotion code"
+				}
+			},
+			"tree": {
+				"headline": "Navigation"
+			}
+		},
+		"view": {
+			"noAffiliate": "No affiliate code",
+			"noCampaign": "No campaign",
+            "productsOnlyInfo": "In calculating revenue, only the prices of the products are taken into account, excluding discount vouchers or shipping costs.",
+            "fullOrderInfo": "In calculating revenue, the total prices of the orders are taken into account, including discount vouchers or shipping costs.",
+			"invoiceOrderInfo": "The orders are grouped by invoice date, so orders without an invoice will not be considered. The invoice date is recorded in a separate database table when the invoice is created, but only if the switch 'Record additional order data if possible' is enabled in the plugin settings. Otherwise, no data is shown here.",
+			"dateColumn": "Date",
+			"goToOrdersTip": "Show underlying orders",
+            "goToProductsTip": "Show underlying products",
+			"goToOrders": "Show underlying orders",
+			"goToProducts": "Show underlying products",
+			"countColumn": "Number Of Orders",
+			"countColumnShort": "Orders",
+			"sumColumn": "Sales",
+            "productNumberColumn": "Product Number",
+            "productNameColumn": "Product Name",
+            "categoryNameColumn": "Category",
+            "salesCountColumn": "Numbers Sold",
+			"conversionColumn": "Conversion rate",
+            "detectionNote": " *) The detections of device, browser or OS are not always precise. So, the data can only be a regarded as rough estimation! Also, marketplace orders are not included.",
+            "productProfitNote": " *) No price rules, price changes or the like are taken into account in the calculation. Therefore, the actual winnings may differ. These statistics only give an approximate overview of the profitability of the individual products.",
+            "net": " (net)",
+            "gross": " (gross)",
+            "manufacturer": "Manufacturer",
+            "stock": "Stock",
+            "groups": {
+                "sales": "Sales",
+                "customers": "Customers",
+                "products": "Products",
+                "marketing": "Marketing",
+                "orders": "Orders",
+                "lexicon": "Lexicon",
+                "unfinished": "Cancellation Analysis",
+				"visitors": "Visitors and Page Clicks",
+				"invoice": "By Invoice Date",
+				"pwreturn": "With Pickware Erp Pro - Return"
+            },
+			"overallCount": {
+				"label": "Overall number : "
+			},
+            "overall": {
+                "label": "Overall Sum :   ",
+				"sales": {
+					"label": "Sales :   "
+				},
+				"sold": {
+					"label": "Number sold :   "
+				},
+				"productCount": {
+					"label": "Number of offered products :   "
+				}
+            },
+			"streamSelect": {
+				"label": "Dynamic Product Group Selection",
+				"placeholder": "Please, select a dynamic product group!"
+			},
+			"propertyGroupSelect": {
+				"label": "Property Value Selection",
+				"placeholder": "Please, select property value!"
+			},
+			"categorySelect": {
+				"label": "Category Selection (optional)",
+                "labelNotOptional": "Category Selection",
+				"placeholder": "Restrict products to this category!",
+                "placeholderMulti": "Select at least 2 categories"
+			},
+            "sortingSelect": {
+                "label": "Sorting",
+                "placeholder": "Sorting",
+                "worthASC": "Stock Worth ascending",
+                "worthDESC": "Stock Worth descending",
+                "nameASC": "Product Name ascending",
+                "nameDESC": "Product Name descending",
+                "stockASC": "Stock ascending",
+                "stockDESC": "Stock descending",
+                "ppriceASC": "Purchase Price ascending",
+                "ppriceDESC": "Purchase Price descending",
+                "numberASC": "Product Number ascending",
+                "numberDESC": "Product Number descending",
+                "cpriceASC": "Sales Price ascending",
+                "cpriceDESC": "Sales Price descending",
+                "profitASC": "Product Profit ascending",
+                "profitDESC": "Product Profit descending",
+                "markUpASC": "Mark-Up ascending",
+                "markUpDESC": "Mark-Up descending",
+                "countASC": "Number of Sales ascending",
+                "countDESC": "Number of Sales descending"
+            },
+			"quickOverview": {
+				"titleTree": "Quick Overview",
+				"titleChart": "Quick Overview",
+				"dateColumn": "Date",
+				"orderCountColumn": "Orders",
+				"salesColumn": "Sales (gross)",
+				"avgSalesColumn": "Ø Order Value",
+				"avgSalesColumnExport": "Average Order Value",
+				"nettoSalesColumn": "Sales (net)",
+				"newCustomersColumn": "New Customers*",
+				"newPayingCustomersColumn": "With Orders*",
+                "firstTimeCountColumn": "First Time Orders*",
+                "visitorsColumn": "Visitors",
+                "impressionsColumn": "Clicks",
+                "description": "*)\nNew customers:  Number of customers in the database which were created that day.\nFirst Time Orders:  Number of orders from customers, who never ordered something before that day.\nWith Orders:  Number of customers among the new customers of that day, who have at least one completed order in the database until today."
+			},
+            "salesByCategory": {
+                "titleTree": "Sales Of A Category",
+                "titleChart": "Sales Of A Category",
+                "info": "For categories with manual product assignment, the subcategories are also included. This does not currently apply to categories with assignment via a product stream.\nIn calculating revenue, only the prices of the products are taken into account, excluding discount vouchers or shipping costs."
+            },
+            "categoryCompare": {
+                "titleTree": "Sales By Categories",
+                "titleChart": "Sales By Categories"
+            },
+            "salesByAccountTypes": {
+                "titleTree": "Sales By Buyer Type",
+                "titleChart": "Sales By Buyer Type",
+                "guest": "Guest",
+                "nonguest": "Registered",
+                "nameColumn": "Type"
+            },
+			"conversionAll": {
+				"titleTree": "Conversion (daily)",
+				"titleChart": "Conversion (daily) *",
+				"visitorsColumn": "Visitors",
+				"conversionColumn": "Conversion rate",
+				"conversionPercentColumn": "Conversion rate %",
+				"description": "Please note: Visitors are only filtered by sales channel. For orders, all set filters apply. These should be chosen so that only orders from the shop are considered, not imported orders, such as those from Amazon. These would distort the conversion rate. The Not-Affiliate-Code filter does not apply for the link to the related orders."
+			},
+			"conversionByMonth": {
+				"titleTree": "Conversion (monthly)",
+				"titleChart": "Conversion (monthly) *",
+				"visitorsColumn": "Visitors",
+				"conversionColumn": "Conversion rate",
+				"conversionPercentColumn": "Conversion rate %",
+				"description": "Please note: Visitors are only filtered by sales channel. For orders, all set filters apply. These should be chosen so that only orders from the shop are considered, not imported orders, such as those from Amazon. These would distort the conversion rate. The Not-Affiliate-Code filter does not apply for the link to the related orders. Months without visitor data are not displayed, for example, if older visitor data is automatically deleted according to the plugin settings."
+			},
+			"crossSelling": {
+				"name": "Product",
+				"viewed": "Views",
+				"sales": "Sales",
+				"titleTree": "Cross Selling",
+				"headlineViews": "Also viewed in one session *",
+				"headlineSales": "Also bought in one order *",
+				"crossSellings": "Cross-Sellings",
+				"description": "*) The filter settings will not be applied",
+				"nolplugin": {
+					"swLink": "To the plugin in the Shopware Store",
+					"cbaxLink": "Plugin info at coolbax.de",
+					"alert": "Unfortunately, no data is available for these statistics. The required data comes from the Coolbax plugin 'Cross Selling Professionall'."
+				}
+			},
+            "searchTerms": {
+                "titleTree": "Popular Search Terms",
+                "titleChart": "Popular Search Terms",
+                "searchTermColumn": "Search term",
+                "countColumn": "Requests",
+                "resultsColumn": "Results",
+                "salesChannelNameColumn": "Saleschannel",
+				"description": "If there is no data here, the possible causes could be:\n\n- JavaScript errors in the frontend might prevent the data collection JS from being executed. Please check the browser console!\n- The Twig block base_body_script in the base.html.twig file is being overridden by a plugin or theme. The code necessary for data collection is inserted into this block by the plugin."
+            },
+            "searchActivity": {
+                "titleTree": "Search Activity (daily)",
+                "titleChart": "Search Activity (daily)",
+                "countColumn": "Requests",
+                "dateColumn": "Date"
+            },
+			"salesByManufacturer": {
+				"titleTree": "Sales By Manufacturer",
+				"titleChart": "Sales By Manufacturer",
+				"nameColumn": "Manufacturer",
+                "countColumn": "Articles Sold",
+				"sumColumn": "Sales"
+			},
+			"salesByDevice": {
+				"titleTree": "Sales By Device",
+				"titleChart": "Sales By Device*",
+				"nameColumn": "Device",
+				"countColumn": "Number of orders*",
+				"sumColumn": "Sales*"
+			},
+            "salesByOs": {
+                "titleTree": "Sales By Operating System",
+                "titleChart": "Sales By Operating System*",
+                "nameColumn": "Operating System",
+                "countColumn": "Number of orders*",
+                "sumColumn": "Sales*"
+            },
+            "salesByBrowser": {
+                "titleTree": "Sales By Browser",
+                "titleChart": "Sales By Browser*",
+                "nameColumn": "Browser",
+                "countColumn": "Number of orders*",
+                "sumColumn": "Sales*"
+            },
+            "unfinishedOrders": {
+				"titleTree": "All Aborted Carts",
+				"titleChart": "All Aborted Carts",
+				"dateColumn": "Date",
+				"salesColumn": "Total",
+				"nameColumn": "Customer",
+				"paymentColumn": "Payment Method",
+                "itemCountColumn": "Articles",
+                "positionColumn": "Positions",
+                "emailColumn": "Email",
+                "phoneColumn": "Phone",
+                "salesChannelColumn": "Saleschannel",
+                "description": "This statistic analyzes the data from the Shopware database table 'cart', where Shopware stores the started shopping carts. This data is deleted upon completion of purchase or by Shopware after 90 days. Only data from logged-in customers is considered. It is possible that other plugins also write data to this table, which would distort this statistic.\nWhen using Redis for the cart table, the data cannot be retrieved. Redis support is planned for a future update.",
+                "modal": {
+                    "title": "Cart items",
+                    "labelColumn": "Label",
+                    "quantityColumn": "Quantity",
+                    "unitPriceColumn": "Unit price",
+                    "totalPriceColumn": "Total price",
+                    "typeColumn": "Type"
+                }
+			},
+            "unfinishedOrdersByPayment": {
+				"titleTree": "Aborted Carts By Payment Method",
+				"titleChart": "Aborted Carts By Payment Method",
+				"sumColumn": "Number Of Carts",
+				"salesColumn": "Total",
+				"nameColumn": "Payment Method"
+			},
+            "unfinishedOrdersByCart": {
+				"titleTree": "Aborted Carts (daily)",
+				"titleChart": "Aborted Carts daily",
+                "dateColumn": "Date",
+				"countColumn": "Number Of Carts",
+				"salesColumn": "Total",
+				"avgColumn": "Ø Order Value",
+				"avgColumnExport": "Average Order Value",
+                "itemCountColumn": "Products",
+                "positionColumn": "Positions",
+                "avgItemCountColumn": "Ø Products"
+			},
+			"salesByProducts": {
+				"titleTree": "Sales By Products",
+				"titleChart": "Sales By Products",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+                "salesColumn": "Sales",
+				"sumColumn": "Numbers Sold",
+				"orderCount": "Number of Orders",
+				"priceAV": "Ø Price",
+				"info": "Numbers Sold represents the total number of units sold of the product. Number of Orders refers to the orders that contain this product. Stock shows nothing when variants are grouped in the displayed parent products."
+			},
+			"salesByProductsPwreturn": {
+				"titleTree": "Numbers Sold With Returns",
+				"titleChart": "Numbers Sold With Returns",
+				"returnSumColumn": "Number Returned",
+				"newSumColumn": "Number Sold after Return"
+			},
+			"pickwareReturns": {
+				"titleTree": "Product Returns",
+				"titleChart": "Product Returns",
+				"returnSumColumn": "Number Returned",
+				"partColumn": "Proportion"
+			},
+			"variantsCompare": {
+				"titleTree": "Variants Sales",
+				"titleChart": "Variants Sales",
+				"productCountColumn": "Number of Products",
+				"nameColumn": "Property",
+				"salesColumn": "Sales",
+				"sumColumn": "Numbers Sold"
+			},
+			"countByProducts": {
+				"titleTree": "Products By Sold Numbers",
+				"titleChart": "Products By Sold Numbers",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Numbers Sold"
+			},
+            "productByOrders": {
+				"titleTree": "Number Of Orders With Product",
+				"titleChart": "Number Of Orders With Product",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Number Of Orders"
+			},
+            "productsInventory": {
+                "titleTree": "Inventory",
+                "titleChart": "Products Inventory",
+                "numberColumn": "Product Number",
+                "nameColumn": "Product Name",
+                "sumColumn": "Stock",
+                "ppriceColumn": "Purchase Price",
+                "worthColumn": "Stock Worth"
+            },
+            "productsProfit": {
+                "titleTree": "Profits",
+                "titleChart": "Products Profits*",
+                "numberColumn": "Product Number",
+                "nameColumn": "Product Name",
+                "sumColumn": "Sold",
+                "ppriceColumn": "Purchase Price",
+                "cpriceColumn": "Sales Price",
+                "profitColumn": "Product Profit*",
+                "markUp": "Mark-Up",
+				"hideNoSales": "hide without sales"
+            },
+			"productStream": {
+				"titleTree": "Sales By Products in Product Stream",
+				"titleChart": "Sales By Products in Product Stream",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"salesColumn": "Sales",
+				"sumColumn": "Numbers Sold"
+			},
+			"salesByProductsFilter": {
+				"titleTree": "Sales By Products With Filters",
+				"titleChart": "Sales By Products With Filters",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"salesColumn": "Sales",
+				"sumColumn": "Numbers Sold"
+			},
+            "productLowInstock": {
+				"titleTree": "With Low Stock",
+				"titleChart": "Products With Low Stock",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Stock"
+			},
+            "productHighInstock": {
+				"titleTree": "With High Stock",
+				"titleChart": "Products With High Stock",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Stock"
+			},
+            "productSoonOutstock": {
+				"titleTree": "To Run Out Of Stock",
+				"titleChart": "Products To Run Out Of Stock",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Days To Run Out Of Stock",
+                "stockColumn": "Stock",
+                "soldColumn": "Sold (number)*",
+                "description": "Based on the plugin setting 'Number of days to calculate average sales for calculating stock lasting days': "
+			},
+            "productInactiveWithInstock": {
+				"titleTree": "Inactive With Stock",
+				"titleChart": "Inactive Products With Stock",
+				"numberColumn": "Product Number",
+				"nameColumn": "Product Name",
+				"sumColumn": "Stock"
+			},
+			"salesByShippingMethod": {
+				"titleTree": "Sales By Shipping Method",
+				"titleChart": "Sales By Shipping Method",
+				"nameColumn": "Shipping method",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByCountry": {
+				"titleTree": "Sales By Destination Country",
+				"titleChart": "Sales By Destination Country",
+				"nameColumn": "Country",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+            "salesByBillingCountry": {
+                "titleTree": "Sales By Billing Country",
+                "titleChart": "Sales By Billing Country",
+                "nameColumn": "Country",
+                "sumColumn": "Sales",
+                "countColumn": "Number Of Orders"
+            },
+			"salesByBillingCountryInvoice": {
+				"titleTree": "Sales By Billing Country",
+				"titleChart": "Sales By Billing Country (by invoice date)"
+			},
+			"salesByLanguage": {
+				"titleTree": "Sales By Language",
+				"titleChart": "Sales By Language",
+				"nameColumn": "Language",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByCurrency": {
+				"titleTree": "Sales By Currency",
+				"titleChart": "Sales By Currency",
+				"nameColumn": "Currency",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"orderCountAll": {
+				"titleTree": "First Time Orders (daily)",
+				"titleChart": "Order Count Daily",
+				"dateColumn": "Date",
+				"countColumn": "Number Of All Orders",
+                "firstTimeCountColumn": "Number Of First Time Orders",
+                "countChart": "All Orders",
+                "firstTimeCountChart": "First Time Orders",
+				"returningCountColumn": "Returning customer",
+				"returningPart": "Percentage",
+				"firstTimePart": "Percentage"
+			},
+			"orderSales": {
+				"titleTree": "Orders (daily)",
+				"titleChart": "Sales daily",
+				"dateColumn": "Date",
+				"sumColumn": "Sales",
+                "countColumn": "Number Of Orders"
+			},
+			"salesAllInvoice": {
+				"titleTree": "Orders (daily)",
+				"titleChart": "Sales (net) daily by invoice date",
+                "quantityColumn": "Number of articles",
+                "sumNetAverageColumn": "Ø Sales net",
+                "quantityAverageColumn": "Ø Number of articles"
+			},
+            "salesAllPwreturn": {
+                "titleTree": "Orders with returns (daily)",
+                "titleChart": "Sales (gross) daily after Pickware refunds/returns",
+				"newGrossColumn": "Sales gross after refund",
+				"newQuantityColumn": "Number returned",
+				"refundColumn": "Refund (gross)",
+				"returnColumn": "Number sold after returns"
+            },
+			"orderSalesMonthly": {
+				"titleTree": "Orders (monthly)",
+				"titleChart": "Sales monthly",
+				"dateColumn": "Date",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByMonthPwreturn": {
+				"titleTree": "Orders with returns (monthly)",
+				"titleChart": "Sales (gross) monthly after Pickware refunds/returns"
+			},
+			"salesByMonthInvoice": {
+				"titleTree": "Orders (monthly)",
+				"titleChart": "Sales (net) monthly by invoice date"
+			},
+            "salesByQuarter": {
+                "titleTree": "Orders (quarterly)",
+                "titleChart": "Sales (net) quarterly"
+            },
+            "salesByQuarterInvoice": {
+                "titleTree": "Orders (quarterly)",
+                "titleChart": "Sales (net) quarterly by invoice date",
+                "dateColumn": "Quarter"
+            },
+			"salesByQuarterPwreturn": {
+				"titleTree": "Orders with returns (quarterly)",
+				"titleChart": "Sales (gross) quarterly after Pickware refunds/returns"
+			},
+            "canceledOrdersByMonth": {
+				"titleTree": "Cancellations (monthly)",
+				"titleChart": "Cancellations Total monthly",
+				"dateColumn": "Date",
+				"sumColumn": "Total",
+				"countColumn": "Number Of Cancellations"
+			},
+			"salesByPaymentMethod": {
+				"titleTree": "Sales By Payment Method",
+				"titleChart": "Sales By Payment Method",
+				"nameColumn": "Payment method",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesBySaleschannel": {
+				"titleTree": "Sales By Saleschannel",
+				"titleChart": "Sales By Saleschannel",
+				"nameColumn": "Saleschannel",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByAffiliate": {
+				"titleTree": "Sales By Affiliate",
+				"titleChart": "Sales By Affiliate",
+				"nameColumn": "Affiliate Code",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders",
+				"cbaxLink": "More information about the Coolbax order import extensions",
+				"description": "This statistic evaluates the 'affiliate_code' column of the Shopware database table 'order'. For instance, when importing orders from marketplaces such as Amazon, Ebay, Otto, Kaufland, or Etsy using the corresponding Coolbax order import extensions, the name of the marketplace is entered there. So, you can use this statistics to analyze the sales data from the marketplaces."
+			},
+			"salesByCampaign": {
+				"titleTree": "Sales By Campaign",
+				"titleChart": "Sales By Campaign",
+				"nameColumn": "Campaign Code",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByCustomergroups": {
+				"titleTree": "Sales By Customer Group",
+				"titleChart": "Sales By Customer Group",
+				"nameColumn": "Customer Group",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByWeekdays": {
+				"titleTree": "Orders By Weekday",
+				"titleChart": "Sales By Weekday",
+				"nameColumn": "Weekday",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"salesByTime": {
+				"titleTree": "Orders By Time Of Day",
+				"titleChart": "Sales By Time Of Day",
+				"nameColumn": "Time Of Day",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders"
+			},
+			"customerAge": {
+				"titleTree": "Customer Age Distribution",
+				"titleChart": "Customer Distribution By Age",
+				"ageColumn": "Age",
+				"percentColumn": "Percent",
+				"countColumn": "Number Of Customers"
+			},
+			"salesByCustomer": {
+				"titleTree": "Best Customer By Turnover",
+				"titleChart": "Customer By Turnover",
+				"numberColumn": "Customer Number",
+				"nameColumn": "Customer",
+				"sumColumn": "Sales",
+				"countColumn": "Number Of Orders",
+                "emailColumn": "Email",
+                "lastLoginColumn": "Last Login"
+			},
+			"newCustomersByTime": {
+				"titleTree": "New Customer Registrations",
+				"titleChart": "New Customer Registrations Monthly",
+				"dateColumn": "Month",
+				"sumColumn": "Number Of All New Customers",
+                "payingColumn": "Of Which Have Already Ordered",
+                "sumChart": "All new customers",
+                "payingChart": "New customers with orders"
+			},
+				"ordersByStatus": {
+				"titleTree": "Orders By Order Status",
+				"titleChart": "Orders By Order Status",
+				"nameColumn": "Order Status",
+				"sumColumn": "Number Of Orders",
+				"salesColumn": "Sales"
+			},
+			"ordersByTransactionStatus": {
+				"titleTree": "Orders By Transaction Status",
+				"titleChart": "Orders By Transaction Status",
+				"nameColumn": "Transaction Status",
+				"sumColumn": "Number Of Orders",
+				"salesColumn": "Sales"
+			},
+			"ordersByDeliveryStatus": {
+				"titleTree": "Orders By Delivery Status",
+				"titleChart": "Orders By Delivery Status",
+				"nameColumn": "Delivery Status",
+				"sumColumn": "Number Of Orders",
+				"salesColumn": "Sales"
+			},
+			"salesByPromotion": {
+				"titleTree": "Promotions With Promotion Code",
+				"titleChart": "Sales By Promotions",
+				"titleGridCode": "Promotions - grouped by promotion code",
+				"titleGridPromotion": "Promotions - grouped by promotion action",
+				"nameColumn": "Promotion Name",
+                "codeColumn": "Promotion code",
+				"discountColumn": "Promotion Value",
+				"countColumn": "Redemptions",
+				"avgColumn": "Ø Order Value",
+				"avgColumnExport": "Average Order Value",
+				"sumColumn": "Sales"
+			},
+			"salesByPromotionOthers": {
+				"titleTree": "Other Promotions",
+				"titleChart": "Sales By Promotions",
+				"nameColumn": "Promotion Name",
+				"discountColumn": "Promotion Value",
+				"countColumn": "Redemptions",
+				"avgColumn": "Ø Order Value",
+				"avgColumnExport": "Average Order Value",
+				"sumColumn": "Sales"
+			},
+			"chartSelection": {
+				"selectLabel": "Chart Type",
+				"placeholder": "Hide chart",
+				"bar": "Bar Chart",
+				"pie": "Pie Chart",
+				"donut": "Donut Chart"
+			},
+			"chartDataSelection": {
+				"selectLabel": "Chart Data",
+				"placeholder": "",
+				"sales": "Sales Chart",
+				"count": "Numbers Sold Chart"
+			},
+			"productImpressions": {
+				"titleTree": "Product impressions",
+				"titleChart": "All Product impressions",
+				"numberColumn": "Product number",
+				"nameColumn": "Product name",
+				"sumColumn": "All Impressions",
+                "sum1Column": "Impressions (logged in)",
+                "sum2Column": "Impressions (not logged in)",
+				"dateColumn": "Date",
+				"total": "Total of all product impressions:",
+				"description": "All clicked products are evaluated (no evaluation based on visitors). Customer groups filter are taken into account for the logged in column and hence for the all column, but not for the not logged in column."
+			},
+            "lexiconImpressions": {
+                "titleTree": "Lexicon impressions",
+                "titleChart": "Lexicon impressions",
+                "countColumn": "Impressions",
+                "nameColumn": "Title",
+                "total": "Total of all lexicon impressions : ",
+				"description": "If there is no data here despite the Coolbax Lexicon Plugin being active, the possible causes could be:\n\n- JavaScript errors in the frontend might prevent the data collection JS from being executed. Please check the browser console!\n- The Twig block base_body_script in the base.html.twig file is being overridden by a plugin or theme. The code necessary for data collection is inserted into this block by the plugin.",
+				"nolplugin": {
+					"swLink": "To the plugin in the Shopware Store",
+					"cbaxLink": "Plugin info at coolbax.de",
+					"alert": "Unfortunately, no data is available for these statistics. The required data comes from the Coolbax plugin 'Lexicon / Glossary Professional'."
+				}
+            },
+            "singleProduct": {
+                "titleChart": "Sales",
+                "titleClicksChart": "Clicks",
+                "titleTree": "Single Product Statistics",
+                "dateColumn": "Date",
+                "countColumn": "Sales",
+                "clicksColumn": "Clicks",
+                "productSelect": {
+                    "label": "Select product",
+                    "placeholder": "No Product selected"
+                },
+                "compareSelect": {
+                    "label": "Select products for comparison",
+                    "placeholder": "No products selected"
+                }
+            },
+			"visitors": {
+				"titleTree": "Visitors",
+				"titleChart": "Visitors",
+				"desktopColumn": "Desktop visitors",
+				"mobileColumn": "Mobile visitors",
+				"tabletColumn": "Tablet visitors",
+				"dateColumn": "Date",
+				"totalVisitors": "Total visitors",
+				"description": "Statistics about unique visitors in the shop: All visitors are counted, whether logged in or not. Therefore, the filter for customer groups is not taken into account here. A returning visitor is counted as new after the time specified in the plugin settings has elapsed (default 12 hours). A bot filter is used to try to capture only real visitors. Works without cookies.\n\nIf there is no data here, it could be due to the following reasons:\n- JavaScript errors in the frontend might prevent the visitor tracking JS from being executed. Please check the browser console!\n- The Twig block base_body_script in the base.html.twig file is being overridden by a plugin or theme. The code necessary for visitor tracking is inserted into this block by the plugin."
+			},
+			"visitorImpressions": {
+				"titleTree": "Page impressions",
+				"titleChart": "Page impressions",
+				"desktopColumn": "Desktop impressions",
+				"mobileColumn": "Mobile impressions",
+				"tabletColumn": "Tablet impressions",
+				"dateColumn": "Date",
+				"totalVisitors": "Page impressions*",
+				"description": "All clicked pages are evaluated (no evaluation based on visitors). Customer groups are also not taken into account, since the customer login is not checked."
+			},
+            "customerOnline": {
+                "titleTree": "In the Shop currently",
+                "timeColumn": "Time period",
+                "visitorsColumn": "Visitors in the shop",
+                "loginsColumn": "Customers logins",
+                "4h": "In the last 4 hours",
+                "2h": "In the last 2 hours",
+                "1h": "In the last hour",
+                "30min": "In the last 30 minutes",
+                "10min": "In the last 10 minutes",
+                "description": "If no data appears here, the following reasons could apply:\n - The global PHP variable session.save_path is not set correctly.\n - You are using Redis for sessions; Redis support is planned for a future update."
+            },
+			"referer": {
+				"titleTree": "Visitors referrer",
+				"titleChart": "Visitors referrer",
+				"deviceTypeColumn": "Device",
+				"countedColumn": "Total",
+				"dateColumn": "Date",
+				"refererColumn": "Referrer",
+				"description": "New visitors with a referrer entry in the header of the request are evaluated. Alternatively, the referrer can also be transmitted via the URL, e.g., in links to the shop in blog entries. In that case, please append the following to the URL: ?referer=Name. 'Name' stands for the identifier of the referrer."
+			},
+			"categoryImpressions": {
+				"titleTree": "Category impressions",
+				"titleChart": "All Category impressions",
+				"nameColumn": "Category name",
+                "sumColumn": "All Impressions",
+                "sum1Column": "Impressions (logged in)",
+                "sum2Column": "Impressions (not logged in)",
+				"dateColumn": "Date",
+				"total": "Total of all category impressions:",
+				"description": "All clicked categories are evaluated (no evaluation based on visitors). Customer groups filter are taken into account for the logged in column and hence for the all column, but not for the not logged in column."
+			},
+			"manufacturerImpressions": {
+				"titleTree": "Manufacturer impressions",
+				"titleChart": "All Manufacturer impressions",
+				"nameColumn": "Manufacturer name",
+                "sumColumn": "All Impressions",
+                "sum1Column": "Impressions (logged in)",
+                "sum2Column": "Impressions (not logged in)",
+				"dateColumn": "Date",
+				"total": "Total of all manufacturer impressions:",
+				"description": "The manufacturers of all clicked products are evaluated (no evaluation based on visitors). Customer groups filter are taken into account for the logged in column and hence for the all column, but not for the not logged in column."
+			},
+			"customerBySalutation": {
+				"titleTree": "Customer By Salutations",
+				"titleChart": "Customer by choosen salutations",
+				"nameColumn": "Salutation",
+				"countColumn": "Number of Customers",
+				"percentColumn": "Percent"
+			},
+			"salesBySalutation": {
+				"titleTree": "Sales By Salutation",
+				"titleChart": "Sales by choosen salutations",
+				"nameColumn": "Salutation",
+				"countColumn": "Number Of Orders",
+				"sumColumn": "Sales"
+			},
+			"salesByTaxrate": {
+				"titleTree": "Sales By Tax Rate",
+				"titleChart": "Sales by tax rate *",
+				"taxRateColumn": "Tax rate",
+				"taxColumn": "Tax *",
+				"sumColumn": "Sales *",
+				"description": "*) The statistics plugin is not a substitute for accounting. The accuracy of all data cannot be guaranteed!"
+			}
+		},
+		"data": {
+			"others": "all others"
+		},
+		"weekdays": {
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"wednesday": "Wednesday",
+			"thursday": "Thursday",
+			"friday": "Friday",
+			"saturday": "Saturday",
+			"sunday": "Sunday"
+		}
+    },
+    "sw-privileges": {
+        "permissions": {
+            "cbaxAnalytics": {
+                "label": "Coolbax Statistics"
+            },
+			"cbaxAnalyticsDashboard": {
+				"label": "Coolbax Dashboard Statistics"
+			}
+        }
+    },
+
+	"sw-order": {
+		"filters": {
+			"promotionCodeFilter": {
+				"label": "Promotion-Code",
+				"placeholder": "Select promotion code"
+			}
+		}
+	}
+}

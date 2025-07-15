@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/System/SystemConfig/Schema/config.xsd">
+
+	<card>
+
+        <title>General Settings</title>
+        <title lang="de-DE">Allgemeine Einstellungen</title>
+
+        <input-field type="single-select">
+            <name>grossOrNet</name>
+            <label>Use gross or net in statistics</label>
+            <label lang="de-DE">Mit brutto oder netto rechnen</label>
+            <helpText>Use gross or net prices for the calculations.</helpText>
+            <helpText lang="de-DE">Brutto oder Netto Preise für die Berechnungen verwenden.</helpText>
+            <defaultValue>gross</defaultValue>
+            <required>true</required>
+            <options>
+                <option>
+                    <id>gross</id>
+                    <name>Gross</name>
+                    <name lang="de-DE">Brutto</name>
+                </option>
+                <option>
+                    <id>net</id>
+                    <name>Net</name>
+                    <name lang="de-DE">Netto</name>
+                </option>
+            </options>
+        </input-field>
+
+		<input-field type="int">
+			<name>chartLimit</name>
+			<label>Data limit for pie and donut charts</label>
+			<label lang="de-DE">Datenbegrenzung für Pie und Donut Charts</label>
+			<placeholder>19</placeholder>
+			<placeholder lang="de-DE">19</placeholder>
+			<defaultValue>19</defaultValue>
+			<required>true</required>
+			<helpText lang="de-DE">Anzahl der dargestellten Daten, Rest wird zusammengefasst</helpText>
+			<helpText>Number of shown data, remaining data is summarized</helpText>
+		</input-field>
+
+        <input-field type="int">
+			<name>gridLimit</name>
+			<label>Data limit for data in the table</label>
+			<label lang="de-DE">Datenbegrenzung für Daten in der Tabelle</label>
+			<placeholder>400</placeholder>
+			<placeholder lang="de-DE">400</placeholder>
+			<defaultValue>400</defaultValue>
+			<required>true</required>
+			<helpText lang="de-DE">Anzahl der dargestellten Daten in der Tabelle, Rest wird zusammengefasst</helpText>
+			<helpText>Number of shown data in the table, remaining data is summarized</helpText>
+		</input-field>
+
+        <input-field type="int">
+			<name>lookBackDays</name>
+			<label>Number of days to calculate average sales</label>
+			<label lang="de-DE">Anzahl der Tage zur Berechnung von Durchschnittsverkäufen</label>
+			<placeholder>90</placeholder>
+			<placeholder lang="de-DE">90</placeholder>
+			<defaultValue>90</defaultValue>
+			<required>true</required>
+			<helpText lang="de-DE">Anzahl der Tage zur Berechnung von Durchschnittsverkäufen zur Schätzung der Zeit bis Produkt ausverkauft ist</helpText>
+			<helpText>Number of days to calculate average sales for calculating stock lasting days</helpText>
+		</input-field>
+
+        <input-field type="bool">
+            <name>collapseSidebar</name>
+            <label lang="de-DE">Admin Menu Sidebar einklappen</label>
+            <label>Collaps admin menu sidebar</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Collaps the admin menu sidebar on the left when starting the statistics.</helpText>
+            <helpText lang="de-DE">Die Admin Menu Sidebar auf der linken Seite einklappen beim Starten der Statistik.</helpText>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>chartType</name>
+            <label>Chart type preselection</label>
+            <label lang="de-DE">Chart-Typ Vorauswahl</label>
+            <helpText>Preselection of the chart type for statistics with a chart type selection.</helpText>
+            <helpText lang="de-DE">Vorauswahl des Chart-Typs für Statistiken mit Chart-Typ-Auswahl.</helpText>
+            <defaultValue>pie</defaultValue>
+            <placeholder>Pie Chart</placeholder>
+            <placeholder lang="de-DE">Pie Chart</placeholder>
+            <options>
+                <option>
+                    <id>pie</id>
+                    <name>Pie Chart</name>
+                    <name lang="de-DE">Pie Chart</name>
+                </option>
+                <option>
+                    <id>bar</id>
+                    <name>Bar Chart</name>
+                    <name lang="de-DE">Bar Chart</name>
+                </option>
+                <option>
+                    <id>donut</id>
+                    <name>Donut Chart</name>
+                    <name lang="de-DE">Donut Chart</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="bool">
+            <name>orderLinkTarget</name>
+            <label lang="de-DE">Zugehörige Bestellungen in neuem Tab öffnen</label>
+            <label>Open related orders in a new tab</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Open related orders via the action column to a new tab.</helpText>
+            <helpText lang="de-DE">Zugehörige Bestellungen über die Action Spalte in neuem Tab öffnen.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>productLinkTarget</name>
+            <label lang="de-DE">Zugehörige Produkte in neuem Tab öffnen</label>
+            <label>Open underlying products in a new tab</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Open underlying product via the action column to a new tab.</helpText>
+            <helpText lang="de-DE">Zugehörige Produkte über die Action Spalte in neuem Tab öffnen.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>recordAdditionalOrderData</name>
+            <label lang="de-DE">Zusätzliche Orderdaten speichern wenn möglich</label>
+            <label>Record additional order data if possible</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Record additional order data for statistic analysis, like browser, device, os, invoice date.</helpText>
+            <helpText lang="de-DE">Zusätzliche Orderdaten speichern für statistische Auswertung wenn möglich, wie Gerät, Betriebssystem, Browser, Rechnungsdatum.</helpText>
+        </input-field>
+
+    </card>
+
+    <card>
+
+        <title>Filter Settings for the Statistics</title>
+        <title lang="de-DE">Filter Einstellungen für die Statistiken</title>
+
+        <input-field type="single-select">
+            <name>statisticsDateRange</name>
+            <label>Date range</label>
+            <label lang="de-DE">Zeitraum</label>
+            <helpText>Default date range for the statistics on the dashboard.</helpText>
+            <helpText lang="de-DE">Voreingestellter Zeitraum für die Statistiken.</helpText>
+            <defaultValue>30</defaultValue>
+            <placeholder>Last 30 days</placeholder>
+            <placeholder lang="de-DE">Letzte 30 Tage</placeholder>
+            <options>
+                <option>
+                    <id>90</id>
+                    <name>Last 90 days</name>
+                    <name lang="de-DE">Letzte 90 Tage</name>
+                </option>
+                <option>
+                    <id>30</id>
+                    <name>Last 30 days</name>
+                    <name lang="de-DE">Letzte 30 Tage</name>
+                </option>
+                <option>
+                    <id>14</id>
+                    <name>Last 14 days</name>
+                    <name lang="de-DE">Letzte 14 Tage</name>
+                </option>
+                <option>
+                    <id>7</id>
+                    <name>Last 7 days</name>
+                    <name lang="de-DE">Letzte 7 Tage</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Since yesterday</name>
+                    <name lang="de-DE">Seit gestern</name>
+                </option>
+                <option>
+                    <id>currentWeek</id>
+                    <name>Current week</name>
+                    <name lang="de-DE">Diese Woche</name>
+                </option>
+                <option>
+                    <id>lastWeek</id>
+                    <name>Last week</name>
+                    <name lang="de-DE">Letzte Woche</name>
+                </option>
+                <option>
+                    <id>currentMonth</id>
+                    <name>Current month</name>
+                    <name lang="de-DE">Dieser Monat</name>
+                </option>
+                <option>
+                    <id>lastMonth</id>
+                    <name>Last month</name>
+                    <name lang="de-DE">Letzter Monat</name>
+                </option>
+                <option>
+                    <id>currentQuarter</id>
+                    <name>Current quarter</name>
+                    <name lang="de-DE">Dieses Vierteljahr</name>
+                </option>
+                <option>
+                    <id>lastQuarter</id>
+                    <name>Last quarter</name>
+                    <name lang="de-DE">Letztes Vierteljahr</name>
+                </option>
+                <option>
+                    <id>currentYear</id>
+                    <name>Current year</name>
+                    <name lang="de-DE">Dieses Jahr</name>
+                </option>
+                <option>
+                    <id>lastYear</id>
+                    <name>Last year</name>
+                    <name lang="de-DE">Letztes Jahr</name>
+                </option>
+
+            </options>
+        </input-field>
+
+        <component name="cbax-analytics-entity-multi-select">
+            <name>defaultSaleschannels</name>
+            <entity>sales_channel</entity>
+            <label>Default Sales Channels</label>
+            <label lang="de-DE">Voreingestellte Verkaufskanäle</label>
+            <placeholder>All Sales Channels</placeholder>
+            <placeholder lang="de-DE">Alle Verkaufskanäle</placeholder>
+            <helpText>Select the default sales channels</helpText>
+            <helpText lang="de-DE">Voreinstellung der Verkaufskanäle auswählen</helpText>
+        </component>
+
+        <component name="sw-entity-multi-id-select">
+            <name>defaultCustomerGroups</name>
+            <entity>customer_group</entity>
+            <label>Default Customer Groups</label>
+            <label lang="de-DE">Voreingestellte Kundengruppen</label>
+            <placeholder>All Customer Groups</placeholder>
+            <placeholder lang="de-DE">Alle Kundengruppen</placeholder>
+            <helpText>Select the default customer groups. Leave empty for all.</helpText>
+            <helpText lang="de-DE">Voreinstellung der Kundengruppen auswählen. Für alle leer lassen.</helpText>
+        </component>
+
+        <component name="cbax-analytics-entity-multi-select">
+            <name>blacklistedOrderStates</name>
+            <entity>state_machine_state</entity>
+            <label>Leave out orders with order status</label>
+            <label lang="de-DE">Bestellungen nicht berücksichtigen mit Bestellstatus</label>
+            <helpText>Leave out orders with the choosen order status</helpText>
+            <helpText lang="de-DE">Bestellungen mit den ausgewählten Bestellstatus nicht berücksichtigen</helpText>
+        </component>
+
+        <component name="cbax-analytics-entity-multi-select">
+            <name>blacklistedTransactionStates</name>
+            <entity>state_machine_state</entity>
+            <label>Leave out orders with transaction status</label>
+            <label lang="de-DE">Bestellungen nicht berücksichtigen mit Zahlungsstatus</label>
+            <helpText>Leave out orders with the choosen transaction status. As soon as something is selected, orders with the payment statuses Canceled and Failed are also filtered out for technical reasons.</helpText>
+            <helpText lang="de-DE">Bestellungen mit den ausgewählten Zahlungsstatus nicht berücksichtigen. Sobald etwas ausgewählt ist werden aus technischen Gründen Bestellungen mit den Zahlungsstati Abgebrochen (Cancelled) und Fehlgeschlagen (Failed) auch mit ausgefiltert.</helpText>
+        </component>
+
+        <component name="cbax-analytics-entity-multi-select">
+            <name>blacklistedDeliveryStates</name>
+            <entity>state_machine_state</entity>
+            <label>Leave out orders with delivery status</label>
+            <label lang="de-DE">Bestellungen nicht berücksichtigen mit Lieferstatus</label>
+            <helpText>Leave out orders with the choosen delivery status</helpText>
+            <helpText lang="de-DE">Bestellungen mit den ausgewählten Lieferstatus nicht berücksichtigen</helpText>
+        </component>
+
+    </card>
+
+    <card>
+
+        <title>Dashboard</title>
+        <title lang="de-DE">Dashboard</title>
+
+        <input-field type="bool">
+            <name>dashboardActiv</name>
+            <label lang="de-DE">Statistiken auf dem Dashboard aktivieren</label>
+            <label>Enable statistics on the dashboard</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Show selected statistics on the dashboard. Selection directly on the dashboard.</helpText>
+            <helpText lang="de-DE">Ausgewählte Statistiken auf dem Dashboard anzeigen. Auswahl direkt auf dem Dashboard.</helpText>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>dashboardLocation</name>
+            <label>Show statistics</label>
+            <label lang="de-DE">Statistiken anzeigen</label>
+            <helpText>Location for the statistics on the dashboard.</helpText>
+            <helpText lang="de-DE">Anzeigeort für die Statistiken.</helpText>
+            <defaultValue>before</defaultValue>
+            <placeholder>before the Shopware statistics</placeholder>
+            <placeholder lang="de-DE">vor den Shopware Statistiken</placeholder>
+            <options>
+                <option>
+                    <id>before</id>
+                    <name>before the Shopware statistics</name>
+                    <name lang="de-DE">vor den Shopware Statistiken</name>
+                </option>
+                <option>
+                    <id>after</id>
+                    <name>after the Shopware statistics</name>
+                    <name lang="de-DE">nach den Shopware Statistiken</name>
+                </option>
+                <option>
+                    <id>replace</id>
+                    <name>replace the Shopware statistics</name>
+                    <name lang="de-DE">ersetze die Shopware Statistiken</name>
+                </option>
+            </options>
+        </input-field>
+
+        <component name="cbax-analytics-entity-multi-select">
+            <name>dashboardSaleschannels</name>
+            <entity>sales_channel</entity>
+            <label>Sales channels for the dashboard</label>
+            <label lang="de-DE">Verkaufskanäle für das Dashboard</label>
+            <placeholder>All Sales Channels</placeholder>
+            <placeholder lang="de-DE">Alle Verkaufskanäle</placeholder>
+            <helpText>Select the sales channels for the dashboard</helpText>
+            <helpText lang="de-DE">Verkaufskanäle für das Dashboard auswählen</helpText>
+        </component>
+
+        <input-field type="single-select">
+            <name>dashboardDateRange</name>
+            <label>Date range</label>
+            <label lang="de-DE">Zeitraum</label>
+            <helpText>Default date range for the statistics on the dashboard.</helpText>
+            <helpText lang="de-DE">Voreingestellter Zeitraum für die Statistiken.</helpText>
+            <defaultValue>30</defaultValue>
+            <placeholder>Last 30 days</placeholder>
+            <placeholder lang="de-DE">Letzte 30 Tage</placeholder>
+            <options>
+                <option>
+                    <id>90</id>
+                    <name>Last 90 days</name>
+                    <name lang="de-DE">Letzte 90 Tage</name>
+                </option>
+                <option>
+                    <id>30</id>
+                    <name>Last 30 days</name>
+                    <name lang="de-DE">Letzte 30 Tage</name>
+                </option>
+                <option>
+                    <id>14</id>
+                    <name>Last 14 days</name>
+                    <name lang="de-DE">Letzte 14 Tage</name>
+                </option>
+                <option>
+                    <id>7</id>
+                    <name>Last 7 days</name>
+                    <name lang="de-DE">Letzte 7 Tage</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Since yesterday</name>
+                    <name lang="de-DE">Seit gestern</name>
+                </option>
+            </options>
+        </input-field>
+
+    </card>
+
+    <card>
+
+        <title>Visitor Statistics</title>
+        <title lang="de-DE">Besucherstatistiken</title>
+
+        <input-field type="bool">
+            <name>recordSearch</name>
+            <label lang="de-DE">Such-Statistiken aktivieren</label>
+            <label>Activate search statistics</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Record searches for statistic analysis</helpText>
+            <helpText lang="de-DE">Suche aufzeichnen für statistische Auswertung</helpText>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>deleteSearchTime</name>
+            <label>Delete search request records</label>
+            <label lang="de-DE">Gespeicherte Suchanfragen löschen</label>
+            <helpText>Automatically delete old search records from the database.</helpText>
+            <helpText lang="de-DE">Alte gespeicherte Suchanfragen automatisch aus der Datenbank löschen.</helpText>
+            <defaultValue>180</defaultValue>
+            <placeholder>after 180 days</placeholder>
+            <placeholder lang="de-DE">nach 180 Tagen</placeholder>
+            <options>
+                <option>
+                    <id>1</id>
+                    <name>Never</name>
+                    <name lang="de-DE">Niemals</name>
+                </option>
+                <option>
+                    <id>30</id>
+                    <name>after 30 days</name>
+                    <name lang="de-DE">nach 30 Tagen</name>
+                </option>
+                <option>
+                    <id>60</id>
+                    <name>after 60 days</name>
+                    <name lang="de-DE">nach 60 Tagen</name>
+                </option>
+                <option>
+                    <id>90</id>
+                    <name>after 90 days</name>
+                    <name lang="de-DE">nach 90 Tagen</name>
+                </option>
+                <option>
+                    <id>180</id>
+                    <name>after 180 days</name>
+                    <name lang="de-DE">nach 180 Tagen</name>
+                </option>
+                <option>
+                    <id>365</id>
+                    <name>after 365 days</name>
+                    <name lang="de-DE">nach 365 Tagen</name>
+                </option>
+                <option>
+                    <id>730</id>
+                    <name>after 730 days</name>
+                    <name lang="de-DE">nach 730 Tagen</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="bool">
+            <name>recordVisitors</name>
+            <label lang="de-DE">Besucher-Statistiken aktivieren</label>
+            <label>Activate visitor statistics</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Record unique visitor numbers, referers and page impressions for statistic analysis</helpText>
+            <helpText lang="de-DE">Besucherzahlen, Referers und Seitenaufrufzahlen aufzeichnen für statistische Auswertung</helpText>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>deleteVisitorsTime</name>
+            <label>Delete visitor numbers records</label>
+            <label lang="de-DE">Gespeicherte Besucherzahlen löschen</label>
+            <helpText>Automatically delete old visitor numbers, referes and page impressions records from the database.</helpText>
+            <helpText lang="de-DE">Alte gespeicherte Besucherzahlen, Refererdaten und Seitenaufrufzahlen automatisch aus der Datenbank löschen.</helpText>
+            <defaultValue>180</defaultValue>
+            <placeholder>after 180 days</placeholder>
+            <placeholder lang="de-DE">nach 180 Tagen</placeholder>
+            <options>
+                <option>
+                    <id>1</id>
+                    <name>Never</name>
+                    <name lang="de-DE">Niemals</name>
+                </option>
+                <option>
+                    <id>30</id>
+                    <name>after 30 days</name>
+                    <name lang="de-DE">nach 30 Tagen</name>
+                </option>
+                <option>
+                    <id>60</id>
+                    <name>after 60 days</name>
+                    <name lang="de-DE">nach 60 Tagen</name>
+                </option>
+                <option>
+                    <id>90</id>
+                    <name>after 90 days</name>
+                    <name lang="de-DE">nach 90 Tagen</name>
+                </option>
+                <option>
+                    <id>180</id>
+                    <name>after 180 days</name>
+                    <name lang="de-DE">nach 180 Tagen</name>
+                </option>
+                <option>
+                    <id>365</id>
+                    <name>after 365 days</name>
+                    <name lang="de-DE">nach 365 Tagen</name>
+                </option>
+                <option>
+                    <id>730</id>
+                    <name>after 730 days</name>
+                    <name lang="de-DE">nach 730 Tagen</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="int">
+            <name>visitorTime</name>
+            <label>How many hours should pass before a visitor is counted as new again?</label>
+            <label lang="de-DE">Nach wievielen Stunden soll ein Besucher wieder als neu gezählt werden?</label>
+            <placeholder>12</placeholder>
+            <placeholder lang="de-DE">12</placeholder>
+            <defaultValue>12</defaultValue>
+            <min>1</min>
+            <helpText lang="de-DE">Wieviele Stunden sollen vergehen, bis ein wiederkehrender Besucher wieder als neu gezählt wird?</helpText>
+            <helpText>How many hours should pass until a returning visitor is counted as new again?</helpText>
+        </input-field>
+
+        <component name="cbax-analytics-ip-select">
+            <name>trackingIpBlacklist</name>
+            <label>Blacklist for IP addresses</label>
+            <label lang="de-DE">Blacklist für IP Adressen</label>
+            <helpText>Add IP addresses that should not be taken into account when tracking visitors and page views.</helpText>
+            <helpText lang="de-DE">Füge IP Adressen hinzu, die bei der Erfassung von Besuchern und Seitenaufrufen nicht berücksichtigt werden sollen.</helpText>
+        </component>
+
+    </card>
+
+    <card>
+
+    <title>CSV Export</title>
+    <title lang="de-DE">CSV Export</title>
+
+        <input-field type="single-select">
+            <name>csvSeparator</name>
+            <label>Separator for csv export files</label>
+            <label lang="de-DE">Trennzeichen für CSV Exportfiles</label>
+            <helpText>This will be used as separator in the csv export files.</helpText>
+            <helpText lang="de-DE">Dieses Zeichen wird als Trennzeichen in den csv Export Files verwendet.</helpText>
+            <defaultValue>comma</defaultValue>
+            <placeholder>Comma: ,</placeholder>
+            <placeholder lang="de-DE">Komma: ,</placeholder>
+            <options>
+                <option>
+                    <id>comma</id>
+                    <name>Comma: ,</name>
+                    <name lang="de-DE">Komma: ,</name>
+                </option>
+                <option>
+                    <id>semicolon</id>
+                    <name>Semicolon: ;</name>
+                    <name lang="de-DE">Semikolon: ;</name>
+                </option>
+                <option>
+                    <id>tab</id>
+                    <name>Tab</name>
+                    <name lang="de-DE">Tab</name>
+                </option>
+                <option>
+                    <id>pipe</id>
+                    <name>Pipe: |</name>
+                    <name lang="de-DE">Pipe: |</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>csvNumberFormat</name>
+            <label>Format for floating point number</label>
+            <label lang="de-DE">Format für Gleitkommazahlen</label>
+            <helpText>Choose the number format for more easy excel import.</helpText>
+            <helpText lang="de-DE">Wählen Sie das Zahlenformat für einfacheren Excel Import.</helpText>
+            <defaultValue>pointOnly</defaultValue>
+            <placeholder>Decimal point only</placeholder>
+            <placeholder lang="de-DE">Nur Dezimalpunkt</placeholder>
+            <options>
+                <option>
+                    <id>pointOnly</id>
+                    <name>Decimal point only</name>
+                    <name lang="de-DE">Nur Dezimalpunkt</name>
+                </option>
+                <option>
+                    <id>commaOnly</id>
+                    <name>Decimal comma only</name>
+                    <name lang="de-DE">Nur Dezimalkomma</name>
+                </option>
+                <option>
+                    <id>pointComma</id>
+                    <name>Decimal point + thousands comma</name>
+                    <name lang="de-DE">Dezimalpunkt + Tausenderkomma</name>
+                </option>
+                <option>
+                    <id>commaPoint</id>
+                    <name>Decimal comma + thousands point</name>
+                    <name lang="de-DE">Dezimalkomma + Tausenderpunkt</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="bool">
+            <name>csvTextSeperator</name>
+            <label lang="de-DE">Textfelder in Anführungszeichen?</label>
+            <label>Double quotes for text fields?</label>
+            <defaultValue>false</defaultValue>
+            <helpText>Should double quotes been put around text fields?</helpText>
+            <helpText lang="de-DE">Sollen Textfelder in Anführungszeichen gesetzt werden?</helpText>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>csvDateFormat</name>
+            <label>Date format</label>
+            <label lang="de-DE">Datum Format</label>
+            <helpText>Which date format should be used.</helpText>
+            <helpText lang="de-DE">Welches Format für das Datum soll verwendet werden.</helpText>
+            <defaultValue>formated</defaultValue>
+            <placeholder>Formated like in the displayed statistics</placeholder>
+            <placeholder lang="de-DE">Formatiert wie in den dargestellten Statistiken</placeholder>
+            <options>
+                <option>
+                    <id>formated</id>
+                    <name>Formated like in the displayed statistics</name>
+                    <name lang="de-DE">Formatiert wie in den dargestellten Statistiken</name>
+                </option>
+                <option>
+                    <id>standard</id>
+                    <name>Standard format YYYY-MM-DD</name>
+                    <name lang="de-DE">Standard Format JJJJ-MM-TT</name>
+                </option>
+            </options>
+        </input-field>
+
+    </card>
+
+</config>

@@ -1,0 +1,45 @@
+{
+    "name": "cbax/modul-analytics",
+    "description": "Umfangreiche Shop Statistik über viele Vorkommnisse im Shop.",
+    "version": "0.0.1",
+	"type": "shopware-platform-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "nfx:MEDIA"
+        }
+    ],
+	"require": {
+        "shopware/core": ">=6.6.0, <6.7"
+    },
+	"extra": {
+		"shopware-plugin-class": "Cbax\\ModulAnalytics\\CbaxModulAnalytics",
+		"copyright": "(c) by nfx:MEDIA",
+        "label": {
+            "de-DE": "nfx MAGIC Analytics",
+            "en-GB": "nfx MAGIC Analytics"
+        },
+        "description": {
+            "de-DE": "Umfangreiche Shop Statistik über viele Vorkommnisse im Shop.",
+            "en-GB": "Comprehensive shop statistics about many occurrences in the shop."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://coolbax.de",
+            "en-GB": "https://coolbax.de"
+        },
+        "supportLink": {
+            "de-DE": "https://www.coolbax.de/handbuecher/auswertung/plugin-statistik-professionell-sw6",
+            "en-GB": "https://www.coolbax.de/handbuecher/auswertung/plugin-statistik-professionell-sw6"
+        }
+    },
+	"autoload": {
+        "psr-4": {
+            "Cbax\\ModulAnalytics\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    }
+}

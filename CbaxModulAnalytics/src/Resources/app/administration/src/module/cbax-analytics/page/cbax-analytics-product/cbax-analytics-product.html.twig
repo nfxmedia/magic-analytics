@@ -1,0 +1,247 @@
+{% block cbax_analytics_product_list %}
+<sw-page class="sw-product-list cbax-analytics-product-list">
+
+    {% block cbax_analytics_product_list_smart_bar_header %}
+        <template #smart-bar-header>
+            {% block cbax_analytics_product_list_smart_bar_header_title %}
+                <h2>
+                    {% block cbax_analytics_product_list_smart_bar_header_title_text %}
+                        {{ $tc('cbax-analytics.index.productGridTitle') }}<span v-if="activeStatisticLabel">{{ activeStatisticLabel }}</span>
+                    {% endblock %}
+
+                    {% block cbax_analytics_product_list_smart_bar_header_amount %}
+                        <span
+                                v-if="!isLoading"
+                                class="sw-page__smart-bar-amount"
+                        >
+                            ({{ total }})
+                        </span>
+                    {% endblock %}
+                </h2>
+            {% endblock %}
+        </template>
+    {% endblock %}
+
+    {% block cbax_analytics_product_list_smart_bar_actions %}
+        <template #smart-bar-actions>
+            {% block cbax_analytics_product_list_smart_bar_actions_slot %}
+                <sw-button
+                        class="cbax-analytics-smart-bar-header-export-button"
+                        @click="exportCSV"
+                        variant="primary">
+                    {{ $tc('cbax-analytics.index.labelActionExport') }}
+                </sw-button>
+            {% endblock %}
+        </template>
+    {% endblock %}
+
+    {% block cbax_analytics_product_list_content %}
+    <template #content>
+        <div class="sw-product-list">
+            {% block cbax_analytics_product_list_content_slot %}
+                <div class="sw-product-list__content">
+
+                    {% block cbax_analytics_product_list_grid %}
+                        <sw-data-grid
+                            :data-source="filteredGridData"
+                            :columns="productColumns"
+                            :show-settings="true"
+                            :is-loading="isLoading"
+                            :showSelection="false"
+                            :sort-by="sortBy"
+                            :sort-direction="sortDirection"
+                            @column-sort="onColumnSort"
+                        >
+
+                            {% block cbax_analytics_product_list_grid_columns %}
+                                {% block cbax_analytics_product_list_grid_columns_name %}
+                                    <template #column-name="{ item }">
+                                        {% block cbax_analytics_product_list_grid_name_link %}
+                                            <router-link :to="{ name: 'sw.product.detail', params: { id: item.id } }">
+                                                {{ item.name }}
+                                            </router-link>
+                                        {% endblock %}
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_order_list_grid_columns_gross %}
+                                    <template #column-gross="{ item }">
+                                        {{ currencyFilter(item.gross, systemCurrency.isoCode) }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_order_list_grid_columns_net %}
+                                    <template #column-net="{ item }">
+                                        {{ currencyFilter(item.net, systemCurrency.isoCode) }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_order_list_grid_columns_gprice %}
+                                    <template #column-gprice="{ item }">
+                                        {{ currencyFilter(item.gprice, systemCurrency.isoCode) }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_order_list_grid_columns_nprice %}
+                                    <template #column-nprice="{ item }">
+                                        {{ currencyFilter(item.nprice, systemCurrency.isoCode) }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_product_list_grid_columns_active %}
+                                    <template #column-active="{ item }">
+                                        <sw-icon
+                                            v-if="item.active==1"
+                                            name="regular-checkmark-xs"
+                                            small
+                                            class="is--active"
+                                        />
+                                        <sw-icon
+                                            v-else
+                                            name="regular-times-s"
+                                            small
+                                            class="is--inactive"
+                                        />
+                                    </template>
+                                {% endblock %}
+
+                                {% block cbax_analytics_product_list_grid_columns_manufacturerName %}
+                                    <template #column-manufacturerName="{ item }">
+                                        {% block cbax_analytics_product_list_grid_manufacturerName_link %}
+                                            <router-link :to="{ name: 'sw.manufacturer.detail', params: { id: item.manufacturerId } }">
+                                                {{ item.manufacturerName }}
+                                            </router-link>
+                                        {% endblock %}
+                                    </template>
+                                {% endblock %}
+
+                            {% endblock %}
+
+                            {% block cbax_analytics_product_list_grid_columns_actions %}
+                                <template #actions="{ item }">
+                                    {% block cbax_analytics_product_list_grid_columns_actions_view %}
+                                        <sw-context-menu-item
+                                            class="sw-product-list__product-view-action"
+                                            :router-link="{ name: 'sw.product.detail', params: { id: item.id } }"
+                                        >
+                                            {{ $tc('cbax-analytics.index.goToProductDetail') }}
+                                        </sw-context-menu-item>
+                                    {% endblock %}
+                                </template>
+                            {% endblock %}
+
+                            <template #pagination>
+                                {% block cbax_analytics_product_list_grid_pagination %}
+                                    <sw-pagination
+                                        :page="page"
+                                        :limit="limit"
+                                        :total="total"
+                                        :total-visible="7"
+                                        @page-change="onPageChange"
+                                    />
+                                {% endblock %}
+                            </template>
+
+                        </sw-data-grid>
+                    {% endblock %}
+
+                    {% block cbax_analytics_product_list_empty_state %}
+                        <template v-if="!isLoading && !total">
+                            <sw-empty-state
+                                :title="$tc('sw-product.list.messageEmpty')"
+                            >
+                                <template #icon>
+                                    <img
+                                        :src="'/administration/static/img/empty-states/products-empty-state.svg' | asset"
+                                        :alt="$tc('sw-product.list.messageEmpty')"
+                                    >
+                                </template>
+                            </sw-empty-state>
+                        </template>
+                    {% endblock %}
+
+                </div>
+            {% endblock %}
+
+        </div>
+
+    </template>
+
+    {% block cbax_analytics_product_list_sidebar %}
+        <template #sidebar>
+            <sw-sidebar class="sw-product-list__sidebar cbax-analytics-product-list__sidebar">
+
+                {% block cbax_analytics_product_list_sidebar_refresh %}
+                    <sw-sidebar-item
+                            :disabled="isLoading"
+                            ref="filterSideBar"
+                            icon="regular-filter"
+                            :badge="activeFilterNumber"
+                            :title="$tc('cbax-analytics.index.labelSidebarFilter')"
+                            @sw-sidebar-item-close-content="closeContent"
+                            @click="closeContent">
+
+                        <div>
+                            <div class="sw-filter-panel">
+                                <div class="sw-filter-panel__item">
+                                    <sw-multi-select
+                                        v-if="!isLoading"
+                                        :options="gridData"
+                                        value-property="id"
+                                        label-property="name"
+                                        :label="$tc('sw-order.filters.productFilter.label')"
+                                        :placeholder="$tc('sw-order.filters.productFilter.placeholder')"
+                                        v-model:value="filterOptions.products"
+                                        @update:value="changeFilterValue"
+                                    />
+                                </div>
+                                <div class="sw-filter-panel__item">
+                                    <sw-multi-select
+                                        v-if="!isLoading"
+                                        :options="manufacturers"
+                                        value-property="id"
+                                        label-property="name"
+                                        :label="$tc('sw-product.filters.manufacturerFilter.label')"
+                                        :placeholder="$tc('sw-product.filters.manufacturerFilter.placeholder')"
+                                        v-model:value="filterOptions.manufacturers"
+                                        @update:value="changeFilterValue"
+                                    />
+                                </div>
+                                <div class="sw-filter-panel__item">
+                                    <sw-single-select
+                                        v-if="!isLoading"
+                                        value-property="value"
+                                        label-property="label"
+                                        :label="$tc('sw-product.filters.activeFilter.label')"
+                                        :placeholder="$tc('sw-product.filters.activeFilter.placeholder')"
+                                        v-model:value="filterOptions.active"
+                                        @update:value="changeFilterValue"
+                                        :options="[
+                                            {value: 'all', label: $tc('sw-boolean-filter.placeholder')},
+                                            {value: 'active', label: $tc('sw-boolean-filter.active')},
+                                            {value: 'not', label: $tc('sw-boolean-filter.inactive')}
+                                        ]"
+                                    />
+                                </div>
+                                <div class="sw-filter-panel__item">
+                                    <sw-switch-field
+                                        v-if="!isLoading"
+                                        v-model:value="filterOptions.showParents"
+                                        :label="$tc('cbax-analytics.component.displayOptions.showVariantParent')"
+                                        @update:value="onChangeShowParents"
+                                    >
+                                    </sw-switch-field>
+                                </div>
+                            </div>
+                        </div>
+
+                    </sw-sidebar-item>
+                {% endblock %}
+
+            </sw-sidebar>
+        </template>
+    {% endblock %}
+
+    {% endblock %}
+</sw-page>
+{% endblock %}

@@ -1,0 +1,41 @@
+<div class="nfx-analytics-cross-selling-grid">
+    <h3 class="nfx-analytics-cross-selling-grid-headline">
+        {{ $tc('nfx-analytics.view.crossSelling.headlineViews') }}
+    </h3>
+    <div v-if="!gridData || (gridData && gridData.length == 0)" class="nfx-analytics-empty-state-wrapper">
+        <sw-empty-state :title="$tc('nfx-analytics.index.noData')"></sw-empty-state>
+    </div>
+    <sw-data-grid v-else
+                  :compactMode="false"
+                  :dataSource="gridData"
+                  :columns="getGridColumns"
+                  :showSelection="false"
+                  :showActions="false">
+
+        <template #column-productName="{ item }">
+            <router-link
+                    class="sw-data-grid__cell-value"
+                    :to="{ name: 'sw.product.detail', params: { id: item.productId } }">
+                {{ item.productName }}
+            </router-link>
+        </template>
+        <template #column-crossSellings="{ item }">
+            <div v-if="item.crossSellings" class="nfx-analytics-cross-selling-grid-column">
+                <div v-for="csName in item.crossSellings" class="nfx-analytics-cross-selling-grid-csname">
+                    {{ csName }}
+                </div>
+            </div>
+        </template>
+        <template #pagination>
+            {% block analytics_cross_selling_grid_pagination %}
+                <sw-pagination :page="page"
+                               :limit="limit"
+                               :total="dataTotal"
+                               :total-visible="7"
+                               @page-change="onPageChange">
+                </sw-pagination>
+            {% endblock %}
+        </template>
+    </sw-data-grid>
+</div>
+

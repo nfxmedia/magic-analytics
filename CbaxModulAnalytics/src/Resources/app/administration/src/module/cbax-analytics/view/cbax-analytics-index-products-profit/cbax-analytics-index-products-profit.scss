@@ -1,0 +1,32 @@
+.cbax-analytics-products-profit-head {
+    .sw-card__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        .cbax-analytics-products-profit-sorting {
+            width: 40%;
+        }
+
+        .cbax-analytics-products-profit-overall {
+            font-size: 14px;
+            height: 36px;
+        }
+    }
+}
+
+.cbax-analytics-products-profit-grid {
+    .sw-card__content {
+        .sw-data-grid__table {
+            .sw-data-grid__cell-content  {
+                padding: 20px 15px;
+
+            }
+        }
+    }
+    .sw-data-grid .sw-data-grid__header .sw-data-grid__cell-content {
+        white-space: unset;
+    }
+}
+

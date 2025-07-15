@@ -1,0 +1,19 @@
+.cbax-analytics-category-compare-head {
+    .sw-card__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        .cbax-analytics-category-compare-stream-select {
+            width: 40%;
+        }
+
+        .cbax-analytics-category-compare-overall.sw-label {
+            font-size: 14px;
+            height: 60px;
+            line-height: 20px;
+        }
+    }
+}
+

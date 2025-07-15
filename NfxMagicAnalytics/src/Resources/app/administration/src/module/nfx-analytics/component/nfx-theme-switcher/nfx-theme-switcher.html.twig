@@ -1,0 +1,34 @@
+{% block nfx_theme_switcher %}
+<div class="nfx-theme-switcher" ref="themeSwitcher">
+    <button 
+        class="nfx-theme-switcher__button"
+        :style="{ background: currentThemeData ? 'var(--nfx-primary)' : '#6366F1' }"
+        @click="toggleMenu"
+        :title="$tc('nfx-analytics.general.changeTheme')"
+    >
+        <span style="font-size: 20px;">{{ currentThemeData ? currentThemeData.icon : '🎨' }}</span>
+    </button>
+    
+    <div 
+        class="nfx-theme-switcher__menu"
+        :class="{ 'is--open': showMenu }"
+    >
+        <div 
+            v-for="theme in themes" 
+            :key="theme.key"
+            class="nfx-theme-switcher__option"
+            :class="{ 'is--active': theme.key === currentTheme }"
+            @click="selectTheme(theme.key)"
+        >
+            <div 
+                class="nfx-theme-switcher__preview"
+                :class="`nfx-theme-switcher__preview--${theme.key}`"
+            ></div>
+            <div>
+                <div class="nfx-theme-switcher__label">{{ theme.label }}</div>
+                <div class="nfx-theme-switcher__description">{{ theme.description }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

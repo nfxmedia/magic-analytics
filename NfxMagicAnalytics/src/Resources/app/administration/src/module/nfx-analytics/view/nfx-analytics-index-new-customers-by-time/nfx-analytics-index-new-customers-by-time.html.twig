@@ -1,0 +1,58 @@
+{% block nfx_analytics_new_customers_by_time %}
+    <div>
+
+        {% block nfx_analytics_new_customers_by_time_chart %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-content-card-chart nfx-analytics-new-customers-by-time-chart"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1">
+
+                {% block nfx_analytics_new_customers_by_time_chart_data %}
+                    <sw-chart
+                            v-if="isLoading == false"
+                            :type="'line'"
+                            :series="chartSeriesData"
+                            :options="chartOptions"
+                            sort>
+                    </sw-chart>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block nfx_analytics_new_customers_by_time_grid %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-content-card-grid nfx-analytics-new-customers-by-time-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block nfx_analytics_new_customers_by_time_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="nfx-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="nfx-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('nfx-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="false">
+
+                        <template #pagination>
+                            {% block analytics_new_customers_by_time_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

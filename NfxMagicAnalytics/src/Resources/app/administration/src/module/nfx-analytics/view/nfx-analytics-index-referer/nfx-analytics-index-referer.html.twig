@@ -1,0 +1,66 @@
+{% block nfx_analytics_referer %}
+    <div class="nfx-analytics-referer">
+
+        {% block nfx_analytics_referer_grid %}
+            <sw-card positionIdentifier="'test'" class="nfx-analytics-content-card-grid nfx-analytics-count-by-referer-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block nfx_analytics_referer_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="nfx-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="nfx-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('nfx-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="false"
+                    >
+                        {% block nfx_analytics_referer_grid_columns_product_number %}
+                            <template #column-number="{ item }">
+                                <router-link
+                                        class="sw-data-grid__cell-value"
+                                        :to="{ name: 'sw.product.detail', params: { id: item.id } }">
+                                    {{ item.number }}
+                                </router-link>
+                            </template>
+                        {% endblock %}
+
+                        <template #pagination>
+                            {% block nfx_analytics_referer_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block nfx_analytics_referer_help %}
+                <sw-alert
+                        v-if="!displayOptions.dashboard"
+                        :appearance="'notification'"
+                        :showIcon="false"
+                        :closable="false"
+                        :variant="'neutral'"
+                        :title="$tc('nfx-analytics.general.help')"
+                >
+                    <div class="nfx-analytics-description">
+                        {{ $tc('nfx-analytics.view.referer.description') }}
+                    </div>
+                </sw-alert>
+            {% endblock %}
+        {% endblock %}
+
+    </div>
+{% endblock %}

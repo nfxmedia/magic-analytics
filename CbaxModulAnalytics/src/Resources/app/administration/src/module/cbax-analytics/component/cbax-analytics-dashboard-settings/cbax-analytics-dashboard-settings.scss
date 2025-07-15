@@ -1,0 +1,91 @@
+@import "~scss/variables";
+
+.cbax-analytics-dashboard-settings-save {
+    margin-bottom: 20px;
+}
+
+.sw-card {
+    .cbax-analytics-dashboard-headline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        h1 {
+            color: $color-darkgray-200;
+            font-size: ($font-size-s * 1.5);
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+
+        .cbax-analytics-dashboard-headline-timerange {
+            font-size: ($font-size-s * 1.5);
+            color: $color-gray-500;
+            padding: 0 16px;
+        }
+    }
+}
+
+.sw-modal {
+    &.sw-modal--default {
+        &.cbax-analytics-dashboard-settings-modal {
+            .sw-modal__dialog {
+                max-width: 850px;
+            }
+        }
+    }
+}
+
+.cbax-analytics-dashboard-settings {
+
+    .cbax-analytics-dashboard-settings-groups {
+        word-break: keep-all;
+
+        .cbax-analytics-dashboard-settings-groupheader {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            cursor: pointer;
+            margin-top: 18px;
+            border: 1px solid lightgrey;
+            padding: 8px;
+
+            .cbax-analytics-dashboard-settings-groupexpanded {
+                margin-right: 25px;
+            }
+
+            .cbax-analytics-dashboard-settings-grouplabel {
+                margin: 0;
+            }
+        }
+
+        .cbax-analytics-dashboard-settings-statistics {
+            border-bottom: 1px solid lightgrey;
+
+            .sw-field {
+                &.cbax-analytics-dashboard-settings-position {
+                    display: flex;
+                    margin-bottom: 0;
+                    label {
+                        padding: 15px;
+                    }
+                    .sw-block-field__block {
+                        margin: 10px 0;
+                        input {
+                            padding: 2px 10px;
+
+                        }
+                    }
+                }
+            }
+
+            .sw-field--switch {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        .cbax-analytics-dashboard-settings-statslabel {
+            padding: 15px 8px;
+            font-size: 14px;
+        }
+    }
+}

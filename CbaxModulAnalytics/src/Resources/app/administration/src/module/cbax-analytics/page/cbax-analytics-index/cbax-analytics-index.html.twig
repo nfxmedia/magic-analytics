@@ -1,0 +1,140 @@
+{% block cbax_analytics_index %}
+    <sw-page class="cbax-analytics-index sw-category"
+             :isLoading="isLoading"
+             :class="pageClasses">
+
+        {% block cbax_analytics_index_smart_bar_back_container %}
+            <template #smart-bar-back>
+                <div class="cbax-analytics-smart_bar_back">
+                    <router-link v-if="parentRoute"
+                                 class="smart-bar__back-btn"
+                                 :to="{ name: parentRoute }"
+                                 :style="{ 'color': pageColor }"
+                                 @click.native="onGoBack"
+                                 >
+                        <sw-icon name="regular-chevron-left" small></sw-icon>
+                        <sw-icon name="regular-flask" small></sw-icon>
+                    </router-link>
+                </div>
+            </template>
+        {% endblock %}
+
+        {% block cbax_analytics_index_smart_bar_header %}
+            <template #smart-bar-header>
+                <div class="cbax-analytics-smart-bar-header" v-if="!isLoading">
+                    <h2 class="cbax-analytics-smart-bar-header-title">{{ $t('cbax-analytics.index.title') }}</h2>
+                    {{ $t('cbax-analytics.index.dates.from') }}
+                    <span class="cbax-analytics-smart-bar-header-start">{{ startDateHeadline }}</span>
+                    {{ $t('cbax-analytics.index.dates.to') }}
+                    <span class="cbax-analytics-smart-bar-header-end">{{ endDateHeadline }}</span>
+                </div>
+            </template>
+        {% endblock %}
+
+        {% block cbax_analytics_index_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <div class="cbax_analytics-manuallinks">
+                    <a :href="manualLink" target="_blank" rel="noopener">{{ $t('cbax-analytics.general.manualLink') }}</a>
+                </div>
+                {% block cbax_analytics_index_smart_bar_actions_csvexport %}
+                    <sw-button
+                            class="cbax-analytics-smart-bar-header-export-button"
+                            @click="exportCSV"
+                            variant="primary">
+                        {{ $tc('cbax-analytics.index.labelActionExport') }}
+                    </sw-button>
+                {% endblock %}
+                {% block cbax_analytics_index_smart_bar_actions_csvexport_refresh %}
+                    <sw-button
+                            class="cbax-analytics-smart-bar-header-refresh-button"
+                            @click="onRefresh"
+                            variant="primary">
+                        {{ $tc('cbax-analytics.component.displayOptions.refreshButton') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+		{% block cbax_analytics_side_content %}
+            <template #side-content>
+                <cbax-analytics-tree
+                    v-if="!modulStarting"
+                    :showTree="true"
+                    :activeStatisticName="activeStatisticName"
+                    @cbax-statistic-selection="changeStatistic">
+                </cbax-analytics-tree>
+            </template>
+        {% endblock %}
+
+        {% block cbax_analytics_content %}
+            <template #content>
+                {% block cbax_analytics_content_inner %}
+
+                    <sw-card-view>
+                        <component
+                            v-if="activeComponentName != ''"
+                            :is="activeComponentName"
+                            :activeStatistic="activeStatistic"
+                            :displayOptions="displayOptions"
+                            :systemCurrency="systemCurrency"
+                            :grossOrNet="grossOrNet"
+                            @cbax-statistics-csv_done="downloadCSV"
+                            :format="format"
+                            :customOptions="customOptions">
+                        </component>
+                    </sw-card-view>
+
+                {% endblock %}
+
+            </template>
+		{% endblock %}
+
+        {% block cbax_analytics_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+                    <sw-sidebar-item
+                            :disabled="isLoading"
+                            ref="filterSideBar"
+                            icon="regular-filter"
+                            :badge="activeFilterNumber"
+                            :title="$tc('cbax-analytics.index.labelSidebarFilterOptions')"
+                            @sw-sidebar-item-close-content="closeContent"
+                            @click="closeContent">
+
+                        {% block cbax_analytics_sidebar_filter %}
+                            <div class="cbax-analytics-display-options-container">
+                                <cbax-analytics-display-options
+                                    :filterOptions="filterOptions">
+                                </cbax-analytics-display-options>
+                            </div>
+                        {% endblock %}
+
+                    </sw-sidebar-item>
+
+                    <sw-sidebar-item
+                        :disabled="!showMoreFilters || isLoading"
+                        ref="moreFiltersSideBar"
+                        icon="regular-plus-circle"
+                        :badge="activeMoreFilterNumber"
+                        :title="$tc('cbax-analytics.index.labelSidebarMoreFilter')"
+                        @sw-sidebar-item-close-content="closeMoreContent"
+                        @click="closeMoreContent">
+
+                        {% block cbax_analytics_sidebar_more_filter %}
+                            <div class="cbax-analytics-display-options-container">
+                                <cbax-analytics-more-filters
+                                    :activeMoreFilterNumber="activeMoreFilterNumber"
+                                    :activeStatisticName="activeStatisticName"
+                                    @filter-changeShowParents="onFilterChangeShowParents"
+                                    :filterOptions="filterOptions">
+                                </cbax-analytics-more-filters>
+                            </div>
+                        {% endblock %}
+                    </sw-sidebar-item>
+
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+    </sw-page>
+{% endblock %}

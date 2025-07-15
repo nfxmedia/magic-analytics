@@ -1,0 +1,19 @@
+.cbax-analytics-sales-by-category-head {
+    .sw-card__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        .cbax-analytics-sales-by-category-stream-select {
+            width: 40%;
+        }
+
+        .cbax-analytics-sales-by-category-overall.sw-label {
+            font-size: 14px;
+            height: 60px;
+            line-height: 20px;
+        }
+    }
+}
+

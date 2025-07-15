@@ -1,0 +1,21 @@
+{% block cbax_analytics_summery %}
+
+    <sw-alert
+            class="sw-card"
+            :appearance="'notification'"
+            :showIcon="false"
+            :closable="false"
+            :variant="'info'"
+            :title="alertTitle"
+    >
+
+        <sw-data-grid
+                :dataSource="gridData"
+                :columns="gridColums"
+                :showSelection="false"
+                :showActions="false"
+        >
+        </sw-data-grid>
+
+    </sw-alert>
+{% endblock %}

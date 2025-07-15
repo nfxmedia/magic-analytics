@@ -1,0 +1,120 @@
+{% block cbax_analytics_sales_by_products %}
+    <div>
+
+        {% block cbax_analytics_sales_by_products_chart %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-chart cbax-analytics-sales-by-products-chart"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1">
+
+                {% block cbax_analytics_sales_by_products_chart_data %}
+                    <sw-chart
+                            v-if="isLoading == false && chartType != null"
+                            :type="chartType"
+                            :series="chartSeriesData"
+                            :options="chartOptions"
+                            sort>
+                    </sw-chart>
+                {% endblock %}
+
+                {% block cbax_analytics_sales_by_products_select_box %}
+                    <sw-select-field class="cbax-analytics-charttype-select"
+                                     :label="$tc('cbax-analytics.view.chartSelection.selectLabel')"
+                                     :placeholder="$tc('cbax-analytics.view.chartSelection.placeholder')"
+                                     :value="chartType"
+                                     @update:value="onChangeField($event, 'chartType')">
+                        <option value="bar">{{  $tc('cbax-analytics.view.chartSelection.bar') }}</option>
+                        <option value="pie">{{ $tc('cbax-analytics.view.chartSelection.pie') }}</option>
+                        <option value="donut">{{ $tc('cbax-analytics.view.chartSelection.donut') }}</option>
+                    </sw-select-field>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_sales_by_products_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-sales-by-products-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block cbax_analytics_sales_by_products_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="!displayOptions.dashboard"
+                            :showSettings="true"
+                            :sort-by="sortBy"
+                            :sort-direction="sortDirection"
+                            @column-sort="onColumnSort">
+
+                        {% block cbax_analytics_sales_by_products_grid_columns_order_number %}
+                            <template #column-number="{ item }">
+                                <router-link
+                                        class="sw-data-grid__cell-value"
+                                        :to="{ name: 'sw.product.detail', params: { id: item.id } }">
+                                    {{ item.number }}
+                                </router-link>
+                            </template>
+                        {% endblock %}
+
+                        <template #column-sales="{ item }">
+                            {{ currencyFilter(item.sales, systemCurrency.isoCode) }}
+                        </template>
+
+                        <template #column-priceAV="{ item }">
+                            {{ currencyFilter(item.priceAV, systemCurrency.isoCode) }}
+                        </template>
+
+                        <template #pagination>
+                            {% block analytics_sales_by_products_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                        <template #actions="{ item }">
+                            <sw-context-menu-item
+                                class="sw-order-list__order-view-action"
+                                :router-link="orderLink(item.name, filterName, displayOptions, activeStatistic, item.id)"
+                                :target="orderLinkTarget(displayOptions)"
+                                    :title="$tc('cbax-analytics.view.goToOrdersTip')"
+                            >
+                                {{ $tc('cbax-analytics.view.goToOrders') }}
+                            </sw-context-menu-item>
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block cbax_analytics_sales_by_products_help %}
+                <sw-alert
+                    v-if="!displayOptions.dashboard"
+                    :appearance="'notification'"
+                    :showIcon="false"
+                    :closable="false"
+                    :variant="'neutral'"
+                    :title="$tc('cbax-analytics.general.help')"
+                >
+                    <div class="cbax-analytics-description">
+                        {{ $tc('cbax-analytics.view.productsOnlyInfo') }}
+                        {{ $tc('cbax-analytics.view.salesByProducts.info') }}
+                    </div>
+                </sw-alert>
+            {% endblock %}
+
+        {% endblock %}
+
+    </div>
+{% endblock %}

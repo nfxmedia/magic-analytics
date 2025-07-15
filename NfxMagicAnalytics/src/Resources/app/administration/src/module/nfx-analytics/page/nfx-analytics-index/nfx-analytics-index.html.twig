@@ -1,0 +1,167 @@
+{% block nfx_analytics_index %}
+{# Use modern layout #}
+{% block nfx_analytics_modern %}
+    <div class="nfx-analytics nfx-analytics__content theme-light-apple" 
+         :class="'theme-' + currentTheme"
+         style="min-height: 100vh; background: var(--nfx-bg-primary, #ffffff); color: var(--nfx-text-primary, #1f2937);">
+        <sw-page class="nfx-analytics-index sw-category"
+                 :isLoading="isLoading"
+                 :class="pageClasses"
+                 style="background: transparent !important;">
+
+            {% block nfx_analytics_index_smart_bar_back_container %}
+                <template #smart-bar-back>
+                    <div class="nfx-analytics-smart_bar_back">
+                        <router-link v-if="parentRoute"
+                                     class="smart-bar__back-btn"
+                                     :to="{ name: parentRoute }"
+                                     :style="{ 'color': pageColor }"
+                                     @click.native="onGoBack"
+                                     >
+                            <sw-icon name="regular-chevron-left" small></sw-icon>
+                            <sw-icon name="regular-flask" small></sw-icon>
+                        </router-link>
+                    </div>
+                </template>
+            {% endblock %}
+
+            {% block nfx_analytics_index_smart_bar_header %}
+                <template #smart-bar-header>
+                    <div class="nfx-page-header" v-if="!isLoading && displayOptions">
+                        <h1 class="nfx-page-header__title">✨ {{ $t('nfx-analytics.index.title') }}</h1>
+                        <p class="nfx-page-header__subtitle" v-if="displayOptions && displayOptions.start && displayOptions.end">
+                            {{ $t('nfx-analytics.index.dates.from') }} {{ startDateHeadline }} 
+                            {{ $t('nfx-analytics.index.dates.to') }} {{ endDateHeadline }}
+                        </p>
+                    </div>
+                </template>
+            {% endblock %}
+
+            {% block nfx_analytics_index_smart_bar_actions %}
+                <template #smart-bar-actions>
+                    <div class="nfx-page-header__actions">
+                        <button class="nfx-button nfx-button--secondary" @click="onRefresh">
+                            <sw-icon name="regular-sync" size="16"></sw-icon>
+                            {{ $tc('nfx-analytics.component.displayOptions.refreshButton') }}
+                        </button>
+                        <button class="nfx-button nfx-button--primary" @click="exportCSV">
+                            <sw-icon name="regular-download" size="16"></sw-icon>
+                            {{ $tc('nfx-analytics.index.labelActionExport') }}
+                        </button>
+                    </div>
+                </template>
+            {% endblock %}
+
+		{% block nfx_analytics_side_content %}
+            <template #side-content>
+                <div class="nfx-sidebar" style="background: var(--nfx-bg-secondary, #f8f9fa); height: 100%; border-right: 1px solid var(--nfx-border-light, #e5e7eb);">
+                    <div class="nfx-sidebar__header" style="padding: 2rem; border-bottom: 1px solid var(--nfx-border-light, #e5e7eb);">
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--nfx-text-primary, #1f2937); margin: 0; display: flex; align-items: center; gap: 0.75rem;">
+                            ✨ Magic Analytics
+                        </h2>
+                    </div>
+                    
+                    <div class="nfx-sidebar__section" style="padding: 1rem;">
+                        <nfx-analytics-tree
+                            v-if="!modulStarting"
+                            :showTree="true"
+                            :activeStatisticName="activeStatisticName"
+                            @nfx-statistic-selection="changeStatistic">
+                        </nfx-analytics-tree>
+                    </div>
+                </div>
+            </template>
+        {% endblock %}
+
+        {% block nfx_analytics_content %}
+            <template #content>
+                {% block nfx_analytics_content_inner %}
+
+                    <div class="nfx-dashboard" style="padding: 2rem;">
+                        <div class="nfx-card fade-in" style="background: var(--nfx-bg-card, #ffffff); border-radius: 16px; padding: 2rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); border: 1px solid var(--nfx-border-light, #f3f4f6);">
+                            <div class="nfx-card__header" style="margin-bottom: 1.5rem;">
+                                <h3 class="nfx-card__title" style="font-size: 1.25rem; font-weight: 600; color: var(--nfx-text-primary, #1f2937); margin: 0;">{{ (activeStatistic && activeStatistic.name) ? activeStatistic.name : $t('nfx-analytics.index.title') }}</h3>
+                            </div>
+                            <div class="nfx-card__body" style="color: var(--nfx-text-secondary, #4b5563);">
+                                <component
+                                    v-if="activeComponentName != '' && displayOptions"
+                                    :is="activeComponentName"
+                                    :activeStatistic="activeStatistic"
+                                    :displayOptions="displayOptions"
+                                    :systemCurrency="systemCurrency"
+                                    :grossOrNet="grossOrNet"
+                                    @nfx-statistics-csv_done="downloadCSV"
+                                    :format="format"
+                                    :customOptions="customOptions">
+                                </component>
+                                <div v-else-if="isLoading || modulStarting" class="nfx-loading">
+                                    <div class="nfx-loading__spinner"></div>
+                                </div>
+                                <div v-else class="nfx-empty-state">
+                                    <div class="nfx-empty-state__icon">📊</div>
+                                    <h3 class="nfx-empty-state__title">{{ $t('nfx-analytics.index.emptyStateHeadline') }}</h3>
+                                    <p class="nfx-empty-state__text">Select a statistic from the navigation to view analytics data.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endblock %}
+
+            </template>
+		{% endblock %}
+
+        {% block nfx_analytics_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+                    <sw-sidebar-item
+                            :disabled="isLoading"
+                            ref="filterSideBar"
+                            icon="regular-filter"
+                            :badge="activeFilterNumber"
+                            :title="$tc('nfx-analytics.index.labelSidebarFilterOptions')"
+                            @sw-sidebar-item-close-content="closeContent"
+                            @click="closeContent">
+
+                        {% block nfx_analytics_sidebar_filter %}
+                            <div class="nfx-analytics-display-options-container">
+                                <nfx-analytics-display-options
+                                    :filterOptions="filterOptions">
+                                </nfx-analytics-display-options>
+                            </div>
+                        {% endblock %}
+
+                    </sw-sidebar-item>
+
+                    <sw-sidebar-item
+                        :disabled="!showMoreFilters || isLoading"
+                        ref="moreFiltersSideBar"
+                        icon="regular-plus-circle"
+                        :badge="activeMoreFilterNumber"
+                        :title="$tc('nfx-analytics.index.labelSidebarMoreFilter')"
+                        @sw-sidebar-item-close-content="closeMoreContent"
+                        @click="closeMoreContent">
+
+                        {% block nfx_analytics_sidebar_more_filter %}
+                            <div class="nfx-analytics-display-options-container">
+                                <nfx-analytics-more-filters
+                                    :activeMoreFilterNumber="activeMoreFilterNumber"
+                                    :activeStatisticName="activeStatisticName"
+                                    @filter-changeShowParents="onFilterChangeShowParents"
+                                    :filterOptions="filterOptions">
+                                </nfx-analytics-more-filters>
+                            </div>
+                        {% endblock %}
+                    </sw-sidebar-item>
+
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+        </sw-page>
+        
+        <!-- Theme Switcher -->
+        <nfx-theme-switcher style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;"></nfx-theme-switcher>
+    </div>
+{% endblock %}
+{% endif %}

@@ -1,0 +1,876 @@
+{
+    "nfx-analytics": {
+		"general": {
+			"name": "nfx-analytics",
+			"title": "Magic Analytics",
+			"description": "Verwaltung von Statistik-Einträgen",
+			"navigationLabel": "Magic Analytics",
+			"treeHeadline": "Navigation",
+            "placeholderSearchBar": "Durchsuche alle Statistiken ...",
+            "help": "Hilfe",
+            "favorites": "Favoriten",
+            "manualLink": "Handbuch",
+            "coolbaxLink": "Weitere Plugins von nfx:MEDIA"
+		},
+        "index": {
+			"labelActionExport": "CSV Export",
+			"noData": "Keine Daten vorhanden",
+			"title": "Magic Analytics",
+			"orderGridTitle": "Bestellungen zur Statistik ",
+            "productGridTitle": "Produkte zur Statistik ",
+			"goToOrderDetail": "Zur SW Order Detailansicht",
+            "goToProductDetail": "Zur SW Produkt Detailansicht",
+			"emptyStateHeadline": "Wähle Links eine Statistik aus",
+			"emptyPropertyGroupHeadline": "Bitte eine Eigenschaft auswählen!",
+			"emptyStreamHeadline": "Bitte eine dynamische Produktgruppe auswählen!",
+			"emptyProductHeadline": "Bitte ein Produkt wählen!",
+            "emptyCategoryHeadline": "Bitte eine Kategorie wählen!",
+			"labelSidebarFilter": "Filter",
+			"labelSidebarMoreFilter": "Zusätzliche spezifische Filter",
+			"labelSidebarFilterOptions": "Haupt - Filter",
+			"labelSidebarExport": "Export starten",
+			"labelSidebarExportBar": " CSV Export",
+			"labelSidebarProductSearchBar": "Produktsuche",
+			"labelSidebarProductSearch": "Produkte auswählen",
+			"labelSidebarProductSearchStart": "Suche",
+			"dates": {
+				"from": "von:",
+				"to": "bis:"
+			},
+			"sums": "Summen"
+        },
+		"dashboard": {
+			"settingsTitel": "Einstellungen",
+            "save": "Speichern",
+            "showChart": "Zeige Chart",
+            "showTable": "Zeige Tabelle",
+            "position": "Position",
+            "title": "Statistiken",
+            "dateRanges": {
+				"90Days": "Letzte 90 Tage",
+                "30Days": "Letzte 30 Tage",
+                "14Days": "Letzte 14 Tage",
+                "7Days": "Letzte 7 Tage",
+                "yesterday": "Seit gestern"
+            }
+        },
+		"product": {
+			"avPrice": "Ø Preis",
+			"sales": "Umsatz",
+			"productNumber": "Produktnummer"
+		},
+        "order": {
+            "profitColumn": "Profit",
+            "info": "Profit wird errechnet aus den Nettopreisen der Produkte in der Bestellung (abzgl. Promotion Rabatte) und den Netto Einkaufspreisen, funktioniert also nicht, wenn die Einkaufspreise nicht bei allen Produkten gepflegt werden. Versandkosten werden nicht berücksichtigt."
+        },
+		"component": {
+			"displayOptions": {
+				"showVariantParent": "Varianten zusammenfassen",
+				"dateFrom": "Von",
+				"dateTo": "Bis",
+				"dateRanges": {
+					"label": "Zeitspanne",
+					"365Days": "Letzte 365 Tage",
+					"180Days": "Letzte 180 Tage",
+					"90Days": "Letzte 90 Tage",
+					"30Days": "Letzte 30 Tage",
+					"14Days": "Letzte 14 Tage",
+					"7Days": "Letzte 7 Tage",
+					"yesterday": "Seit gestern",
+					"userdefined": "Benutzerdefiniert",
+					"currentWeek": "Diese Woche",
+					"lastWeek": "Letzte Woche",
+					"currentMonth": "Dieser Monat",
+					"lastMonth": "Letzter Monat",
+					"currentQuarter": "Dieses Vierteljahr",
+					"lastQuarter": "Letztes Vierteljahr",
+					"currentYear": "Dieses Jahr",
+					"lastYear": "Letztes Jahr"
+				},
+				"refreshButton": "Aktualisieren",
+				"saleschannel": {
+					"label": "Verkaufskanäle",
+					"placeholder": "Alle Verkaufskanäle"
+				},
+				"customerGroup": {
+					"label": "Kundengruppen",
+					"placeholder": "Alle Kundengruppen"
+				},
+                "product": {
+                    "label": "Produkte",
+                    "placeholder": "Wähle Produkt"
+                },
+                "manufacturer": {
+                    "label": "Hersteller",
+                    "placeholder": "Wähle Hersteller"
+                },
+                "affiliate": {
+                    "label": "Partner-Code (Affiliates)",
+                    "placeholder": "Wähle Affiliate-Code"
+                },
+				"notaffiliate": {
+					"label": "Hat NICHT Partner-Code (Affiliates)"
+				},
+                "campaign": {
+                    "label": "Kampagnen-Code",
+                    "placeholder": "Wähle Kampagnen-Code"
+                },
+				"promotion": {
+					"label": "Promotion-Code",
+					"placeholder": "Wähle Promotion-Code"
+				}
+			},
+			"tree": {
+				"headline": "Navigation"
+			}
+		},
+		"view": {
+			"noAffiliate": "Kein Partner Code",
+			"noCampaign": "Keine Kampagne",
+            "productsOnlyInfo": "Bei der Berechnung des Umsatzes werden nur die Preise der Produkte berücksichtigt, nicht jedoch Rabattgutscheine oder Versandkosten.",
+            "fullOrderInfo": "Bei der Berechnung des Umsatzes werden die Gesamtpreise der Bestellungen berücksichtigt, also inklusive Rabattgutscheine oder Versandkosten.",
+			"invoiceOrderInfo": "Die Bestellungen sind nach Rechnungsdatum gruppiert, also werden Bestellungen ohne Rechnung nicht berücksichtigt. Das Rechnungsdatum wird bei Erstellung der Rechnung in einer extra Datenbanktabelle erfasst, aber nur, wenn in den Plugin-Einstellungen der Schalter 'Zusätzliche Orderdaten speichern wenn möglich' aktiv ist, ansonsten gibt es hier keine Daten.",
+			"dateColumn": "Datum",
+			"goToOrdersTip": "Zeige zugehörige Bestellungen",
+            "goToProductsTip": "Zeige zugehörige Produkte",
+			"goToOrders": "Bestellungen",
+			"goToProducts": "Produkte",
+			"countColumn": "Anzahl Bestellungen",
+			"countColumnShort": "Bestellungen",
+            "sumColumn": "Umsatz",
+            "productNumberColumn": "Produktnummer",
+            "productNameColumn": "Produktname",
+            "categoryNameColumn": "Kategorie",
+            "salesCountColumn": "Anzahl Verkäufe",
+			"conversionColumn": "Conversion Rate",
+            "detectionNote": " *) Die Bestimmung von Gerät, Browser und Betriebssystem sind nicht immer genau. Daher können diese Daten nur als ungefähre Schätzung angesehen werden! Auch sind Marktplatzbestellungen nicht enthalten.",
+            "productProfitNote": " *) Bei der Berechnung werden keine Preisregeln, Preisänderungen oder dergleichen berücksichtigt. Daher können die tatsächliche Gewinne abweichen. Diese Statistik gibt also nur einen ungefähren Überblick über die Profitabilität der einzelnen Produkte.",
+            "net": " (netto)",
+            "gross": " (brutto)",
+            "manufacturer": "Hersteller",
+            "stock": "Lager",
+            "groups": {
+                "sales": "Umsatz",
+                "customers": "Kunden",
+                "products": "Produkte",
+                "marketing": "Marketing",
+                "orders": "Bestellungen",
+                "lexicon": "Lexikon",
+                "unfinished": "Abbruchanalyse",
+				"visitors": "Besucher und Seitenklicks",
+				"invoice": "Nach Rechnungsdatum",
+				"pwreturn": "Mit Pickware Erp Pro - Retour"
+            },
+			"overallCount": {
+				"label": "Gesamtanzahl : "
+			},
+            "overall": {
+                "label": "Gesamtsumme :   ",
+				"sales": {
+					"label": "Umsatz :   "
+				},
+				"sold": {
+					"label": "Anzahl verkauft :   "
+				},
+				"productCount": {
+					"label": "Anzahl angebotene Produkte :   "
+				}
+            },
+			"streamSelect": {
+				"label": "Dynamische Produktgruppe Auswahl",
+				"placeholder": "Bitte eine dynamische Produktgruppe wählen!"
+			},
+			"propertyGroupSelect": {
+				"label": "Eigenschaftsausprägung Auswahl",
+				"placeholder": "Bitte Eigenschaftsausprägung wählen!"
+			},
+			"categorySelect": {
+				"label": "Kategorie Auswahl (optional)",
+                "labelNotOptional": "Kategorie Auswahl",
+				"placeholder": "Produkte auf diese Kategorie beschränken",
+                "placeholderMulti": "Wähle mindestens 2 Kategorien"
+			},
+            "sortingSelect": {
+                "label": "Sortierung",
+                "placeholder": "Sortierung",
+                "worthASC": "Bestandswert aufsteigend",
+                "worthDESC": "Bestandswert absteigend",
+                "nameASC": "Produktname aufsteigend",
+                "nameDESC": "Produktname absteigend",
+                "stockASC": "Lagerbestand aufsteigend",
+                "stockDESC": "Lagerbestand absteigend",
+                "ppriceASC": "Einkaufspreis aufsteigend",
+                "ppriceDESC": "Einkaufspreis absteigend",
+                "numberASC": "Produktnummer aufsteigend",
+                "numberDESC": "Produktnummer absteigend",
+                "cpriceASC": "Verkaufspreis aufsteigend",
+                "cpriceDESC": "Verkaufspreis absteigend",
+                "profitASC": "Rohertrag aufsteigend",
+                "profitDESC": "Rohertrag absteigend",
+                "markUpASC": "Handelsspanne aufsteigend",
+                "markUpDESC": "Handelsspanne absteigend",
+                "countASC": "Verkäufe aufsteigend",
+                "countDESC": "Verkäufe absteigend"
+            },
+			"quickOverview": {
+				"titleTree": "Schnellübersicht",
+				"titleChart": "Schnellübersicht",
+				"dateColumn": "Datum",
+				"orderCountColumn": "Bestellungen",
+				"salesColumn": "Brutto-Umsatz",
+				"avgSalesColumn": "Ø Bestellwert",
+				"avgSalesColumnExport": "Durchschnittlicher Bestellwert",
+				"nettoSalesColumn": "Netto-Umsatz",
+				"newCustomersColumn": "Neue Kunden*",
+				"newPayingCustomersColumn": "Mit Bestellungen*",
+                "firstTimeCountColumn": "Erstbestellungen*",
+                "visitorsColumn": "Besucher",
+                "impressionsColumn": "Klicks",
+                "description": "*)\nNeue Kunden:  Anzahl der Kunden in der Datenbank, die an diesem Tag erstellt wurden.\nErstbestellungen:  Anzahl von Bestellungen von Kunden, die vor diesem Tag noch nichts bestellt hatten.\nMit Bestellungen:  Anzahl der Kunden unter den Neukunden des Tages, die mindestens eine abgeschlossene Bestellung bis heute getätigt haben."
+			},
+            "salesByCategory": {
+                "titleTree": "Umsatz einer Kategorie",
+                "titleChart": "Umsatz einer Kategorie",
+                "info": "Bei Kategorien mit manueller Produktzuweisung werden auch die Unterkategorien einbezogen. Für Kategorien mit Zuweisung über eine dynamische Produktgruppe gilt dies derzeit nicht.\nBei der Berechnung des Umsatzes werden nur die Preise der Produkte berücksichtigt, nicht jedoch Rabattgutscheine oder Versandkosten."
+            },
+            "categoryCompare": {
+                "titleTree": "Umsatz nach Kategorien",
+                "titleChart": "Umsatz nach Kategorien"
+            },
+            "salesByAccountTypes": {
+                "titleTree": "Umsatz nach Besteller Typ",
+                "titleChart": "Umsatz nach Besteller Typ",
+                "guest": "Gastbesteller",
+                "nonguest": "Registriert",
+                "nameColumn": "Typ"
+            },
+			"conversionAll": {
+				"titleTree": "Conversion (täglich)",
+				"titleChart": "Conversion (täglich) *",
+				"visitorsColumn": "Besucher",
+				"conversionColumn": "Conversion Rate",
+				"conversionPercentColumn": "Conversion Rate %",
+				"description": "Bitte beachten: Besucher werden nur nach Saleschannel gefiltert. Bei den Bestellungen wirken alle eingestellten Filter. Diese sollten so gewählt werden, dass möglichst nur Bestellungen aus dem Shop berücksichtigt werden, nicht importierte Bestellungen, wie z.B. von Amazon. Diese würden die Conversion Rate verfälschen. Beim Link zu den zugehörigen Bestellungen wirkt der Nicht-Partnercode Filter nicht."
+			},
+			"conversionByMonth": {
+				"titleTree": "Conversion (monatlich)",
+				"titleChart": "Conversion (monatlich) *",
+				"visitorsColumn": "Besucher",
+				"conversionColumn": "Conversion Rate",
+				"conversionPercentColumn": "Conversion Rate %",
+				"description": "Bitte beachten: Besucher werden nur nach Saleschannel gefiltert. Bei den Bestellungen wirken alle eingestellten Filter. Diese sollten so gewählt werden, dass möglichst nur Bestellungen aus dem Shop berücksichtigt werden, nicht importierte Bestellungen, wie z.B. von Amazon. Diese würden die Conversion Rate verfälschen. Beim Link zu den zugehörigen Bestellungen wirkt der Nicht-Partnercode Filter nicht. Monate ohne Besucherdaten werden nicht angezeigt, z.B. wenn ältere Besucherdaten automatisch nach Plugin-Einstellung gelöscht werden."
+			},
+			"crossSelling": {
+				"name": "Produkt",
+				"viewed": "Anzahl",
+				"sales": "Anzahl",
+				"titleTree": "Cross Selling",
+				"headlineViews": "In einer Sitzung auch angesehen *",
+				"headlineSales": "In einer Bestellung auch gekauft *",
+				"crossSellings": "Cross-Sellings",
+				"description": "*) Keine Berücksichtigung der Filtereinstellungen",
+				"nolplugin": {
+					"swLink": "Zum Plugin im Shopware Store",
+					"nfxLink": "Plugin Infos bei coolbax.de",
+					"alert": "Für diese Statistik stehen leider keine Daten zur Verfügung. Die benötigten Daten kommen vom Coolbax Plugin 'Cross Selling / Zubehör Professionell'."
+				}
+			},
+            "searchTerms": {
+                "titleTree": "Beliebte Suchbegriffe",
+                "titleChart": "Beliebte Suchbegriffe",
+                "searchTermColumn": "Suchbegriff *",
+                "countColumn": "Anfragen",
+                "resultsColumn": "Ergebnisse",
+                "salesChannelNameColumn": "Saleschannel",
+				"description": "Falls es hier keine Daten gibt, könnte es folgende Ursachen haben:\n\n- Javascript Fehler im Frontend könnten verhindern, dass das JS zur Datenerfassung ausgeführt wird. Bitte Browser Konsole checken!\n- Der Twig Block base_body_script in der base.html.twig Datei wird von einem Plugin oder dem Theme überschrieben. In diesen Block hängt das Plugin für die Datenerfassung notwendigen Code ein."
+            },
+            "searchActivity": {
+                "titleTree": "Suchanfragen (täglich)",
+                "titleChart": "Suchanfragen (täglich) *",
+                "countColumn": "Anfragen",
+                "dateColumn": "Datum"
+            },
+			"salesByManufacturer": {
+				"titleTree": "Umsatz nach Hersteller",
+				"titleChart": "Umsatz nach Hersteller",
+				"nameColumn": "Hersteller",
+				"countColumn": "Verkaufte Artikel",
+				"sumColumn": "Umsatz"
+			},
+			"salesByDevice": {
+				"titleTree": "Umsatz nach Gerät",
+				"titleChart": "Umsatz nach Gerät*",
+				"nameColumn": "Gerät",
+				"countColumn": "Anzahl Bestellungen*",
+				"sumColumn": "Umsatz*"
+			},
+            "salesByOs": {
+                "titleTree": "Umsatz nach Betriebssystem",
+                "titleChart": "Umsatz nach Betriebssystem*",
+                "nameColumn": "Betriebssystem",
+                "countColumn": "Anzahl Bestellungen*",
+                "sumColumn": "Umsatz*"
+            },
+            "salesByBrowser": {
+                "titleTree": "Umsatz nach Browser",
+                "titleChart": "Umsatz nach Browser*",
+                "nameColumn": "Browser",
+                "countColumn": "Anzahl Bestellungen*",
+                "sumColumn": "Umsatz*"
+            },
+            "unfinishedOrders": {
+				"titleTree": "Abgebrochene Warenkörbe",
+				"titleChart": "Alle Abgebrochene Warenkörbe",
+				"dateColumn": "Datum",
+				"salesColumn": "Betrag",
+				"nameColumn": "Kunde",
+				"paymentColumn": "Zahlart",
+                "itemCountColumn": "Artikel",
+                "positionColumn": "Positionen",
+                "emailColumn": "Email",
+                "phoneColumn": "Telefon",
+                "salesChannelColumn": "Saleschannel",
+                "description": "Diese Statistik wertet die Daten der Shopware Datenbanktabelle 'cart' aus, wo Shopware die angefangenen Warenkörbe speichert. Diese Daten werden bei Kaufabschluss gelöscht oder von Shopware nach 90 Tagen. Berücksichtigt werden nur Daten von angemeldete Kunden. Es kann vorkommen, dass andere Plugins auch in diese Tabelle Daten schreiben, was diese Statistik verfälschen würde.\nBei Verwendung von Redis für die cart Tabelle können die Daten nicht ermittelt werden. Redis Unterstützung ist für ein zukünftiges Update geplant.",
+                "modal": {
+                    "title": "Artikel im Warenkorb",
+                    "labelColumn": "Label",
+                    "quantityColumn": "Anzahl",
+                    "unitPriceColumn": "Preis",
+                    "totalPriceColumn": "Gesamtpreis",
+                    "typeColumn": "Typ"
+                }
+			},
+            "unfinishedOrdersByPayment": {
+				"titleTree": "Abgebrochene Warenkörbe (Zahlungsart)",
+				"titleChart": "Abgebrochene Warenkörbe nach Zahlungsart",
+				"sumColumn": "Anzahl Warenkörbe",
+				"salesColumn": "Umsatz",
+				"nameColumn": "Zahlungsart"
+			},
+            "unfinishedOrdersByCart": {
+				"titleTree": "Abgebrochene Warenkörbe (täglich)",
+				"titleChart": "Abgebrochene Warenkörbe täglich",
+				"dateColumn": "Datum",
+				"countColumn": "Anzahl Warenkörbe",
+				"salesColumn": "Umsatz",
+				"avgColumn": "Ø Bestellwert",
+				"avgColumnExport": "Durchschnittlicher Bestellwert",
+                "itemCountColumn": "Artikelanzahl",
+                "positionColumn": "Positionen",
+                "avgItemCountColumn": "Ø Artikelanzahl"
+			},
+			"salesByProducts": {
+				"titleTree": "Umsatz nach Produkten",
+				"titleChart": "Umsatz nach Produkten",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+                "salesColumn": "Umsatz",
+				"sumColumn": "Anzahl Verkäufe",
+				"orderCount": "Anzahl Bestellungen",
+				"priceAV": "Ø Preis",
+				"info": "Anzahl Verkäufe gibt die Gesamtzahl der verkauften Einheiten des Produkts wieder. Bei Anzahl Bestellungen sind die Bestellungen gemeint, die dieses Produkt enthalten. Lager zeigt nichts an, wenn Varianten zusammengefasst sind bei den dann angezeigten Parent Produkten."
+			},
+			"salesByProductsPwreturn": {
+				"titleTree": "Anzahl Produktverkäufe mit Retouren",
+				"titleChart": "Anzahl Produktverkäufe mit Retouren",
+				"returnSumColumn": "Anzahl Retour",
+				"newSumColumn": "Verkäufe nach Retour"
+			},
+			"pickwareReturns": {
+				"titleTree": "Produkt Retouren",
+				"titleChart": "Produkt Retouren",
+				"returnSumColumn": "Anzahl Retour",
+				"partColumn": "Anteil"
+			},
+			"variantsCompare": {
+				"titleTree": "Varianten Umsatz",
+				"titleChart": "Varianten Umsatz",
+				"productCountColumn": "Anzahl Produkte",
+				"nameColumn": "Eigenschaft",
+				"salesColumn": "Umsatz",
+				"sumColumn": "Anzahl Verkäufe"
+			},
+			"countByProducts": {
+				"titleTree": "Produkte nach Verkäufen",
+				"titleChart": "Produkte nach Verkäufen",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Anzahl Verkäufe"
+			},
+            "productByOrders": {
+				"titleTree": "Anzahl Bestellungen mit Produkt",
+				"titleChart": "Anzahl Bestellungen mit Produkt",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Anzahl Bestellungen"
+			},
+            "productsInventory": {
+                "titleTree": "Bestand",
+                "titleChart": "Produkte Bestand",
+                "numberColumn": "Produktnummer",
+                "nameColumn": "Produktname",
+                "sumColumn": "Lagerbestand",
+                "ppriceColumn": "Einkaufspreis",
+                "worthColumn": "Bestandswert"
+            },
+            "productsProfit": {
+                "titleTree": "Ertrag",
+                "titleChart": "Produktertrag*",
+                "numberColumn": "Produktnummer",
+                "nameColumn": "Produktname",
+                "sumColumn": "Verkäufe",
+                "ppriceColumn": "Einkaufspreis",
+                "cpriceColumn": "Verkaufspreis",
+                "profitColumn": "Produktertrag*",
+                "markUp": "Handelsspanne",
+				"hideNoSales": "ohne Umsatz nicht zeigen"
+            },
+			"productStream": {
+				"titleTree": "Umsatz nach Produkten in Produktstream",
+				"titleChart": "Umsatz nach Produkten in Produktstream",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"salesColumn": "Umsatz",
+				"sumColumn": "Anzahl Verkäufe"
+			},
+			"salesByProductsFilter": {
+				"titleTree": "Umsatz nach Produkten mit Filter",
+				"titleChart": "Umsatz nach Produkten mit Filter",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"salesColumn": "Umsatz",
+				"sumColumn": "Anzahl Verkäufe"
+			},
+            "productLowInstock": {
+				"titleTree": "Mit wenig Lagerbestand",
+				"titleChart": "Produkte mit wenig Lagerbestand",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Lagerbestand"
+			},
+            "productHighInstock": {
+				"titleTree": "Mit hohem Lagerbestand",
+				"titleChart": "Produkte mit hohem Lagerbestand",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Lagerbestand"
+			},
+            "productSoonOutstock": {
+				"titleTree": "Mit auslaufendem Lagerbestand",
+				"titleChart": "Produkte mit auslaufendem Lagerbestand",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Tage bis Produkt ausverkauft",
+                "stockColumn": "Lagerbestand",
+                "soldColumn": "Verkauft (Anzahl)*",
+                "description": "Basierend auf der Plugineinstellung 'Anzahl der Tage zur Berechnung von Durchschnittsverkäufen': "
+			},
+            "productInactiveWithInstock": {
+				"titleTree": "Inaktiv mit Lagerbestand",
+				"titleChart": "Inaktive Produkte mit Lagerbestand",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Lagerbestand"
+			},
+			"salesByShippingMethod": {
+				"titleTree": "Umsatz nach Versandart",
+				"titleChart": "Umsatz nach Versandart",
+				"nameColumn": "Versandart",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByCountry": {
+				"titleTree": "Umsatz nach Lieferland",
+				"titleChart": "Umsatz nach Lieferland",
+				"nameColumn": "Land",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+            "salesByBillingCountry": {
+                "titleTree": "Umsatz nach Rechnungsland",
+                "titleChart": "Umsatz nach Rechnungsland",
+                "nameColumn": "Land",
+                "sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+            },
+			"salesByBillingCountryInvoice": {
+				"titleTree": "Umsatz nach Rechnungsland",
+				"titleChart": "Umsatz nach Rechnungsland (mit Rechnungsdatum)"
+			},
+			"salesByLanguage": {
+				"titleTree": "Umsatz nach Sprache",
+				"titleChart": "Umsatz nach Sprache",
+				"nameColumn": "Sprache",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByCurrency": {
+				"titleTree": "Umsatz nach Währung",
+				"titleChart": "Umsatz nach Währung",
+				"nameColumn": "Währung",
+				"sumColumn": "Umsatz",
+				"countColumn": "Anzahl Bestellungen"
+			},
+			"orderCountAll": {
+				"titleTree": "Erstbestellungen (täglich)",
+				"titleChart": "Anzahl Bestellungen täglich",
+				"dateColumn": "Datum",
+				"countColumn": "Anzahl aller Bestellungen",
+                "firstTimeCountColumn": "Anzahl Erstbestellungen",
+                "countChart": "Alle Bestellungen",
+                "firstTimeCountChart": "Erstbestellungen",
+				"returningCountColumn": "Wiederkehrender Kunde",
+				"returningPart": "Anteil",
+				"firstTimePart": "Anteil"
+			},
+			"orderSales": {
+				"titleTree": "Bestellungen (täglich)",
+				"titleChart": "Umsatz täglich",
+				"dateColumn": "Datum",
+				"sumColumn": "Umsatz",
+				"countColumn": "Anzahl Bestellungen"
+			},
+			"salesAllInvoice": {
+				"titleTree": "Bestellungen (täglich)",
+				"titleChart": "Bestellungen/Umsatz (netto) täglich nach Rechnungsdatum",
+                "quantityColumn": "Anzahl Artikel",
+                "sumNetAverageColumn": "Ø Umsatz netto",
+                "quantityAverageColumn": "Ø Anzahl Artikel"
+			},
+            "salesAllPwreturn": {
+                "titleTree": "Bestellungen mit Refunds (täglich)",
+                "titleChart": "Umsatz (brutto) täglich nach Pickware Refunds/Retouren",
+				"newGrossColumn": "Umsatz brutto nach Refund",
+				"newQuantityColumn": "Artikel nach Retour",
+				"refundColumn": "Refund (brutto)",
+				"returnColumn": "Anzahl Artikel Retour"
+            },
+			"orderSalesMonthly": {
+				"titleTree": "Bestellungen (monatlich)",
+				"titleChart": "Umsatz monatlich",
+				"dateColumn": "Datum",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByMonthPwreturn": {
+				"titleTree": "Bestellungen mit Refunds (monatlich)",
+				"titleChart": "Umsatz (brutto) monatlich nach Pickware Refunds/Retouren"
+			},
+			"salesByMonthInvoice": {
+				"titleTree": "Bestellungen (monatlich)",
+				"titleChart": "Bestellungen/Umsatz (netto) monatlich nach Rechnungsdatum"
+			},
+            "salesByQuarter": {
+                "titleTree": "Bestellungen (Quartal)",
+                "titleChart": "Bestellungen/Umsatz (netto) quartalsweise"
+            },
+            "salesByQuarterInvoice": {
+                "titleTree": "Bestellungen (Quartal)",
+                "titleChart": "Bestellungen/Umsatz (netto) quartalsweise nach Rechnungsdatum",
+                "dateColumn": "Quartal"
+            },
+			"salesByQuarterPwreturn": {
+				"titleTree": "Bestellungen mit Refunds (Quartal)",
+				"titleChart": "Umsatz (brutto) quartalsweise nach Pickware Refunds/Retouren"
+			},
+            "canceledOrdersByMonth": {
+				"titleTree": "Stornierungen (monatlich)",
+				"titleChart": "Umsatz Stornierungen monatlich",
+				"dateColumn": "Datum",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Stornierungen"
+			},
+			"salesByPaymentMethod": {
+				"titleTree": "Umsatz nach Zahlungsart",
+				"titleChart": "Umsatz nach Zahlungsart",
+				"nameColumn": "Zahlungsart",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesBySaleschannel": {
+				"titleTree": "Umsatz nach Verkaufskanal",
+				"titleChart": "Umsatz nach Verkaufskanal",
+				"nameColumn": "Verkaufskanal",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByAffiliate": {
+				"titleTree": "Umsatz nach Partner",
+				"titleChart": "Umsatz nach Partner",
+				"nameColumn": "Partner Code",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen",
+				"nfxLink": "Mehr Infos zu den Coolbax Bestellimport Erweiterungen",
+				"description": "Diese Statistik wertet die Spalte affiliate_code der Shopware Datenbanktabelle order aus. Wenn Sie z.B. Bestellungen von Marktplätzen, wie Amazon, Ebay, Otto, Kaufland oder Etsy mit Hilfe der entsprechenen Coolbax Bestellimport Erweiterungen importieren, wird dort der Name des Marktplatzes eingetragen und Sie können damit die Umatzdaten der Marktplätze auswerten."
+			},
+			"salesByCampaign": {
+				"titleTree": "Umsatz nach Kampagne",
+				"titleChart": "Umsatz nach Kampagne",
+				"nameColumn": "Kampagne Code",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByCustomergroups": {
+				"titleTree": "Umsatz nach Kundengruppe",
+				"titleChart": "Umsatz nach Kundengruppe",
+				"nameColumn": "Kundengruppe",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByWeekdays": {
+				"titleTree": "Bestellungen nach Wochentag",
+				"titleChart": "Umsatz nach Wochentag",
+				"nameColumn": "Wochentag",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"salesByTime": {
+				"titleTree": "Bestellungen nach Uhrzeit",
+				"titleChart": "Umsatz nach Uhrzeit",
+				"nameColumn": "Uhrzeit",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen"
+			},
+			"customerAge": {
+				"titleTree": "Altersverteilung der Kunden",
+				"titleChart": "Verteilung der Kunden nach Alter",
+				"ageColumn": "Alter",
+				"percentColumn": "Prozentanteil",
+				"countColumn": "Anzahl Kunden"
+			},
+            "salesByCustomer": {
+				"titleTree": "Umsatzstärkste Kunden",
+				"titleChart": "Umsatzstärkste Kunden",
+                "numberColumn": "Kundennummer",
+				"nameColumn": "Kunde",
+				"sumColumn": "Umsatz",
+                "countColumn": "Anzahl Bestellungen",
+                "emailColumn": "Email",
+                "lastLoginColumn": "Letztes Login"
+			},
+            "newCustomersByTime": {
+				"titleTree": "Neukundenanmeldungen",
+				"titleChart": "Neukundenanmeldungen monatlich",
+				"dateColumn": "Monat",
+				"sumColumn": "Anzahl aller Neukunden",
+                "payingColumn": "Davon haben bereits bestellt",
+                "sumChart": "Alle Neukunden",
+                "payingChart": "Neukunden mit Bestellungen"
+			},
+            "ordersByStatus": {
+				"titleTree": "Bestellungen nach Bestellstatus",
+				"titleChart": "Bestellungen nach Bestellstatus",
+				"nameColumn": "Bestellstatus",
+				"sumColumn": "Anzahl Bestellungen",
+            "salesColumn": "Umsatz"
+			},
+			"ordersByTransactionStatus": {
+				"titleTree": "Bestellungen nach Zahlungsstatus",
+				"titleChart": "Bestellungen nach Zahlungsstatus",
+				"nameColumn": "Zahlungsstatus",
+				"sumColumn": "Anzahl Bestellungen",
+                "salesColumn": "Umsatz"
+			},
+			"ordersByDeliveryStatus": {
+				"titleTree": "Bestellungen nach Lieferstatus",
+				"titleChart": "Bestellungen nach Lieferstatus",
+				"nameColumn": "Lieferstatus",
+				"sumColumn": "Anzahl Bestellungen",
+                "salesColumn": "Umsatz"
+			},
+            "salesByPromotion": {
+                "titleTree": "Rabatte mit Aktionscode/Gutscheine",
+				"titleChart": "Umsatz nach Gutschein",
+				"titleGridCode": "Gutscheine - gruppiert nach Aktionscode",
+				"titleGridPromotion": "Gutscheine - gruppiert nach Rabattaktion",
+				"nameColumn": "Rabattname",
+                "codeColumn": "Aktionscode",
+				"discountColumn": "Rabattwert",
+                "countColumn": "Eingelöst",
+                "avgColumn": "Ø Bestellwert",
+				"avgColumnExport": "Durchschnittlicher Bestellwert",
+                "sumColumn": "Umsatz"
+            },
+            "salesByPromotionOthers": {
+                "titleTree": "Sonstige Rabatte",
+				"titleChart": "Umsatz nach Rabatt",
+				"nameColumn": "Rabattname",
+				"discountColumn": "Rabattwert",
+                "countColumn": "Angewendet",
+                "avgColumn": "Ø Bestellwert",
+				"avgColumnExport": "Durchschnittlicher Bestellwert",
+                "sumColumn": "Umsatz"
+            },
+			"chartSelection": {
+				"selectLabel": "Chart Typ",
+				"placeholder": "Chart ausblenden",
+				"bar": "Bar Chart",
+				"pie": "Pie Chart",
+				"donut": "Donut Chart"
+			},
+            "chartDataSelection": {
+				"selectLabel": "Chart Daten",
+				"placeholder": "",
+				"sales": "Umsatz Chart",
+				"count": "Anzahl Verkäufe Chart"
+			},
+			"productImpressions": {
+				"titleTree": "Produktimpressionen",
+				"titleChart": "Alle Produktimpressionen",
+				"numberColumn": "Produktnummer",
+				"nameColumn": "Produktname",
+				"sumColumn": "Alle Impressionen",
+                "sum1Column": "Impressionen (angemeldet)",
+                "sum2Column": "Impressionen (nicht angemeldet)",
+				"dateColumn": "Datum",
+				"total": "Summe aller Produktimpressionen:",
+				"description": "Ausgewertet werden sämtliche angeklickten Produkte (keine Auswertung anhand der Besucher). Kundengruppenfilter werden bei den Impressionen der angemeldeten Besucher berücksichtigt, damit auch bei allen, aber nicht bei nicht angemeldeten."
+			},
+            "lexiconImpressions": {
+                "titleTree": "Lexikon/Glossar Impressionen",
+                "titleChart": "Lexikon/Glossar Impressionen",
+                "countColumn": "Impressionen",
+                "nameColumn": "Titel",
+                "total": "Summe aller Lexikon/Glossar Impressionen : ",
+				"description": "Falls es trotz aktivem Coolbax Lexikon Plugin hier keine Daten gibt, könnte es folgende Ursachen haben:\n\n- Javascript Fehler im Frontend könnten verhindern, dass das JS zur Datenerfassung ausgeführt wird. Bitte Browser Konsole checken!\n- Der Twig Block base_body_script in der base.html.twig Datei wird von einem Plugin oder dem Theme überschrieben. In diesen Block hängt das Plugin für die Datenerfassung notwendigen Code ein.",
+				"nolplugin": {
+					"swLink": "Zum Plugin im Shopware Store",
+					"nfxLink": "Plugin Infos bei coolbax.de",
+					"alert": "Für diese Statistik stehen leider keine Daten zur Verfügung. Die benötigten Daten kommen vom Coolbax Plugin 'Lexikon / Glossar Professionell'."
+				}
+            },
+            "singleProduct": {
+                "titleChart": "Verkäufe",
+                "titleClicksChart": "Klicks",
+                "titleTree": "Einzel-Produkt-Statistiken",
+                "dateColumn": "Datum",
+                "countColumn": "Verkäufe",
+                "clicksColumn": "Klicks",
+                "productSelect": {
+                    "label": "Produkt auswählen",
+                    "placeholder": "Kein Produkt ausgewählt"
+                },
+                "compareSelect": {
+                    "label": "Produkte zum Vergleich auswählen",
+                    "placeholder": "Keine Produkte ausgewählt"
+                }
+            },
+			"visitors": {
+				"titleTree": "Besucher",
+				"titleChart": "Besucher",
+				"desktopColumn": "Desktop Besucher",
+				"mobileColumn": "Mobile Besucher",
+				"tabletColumn": "Tablet Besucher",
+				"dateColumn": "Datum",
+				"totalVisitors": "Gesamt Besucher",
+				"description": "Statistik über die einzigartigen Besucher im Shop: Alle Besucher werden gezählt, egal ob angemeldet oder nicht. Daher wird der Filter für Kundengruppen hier auch nicht berücksichtigt. Ein wiederkehrender Besucher wird als neu gezählt nach Ablauf der in den Plugin-Einstellungen eingetragenen Zeit (Standard 12 Stunden). Per Botfilter wird versucht, nur echte Besucher zu erfassen. Funktioniert ohne Cookies.\n\nFalls es hier keine Daten gibt, könnte es folgende Ursachen haben:\n- Javascript Fehler im Frontend könnten verhindern, dass das JS zur Besuchererfassung ausgeführt wird. Bitte Browser Konsole checken!\n- Der Twig Block base_body_script in der base.html.twig Datei wird von einem Plugin oder dem Theme überschrieben. In diesen Block hängt das Plugin für die Besuchererfassung notwendigen Code ein."
+			},
+			"visitorImpressions": {
+				"titleTree": "Seitenimpressionen",
+				"titleChart": "Seitenimpressionen",
+				"desktopColumn": "Desktop Impressionen",
+				"mobileColumn": "Mobile Impressionen",
+				"tabletColumn": "Tablet Impressionen",
+				"dateColumn": "Datum",
+				"totalVisitors": "Gesamt Impressionen",
+				"description": "Ausgewertet werden sämtliche angeklickten Seiten (keine Auswertung anhand der Besucher). Kundengruppen werden auch nicht berücksichtigt, da nicht auf Kunden Login geprüft wird."
+			},
+            "customerOnline": {
+                "titleTree": "Derzeit im Shop",
+                "timeColumn": "Zeitraum",
+                "visitorsColumn": "Besucher im Shop",
+                "loginsColumn": "Kunden Logins",
+                "4h": "In den letzen 4 Stunden",
+                "2h": "In den letzen 2 Stunden",
+                "1h": "In der letzen Stunde",
+                "30min": "In den letzen 30 Minuten",
+                "10min": "In den letzen 10 Minuten",
+                "description": "Wenn hier keine Daten erscheinen, könnte das folgende Gründe haben:\n - Die globale PHP Variable session.save_path ist nicht korrekt gesetzt.\n - Sie verwenden Redis für die Sessions, Redis Unterstützung ist für ein künftiges Update geplant."
+            },
+			"referer": {
+				"titleTree": "Besucher Zugriffsquellen",
+				"titleChart": "Besucher Zugriffsquellen",
+				"deviceTypeColumn": "Device",
+				"countedColumn": "Gesamt",
+				"dateColumn": "Datum",
+				"refererColumn": "Zugriffsquellen",
+				"description": "Ausgewertet werden neue Besucher, die einen Referrer Eintrag im Header des Request haben. Alternativ kann der Referrer auch über die URL übertragen werden, z.B. bei Links zum Shop in Blog Einträgen. Dann bitte folgendes an die URL anhängen: ?referer=Name. Name steht dabei für die Kennung des Referrers."
+			},
+			"categoryImpressions": {
+				"titleTree": "Kategorieimpressionen",
+				"titleChart": "Alle Kategorieimpressionen",
+				"nameColumn": "Kategoriename",
+                "sumColumn": "Alle Impressionen",
+                "sum1Column": "Impressionen (angemeldet)",
+                "sum2Column": "Impressionen (nicht angemeldet)",
+				"dateColumn": "Datum",
+				"total": "Summe aller Kategorieimpressionen:",
+				"description": "Ausgewertet werden sämtliche angeklickten Kategorien (keine Auswertung anhand der Besucher). Kundengruppenfilter werden bei den Impressionen der angemeldeten Besucher berücksichtigt, damit auch bei allen, aber nicht bei nicht angemeldeten."
+			},
+			"manufacturerImpressions": {
+				"titleTree": "Herstellerimpressionen",
+				"titleChart": "Alle Herstellerimpressionen",
+				"nameColumn": "Herstellername",
+                "sumColumn": "Alle Impressionen",
+                "sum1Column": "Impressionen (angemeldet)",
+                "sum2Column": "Impressionen (nicht angemeldet)",
+				"dateColumn": "Datum",
+				"total": "Summe aller Herstellerimpressionen:",
+				"description": "Ausgewertet werden die Hersteller von sämtlichen angeklickten Produkten (keine Auswertung anhand der Besucher). Kundengruppenfilter werden bei den Impressionen der angemeldeten Besucher berücksichtigt, damit auch bei allen, aber nicht bei nicht angemeldeten."
+			},
+			"customerBySalutation": {
+				"titleTree": "Kunden nach Anrede",
+				"titleChart": "Kunden nach gewählter Anrede",
+				"nameColumn": "Anrede",
+				"countColumn": "Anzahl Kunden",
+				"percentColumn": "Anteil"
+			},
+			"salesBySalutation": {
+				"titleTree": "Umsatz nach Anrede",
+				"titleChart": "Umsatz nach gewählter Anrede",
+				"nameColumn": "Anrede",
+				"countColumn": "Anzahl Bestellungen",
+				"sumColumn": "Umsatz"
+			},
+			"salesByTaxrate": {
+				"titleTree": "Umsatz nach Steuerrate",
+				"titleChart": "Umsatz nach Steuerrate *",
+				"taxRateColumn": "Steuerrate",
+				"taxColumn": "Steuer *",
+				"sumColumn": "Umsatz *",
+				"description": "*) Das Statistik Plugin ist kein Ersatz für eine Buchhaltung. Die Exakheit aller Daten kann nicht gerantiert werden!"
+			}
+		},
+		"data": {
+			"others": "alle weiteren"
+		},
+		"weekdays": {
+			"monday": "Montag",
+			"tuesday": "Dienstag",
+			"wednesday": "Mittwoch",
+			"thursday": "Donnerstag",
+			"friday": "Freitag",
+			"saturday": "Sonnabend",
+			"sunday": "Sonntag"
+		}
+    },
+    "sw-privileges": {
+        "permissions": {
+            "nfxAnalytics": {
+                "label": "Coolbax Statistik"
+            },
+			"nfxAnalyticsDashboard": {
+				"label": "Coolbax Dashboard Statistik"
+			}
+        }
+    },
+
+	"sw-order": {
+		"filters": {
+			"promotionCodeFilter": {
+				"label": "Gutschein-Code",
+				"placeholder": "Gutschein Code auswählen"
+			}
+		}
+	}
+}

@@ -1,0 +1,15 @@
+.cbax-analytics-display-options-container {
+    .cbax-analytics-more-filters {
+        padding: 0 15px 15px 15px;
+
+        .cbax-analytics-more-filters-resetall-wrap {
+            display: flex;
+            justify-content: flex-end;
+
+            .cbax-analytics-more-filters-resetall {
+                margin: 0 15px 15px 0;
+                font-size: 14px;
+            }
+        }
+    }
+}

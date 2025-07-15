@@ -1,0 +1,131 @@
+// Theme Switcher Styles
+// ====================
+
+.nfx-theme-switcher {
+  position: fixed;
+  bottom: $spacing-unit * 3;
+  right: $spacing-unit * 3;
+  z-index: $z-index-fixed;
+  
+  &__button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition-base;
+    box-shadow: $shadow-lg;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  &__menu {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background: var(--nfx-bg-card);
+    border-radius: $border-radius-base;
+    padding: $spacing-unit;
+    box-shadow: $shadow-xl;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: $transition-base;
+    
+    &.is--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+  
+  &__option {
+    display: flex;
+    align-items: center;
+    padding: $spacing-unit * 1.5 $spacing-unit * 2;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: $transition-fast;
+    min-width: 200px;
+    
+    &:hover {
+      background: var(--nfx-bg-hover);
+    }
+    
+    &.is--active {
+      background: var(--nfx-primary);
+      color: white;
+    }
+  }
+  
+  &__preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: $spacing-unit * 1.5;
+    position: relative;
+    overflow: hidden;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 100%;
+    }
+    
+    &::before {
+      left: 0;
+    }
+    
+    &::after {
+      right: 0;
+    }
+    
+    &--dark-violet {
+      &::before {
+        background: #6366F1;
+      }
+      &::after {
+        background: #8B5CF6;
+      }
+    }
+    
+    &--light-apple {
+      &::before {
+        background: #FF9500;
+      }
+      &::after {
+        background: #FFCC00;
+      }
+    }
+    
+    &--pastel {
+      &::before {
+        background: #B794F4;
+      }
+      &::after {
+        background: #FBB6CE;
+      }
+    }
+    
+    &--retro-90s {
+      &::before {
+        background: #FF006E;
+      }
+      &::after {
+        background: #00FFFF;
+      }
+    }
+  }
+}

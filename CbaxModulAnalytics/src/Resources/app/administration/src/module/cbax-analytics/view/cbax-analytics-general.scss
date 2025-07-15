@@ -1,0 +1,67 @@
+@import "~scss/variables";
+
+.cbax-analytics-content-card-grid .sw-data-grid__wrapper th .sw-data-grid__cell-content {
+    white-space: normal;
+}
+
+.cbax-analytics-grid-label {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 5px;
+    padding: 14px;
+}
+
+.cbax-analytics-empty-state-wrapper {
+    position: relative;
+    min-height: 220px;
+}
+
+.cbax-analytics-charttype-select {
+    width: 25%;
+    margin-right: 50px;
+}
+
+.cbax-analytics-content-card-grid {
+    .sw-data-grid {
+        .sw-data-grid__wrapper {
+            .sw-data-grid__cell-content {
+                padding: 14px;
+            }
+        }
+
+        &.is--compact {
+            .sw-data-grid__wrapper {
+                .sw-data-grid__cell-content {
+                    padding: 10px 14px;
+                }
+            }
+        }
+    }
+}
+
+.cbax-analytics-description {
+    white-space: pre-line;
+}
+
+.cbax-analytics-grid-sums {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .cbax-analytics-grid-sum {
+        margin-right: 22px;
+        margin-bottom: 12px;
+        div {
+            margin-right: 3px;
+        }
+    }
+}
+
+.cbax-analytics-charttype-select-container {
+    display: flex;
+    align-items: center;
+}
+
+.cbax-analytics-content-card-noplugin-alert {
+    margin-bottom: 25px;
+}

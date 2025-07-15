@@ -1,0 +1,105 @@
+// Inline Theme Variables - ensures immediate styling
+// ===================================================
+
+// Force theme variables to be available immediately
+:root,
+body,
+.nfx-analytics {
+  // Light Apple Theme (default)
+  --nfx-primary: #FF9500;
+  --nfx-primary-light: #FFAA33;
+  --nfx-primary-dark: #E68900;
+  
+  --nfx-bg-primary: #FFFFFF;
+  --nfx-bg-secondary: #F8F9FA;
+  --nfx-bg-tertiary: #F3F4F6;
+  --nfx-bg-card: #FFFFFF;
+  --nfx-bg-hover: #F9FAFB;
+  
+  --nfx-text-primary: #1F2937;
+  --nfx-text-secondary: #4B5563;
+  --nfx-text-tertiary: #6B7280;
+  --nfx-text-muted: #9CA3AF;
+  
+  --nfx-border: #E5E7EB;
+  --nfx-border-light: #F3F4F6;
+  --nfx-shadow: rgba(0, 0, 0, 0.1);
+  
+  --nfx-gradient-primary: linear-gradient(135deg, #FFE4B5 0%, #FFD700 100%);
+  --nfx-gradient-accent: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+}
+
+// Dark Violet Theme
+.theme-dark-violet {
+  --nfx-primary: #6366F1;
+  --nfx-primary-light: #818CF8;
+  --nfx-primary-dark: #4F46E5;
+  
+  --nfx-bg-primary: #0F0F1E;
+  --nfx-bg-secondary: #1A1A2E;
+  --nfx-bg-tertiary: #252542;
+  --nfx-bg-card: #1E1E3F;
+  --nfx-bg-hover: #2A2A4E;
+  
+  --nfx-text-primary: #FFFFFF;
+  --nfx-text-secondary: #B8BCC8;
+  --nfx-text-tertiary: #6B7280;
+  --nfx-text-muted: #4B5563;
+  
+  --nfx-border: rgba(255, 255, 255, 0.1);
+  --nfx-border-light: rgba(255, 255, 255, 0.05);
+  --nfx-shadow: rgba(0, 0, 0, 0.5);
+  
+  --nfx-gradient-primary: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  --nfx-gradient-accent: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+}
+
+// Pastel Theme
+.theme-pastel {
+  --nfx-primary: #B794F4;
+  --nfx-primary-light: #D6BCFA;
+  --nfx-primary-dark: #9F7AEA;
+  
+  --nfx-bg-primary: #FDFEFF;
+  --nfx-bg-secondary: #F7FAFC;
+  --nfx-bg-tertiary: #EDF2F7;
+  --nfx-bg-card: #FFFFFF;
+  --nfx-bg-hover: #F7FAFC;
+  
+  --nfx-text-primary: #2D3748;
+  --nfx-text-secondary: #4A5568;
+  --nfx-text-tertiary: #718096;
+  --nfx-text-muted: #A0AEC0;
+  
+  --nfx-border: #E8E8FB;
+  --nfx-border-light: #F4F4FD;
+  --nfx-shadow: rgba(185, 148, 244, 0.1);
+  
+  --nfx-gradient-primary: linear-gradient(135deg, #E9D8FD 0%, #D6BCFA 100%);
+  --nfx-gradient-accent: linear-gradient(135deg, #FED7E2 0%, #FBB6CE 100%);
+}
+
+// 90s Retro Theme
+.theme-retro-90s {
+  --nfx-primary: #FF006E;
+  --nfx-primary-light: #FF4081;
+  --nfx-primary-dark: #CC0058;
+  
+  --nfx-bg-primary: #0A0E27;
+  --nfx-bg-secondary: #151932;
+  --nfx-bg-tertiary: #1F2348;
+  --nfx-bg-card: #2A2E5E;
+  --nfx-bg-hover: #353975;
+  
+  --nfx-text-primary: #FFFFFF;
+  --nfx-text-secondary: #FB37FF;
+  --nfx-text-tertiary: #00FFFF;
+  --nfx-text-muted: #8B8B8B;
+  
+  --nfx-border: #FB37FF;
+  --nfx-border-light: rgba(251, 55, 255, 0.3);
+  --nfx-shadow: rgba(251, 55, 255, 0.5);
+  
+  --nfx-gradient-primary: linear-gradient(135deg, #FF006E 0%, #FB37FF 100%);
+  --nfx-gradient-accent: linear-gradient(135deg, #00FFFF 0%, #FB37FF 100%);
+}

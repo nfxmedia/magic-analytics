@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  shopware:
+    image: dockware/dev:6.6.10.5
+    container_name: nfx-magic-analytics-shop
+    ports:
+      - "80:80"
+      - "443:443"
+      - "3306:3306"
+      - "22:22"
+      - "8888:8888"
+      - "9999:9999"
+    volumes:
+      - ./NfxMagicAnalytics:/var/www/html/custom/plugins/NfxMagicAnalytics
+    environment:
+      - SHOPWARE_VERSION=6.6.10.5
+      - PHP_VERSION=8.2
+    networks:
+      - shopware-network
+
+networks:
+  shopware-network:
+    driver: bridge

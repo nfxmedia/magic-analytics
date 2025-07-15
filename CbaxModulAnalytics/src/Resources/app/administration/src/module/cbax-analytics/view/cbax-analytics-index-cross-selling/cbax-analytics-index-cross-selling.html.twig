@@ -1,0 +1,89 @@
+{% block cbax_analytics_cross_selling %}
+    <div>
+
+        {% block cbax_analytics_cross_selling_noplugin %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-noplugin cbax-analytics-cross-selling-noplugin"
+                     v-if="noPlugin"
+                     :isLoading="isLoading">
+                <sw-alert
+                    :appearance="'notification'"
+                    :showIcon="false"
+                    :variant="'info'"
+                >
+                    <div class="cbax-analytics-content-card-noplugin-alert">
+                        {{  $tc('cbax-analytics.view.crossSelling.nolplugin.alert') }}
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://store.shopware.com/cbax670444287112/cross-selling/zubehoer-professionell-pro.html'">
+                            {{  $tc('cbax-analytics.view.crossSelling.nolplugin.swLink') }}
+                        </sw-external-link>
+
+                    </div>
+                    <div>
+                        <sw-external-link :href="'https://www.coolbax.de/shopware-plugins/storefront/89/cross-selling/zubehoer-professionall-pro'">
+                            {{  $tc('cbax-analytics.view.crossSelling.nolplugin.cbaxLink') }}
+                        </sw-external-link>
+                    </div>
+                </sw-alert>
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_cross_selling_head %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-cross-selling-head" :isLoading="isLoading">
+                {% block cbax_analytics_cross_selling_select %}
+                    <sw-entity-single-select class="cbax-analytics-cross-selling-select"
+                         :label="$tc('cbax-analytics.view.singleProduct.productSelect.label')"
+                         :placeholder="$tc('cbax-analytics.view.singleProduct.productSelect.placeholder')"
+                         :labelProperty="labelProperty"
+                         valueProperty="id"
+                         :error="errors.productId"
+                         entity="product"
+                         v-model:value="productId"
+                         @update:value="onChangeProductSelectField">
+                    </sw-entity-single-select>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_variants_compare_content_empty %}
+            <sw-empty-state v-if="productId == '' || !productId" :title="$tc('cbax-analytics.index.emptyProductHeadline')"></sw-empty-state>
+        {% endblock %}
+
+        {% block cbax_analytics_cross_selling_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-cross-selling-grids"
+                     v-if="productId != ''"
+                     :isLoading="isLoading">
+
+                {% block cbax_analytics_cross_selling_grid_data %}
+                    <h2 class="cbax-analytics-cross-selling-productname">
+                        {{ productName }}
+                    </h2>
+                    <div class="cbax-analytics-cross-selling-double-grid-wrapper">
+                        <cbax-grid-viewed :data="alsoViewed">
+                        </cbax-grid-viewed>
+                        <cbax-grid-bought :data="alsoBought">
+                        </cbax-grid-bought>
+                    </div>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block cbax_analytics_cross_selling_help %}
+                <sw-alert
+                    v-if="!displayOptions.dashboard"
+                    :appearance="'notification'"
+                    :showIcon="false"
+                    :closable="false"
+                    :variant="'neutral'"
+                    :title="$tc('cbax-analytics.general.help')"
+                >
+                    <div class="cbax-analytics-description">
+                        {{ $tc('cbax-analytics.view.crossSelling.description') }}
+                    </div>
+                </sw-alert>
+            {% endblock %}
+
+        {% endblock %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,204 @@
+// Magic Analytics Theme Definitions
+// =================================
+
+// Theme 1: Dark/Violet (Based on first sample)
+$theme-dark-violet: (
+  // Primary colors
+  primary: #6366F1,
+  primary-light: #818CF8,
+  primary-dark: #4F46E5,
+  
+  // Background colors
+  bg-primary: #0F0F1E,
+  bg-secondary: #1A1A2E,
+  bg-tertiary: #252542,
+  bg-card: #1E1E3F,
+  bg-hover: #2A2A4E,
+  
+  // Text colors
+  text-primary: #FFFFFF,
+  text-secondary: #B8BCC8,
+  text-tertiary: #6B7280,
+  text-muted: #4B5563,
+  
+  // Accent colors
+  accent-purple: #8B5CF6,
+  accent-pink: #EC4899,
+  accent-blue: #3B82F6,
+  accent-green: #10B981,
+  accent-orange: #F59E0B,
+  accent-red: #EF4444,
+  
+  // UI colors
+  border: rgba(255, 255, 255, 0.1),
+  border-light: rgba(255, 255, 255, 0.05),
+  shadow: rgba(0, 0, 0, 0.5),
+  
+  // Chart colors
+  chart-1: #8B5CF6,
+  chart-2: #3B82F6,
+  chart-3: #10B981,
+  chart-4: #F59E0B,
+  chart-5: #EF4444,
+  chart-6: #EC4899,
+  
+  // Gradients
+  gradient-primary: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%),
+  gradient-accent: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%),
+  gradient-bg: radial-gradient(circle at top right, #2A2A4E 0%, #0F0F1E 100%)
+);
+
+// Theme 2: Light Apple Style (Based on second sample)
+$theme-light-apple: (
+  // Primary colors
+  primary: #FF9500,
+  primary-light: #FFAA33,
+  primary-dark: #E68900,
+  
+  // Background colors
+  bg-primary: #FFFFFF,
+  bg-secondary: #F8F9FA,
+  bg-tertiary: #F3F4F6,
+  bg-card: #FFFFFF,
+  bg-hover: #F9FAFB,
+  
+  // Text colors
+  text-primary: #1F2937,
+  text-secondary: #4B5563,
+  text-tertiary: #6B7280,
+  text-muted: #9CA3AF,
+  
+  // Accent colors
+  accent-orange: #FF9500,
+  accent-yellow: #FFCC00,
+  accent-green: #34C759,
+  accent-blue: #007AFF,
+  accent-purple: #AF52DE,
+  accent-red: #FF3B30,
+  
+  // UI colors
+  border: #E5E7EB,
+  border-light: #F3F4F6,
+  shadow: rgba(0, 0, 0, 0.1),
+  
+  // Chart colors
+  chart-1: #FF9500,
+  chart-2: #007AFF,
+  chart-3: #34C759,
+  chart-4: #FFCC00,
+  chart-5: #FF3B30,
+  chart-6: #AF52DE,
+  
+  // Gradients
+  gradient-primary: linear-gradient(135deg, #FFE4B5 0%, #FFD700 100%),
+  gradient-accent: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%),
+  gradient-bg: linear-gradient(180deg, #FFF8F0 0%, #FFFFFF 100%)
+);
+
+// Theme 3: Pastel Colors
+$theme-pastel: (
+  // Primary colors
+  primary: #B794F4,
+  primary-light: #D6BCFA,
+  primary-dark: #9F7AEA,
+  
+  // Background colors
+  bg-primary: #FDFEFF,
+  bg-secondary: #F7FAFC,
+  bg-tertiary: #EDF2F7,
+  bg-card: #FFFFFF,
+  bg-hover: #F7FAFC,
+  
+  // Text colors
+  text-primary: #2D3748,
+  text-secondary: #4A5568,
+  text-tertiary: #718096,
+  text-muted: #A0AEC0,
+  
+  // Accent colors
+  accent-lavender: #B794F4,
+  accent-pink: #FBB6CE,
+  accent-mint: #9AE6B4,
+  accent-sky: #90CDF4,
+  accent-peach: #FBD38D,
+  accent-rose: #FECACA,
+  
+  // UI colors
+  border: #E8E8FB,
+  border-light: #F4F4FD,
+  shadow: rgba(185, 148, 244, 0.1),
+  
+  // Chart colors
+  chart-1: #B794F4,
+  chart-2: #90CDF4,
+  chart-3: #9AE6B4,
+  chart-4: #FBD38D,
+  chart-5: #FBB6CE,
+  chart-6: #FECACA,
+  
+  // Gradients
+  gradient-primary: linear-gradient(135deg, #E9D8FD 0%, #D6BCFA 100%),
+  gradient-accent: linear-gradient(135deg, #FED7E2 0%, #FBB6CE 100%),
+  gradient-bg: linear-gradient(180deg, #F7FAFC 0%, #EDF2F7 100%)
+);
+
+// Theme 4: 90s Retro
+$theme-retro-90s: (
+  // Primary colors
+  primary: #FF006E,
+  primary-light: #FF4081,
+  primary-dark: #CC0058,
+  
+  // Background colors
+  bg-primary: #0A0E27,
+  bg-secondary: #151932,
+  bg-tertiary: #1F2348,
+  bg-card: #2A2E5E,
+  bg-hover: #353975,
+  
+  // Text colors
+  text-primary: #FFFFFF,
+  text-secondary: #FB37FF,
+  text-tertiary: #00FFFF,
+  text-muted: #8B8B8B,
+  
+  // Accent colors
+  accent-neon-pink: #FF006E,
+  accent-neon-purple: #FB37FF,
+  accent-neon-cyan: #00FFFF,
+  accent-neon-yellow: #FFFF00,
+  accent-neon-green: #00FF00,
+  accent-neon-orange: #FF8C00,
+  
+  // UI colors
+  border: #FB37FF,
+  border-light: rgba(251, 55, 255, 0.3),
+  shadow: rgba(251, 55, 255, 0.5),
+  
+  // Chart colors
+  chart-1: #FF006E,
+  chart-2: #00FFFF,
+  chart-3: #FFFF00,
+  chart-4: #00FF00,
+  chart-5: #FB37FF,
+  chart-6: #FF8C00,
+  
+  // Gradients
+  gradient-primary: linear-gradient(135deg, #FF006E 0%, #FB37FF 100%),
+  gradient-accent: linear-gradient(135deg, #00FFFF 0%, #FB37FF 100%),
+  gradient-bg: linear-gradient(180deg, #0A0E27 0%, #151932 100%)
+);
+
+// Theme map for easy access
+$themes: (
+  'dark-violet': $theme-dark-violet,
+  'light-apple': $theme-light-apple,
+  'pastel': $theme-pastel,
+  'retro-90s': $theme-retro-90s
+);
+
+// Helper function to get theme color
+@function theme-color($theme-name, $color-key) {
+  $theme: map-get($themes, $theme-name);
+  @return map-get($theme, $color-key);
+}

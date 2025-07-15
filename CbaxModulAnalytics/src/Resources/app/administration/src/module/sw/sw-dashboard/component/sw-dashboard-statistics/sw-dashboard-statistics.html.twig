@@ -1,0 +1,35 @@
+{% block sw_dashboard_statistics %}
+
+    <div>
+        <div v-if="(!cbaxActive && !isCbaxLoading) || !acl.can('cbaxAnalyticsDashboard.viewer')">
+            {% parent %}
+        </div>
+
+        <div v-if="!isCbaxLoading && acl.can('cbaxAnalyticsDashboard.viewer')">
+            <cbax-analytics-dashboard-settings
+                v-if="cbaxActive"
+                @cbax-statistics-settings-modal-closed="resetDashboard($event)"
+                :dateRange="dateRange">
+            </cbax-analytics-dashboard-settings>
+
+            <cbax-analytics-dashboard-statistics
+                v-if="cbaxActive && (cbaxLocation == 'before' || cbaxLocation == 'replace')"
+                :cbaxAnalyticsConfig="cbaxAnalyticsConfig"
+                :dateRange="dateRange">
+            </cbax-analytics-dashboard-statistics>
+        </div>
+
+        <div v-if="cbaxActive && cbaxLocation != 'replace'">
+            {% parent %}
+        </div>
+
+        <div v-if="!isCbaxLoading && acl.can('cbaxAnalyticsDashboard.viewer')">
+            <cbax-analytics-dashboard-statistics
+                v-if="cbaxActive && cbaxLocation == 'after'"
+                :cbaxAnalyticsConfig="cbaxAnalyticsConfig"
+                :dateRange="dateRange">
+            </cbax-analytics-dashboard-statistics>
+        </div>
+    </div>
+
+{% endblock %}

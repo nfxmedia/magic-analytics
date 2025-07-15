@@ -1,0 +1,40 @@
+<div class="cbax-analytics-cross-selling-grid">
+    <h3 class="cbax-analytics-cross-selling-grid-headline">
+        {{ $tc('cbax-analytics.view.crossSelling.headlineSales') }}
+    </h3>
+    <div v-if="!gridData || (gridData && gridData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+    </div>
+    <sw-data-grid v-else
+                  :dataSource="gridData"
+                  :columns="getGridColumns"
+                  :showSelection="false"
+                  :showActions="false">
+
+        <template #column-productName="{ item }">
+            <router-link
+                    class="sw-data-grid__cell-value"
+                    :to="{ name: 'sw.product.detail', params: { id: item.productId } }">
+                {{ item.productName }}
+            </router-link>
+        </template>
+        <template #column-crossSellings="{ item }">
+            <div v-if="item.crossSellings" class="cbax-analytics-cross-selling-grid-column">
+                <div v-for="csName in item.crossSellings" class="cbax-analytics-cross-selling-grid-csname">
+                    {{ csName }}
+                </div>
+            </div>
+        </template>
+        <template #pagination>
+            {% block analytics_cross_selling_grid_pagination %}
+                <sw-pagination :page="page"
+                               :limit="limit"
+                               :total="dataTotal"
+                               :total-visible="7"
+                               @page-change="onPageChange">
+                </sw-pagination>
+            {% endblock %}
+        </template>
+    </sw-data-grid>
+</div>
+

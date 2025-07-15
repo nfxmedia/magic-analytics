@@ -1,0 +1,129 @@
+@import './../../view/nfx-analytics-general';
+@import './../../scss/inline-theme-vars';
+@import './../../scss/nfx-magic-analytics-modern';
+@import './nfx-analytics-modern-layout';
+
+// Force modern design but keep Shopware navigation
+body.nfx-analytics {
+    background: var(--nfx-bg-primary, #ffffff) !important;
+    color: var(--nfx-text-primary, #1f2937) !important;
+    
+    .sw-page {
+        background: transparent !important;
+        
+        .sw-page__content {
+            background: transparent !important;
+        }
+        
+        .sw-page__main-content {
+            background: transparent !important;
+            padding: 2rem !important;
+        }
+        
+        .sw-page__side-content {
+            background: var(--nfx-bg-secondary, #f8f9fa) !important;
+            border-right: 1px solid var(--nfx-border-light, #e5e7eb) !important;
+        }
+        
+        // Hide search bar
+        .sw-search-bar {
+            display: none !important;
+        }
+    }
+}
+
+// Keep Shopware navigation visible
+
+.nfx-analytics-index {
+
+    .nfx_analytics-manuallinks {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    &.sw-page {
+        .sw-page__content.has--side-content {
+            grid-template-columns: 400px 1fr auto;
+        }
+        &.is--mobile {
+            .sw-page__content.has--side-content {
+                grid-template-columns: 1fr auto;
+            }
+
+            .nfx-analytics-smart_bar_back {
+                margin: 5px;
+            }
+
+            .sw-page__main-content {
+                display: none;
+            }
+
+            &.has--category {
+                .sw-page__back-btn-container {
+                    display: block;
+                }
+
+                .sw-page__main-content {
+                    display: block;
+                }
+
+                .sw-page__side-content {
+                    display: none;
+                }
+            }
+        }
+    }
+
+	.sw-card-view__content {
+		padding: 26px;
+	}
+
+	.sw-card {
+
+		max-width: 100%;
+
+		.sw-card__title {
+			width: inherit;
+			position: inherit;
+			left: inherit;
+			top: 0;
+			text-align: left;
+		}
+	}
+
+	.nfx-analytics-content-card-grid {
+		.sw-card__content {
+			padding: 0;
+		}
+	}
+
+	.nfx-analytics-smart-bar-header {
+
+		.nfx-analytics-smart-bar-header-title {
+			display: inline;
+			margin-right: 10px;
+		}
+
+		.nfx-analytics-smart-bar-header-start {
+			margin-right: 10px;
+			margin-left: 5px;
+
+		}
+		.nfx-analytics-smart-bar-header-end {
+			margin-right: 10px;
+			margin-left: 5px;
+
+		}
+	}
+
+	.nfx-analytics-display-options-sidebar-item {
+		margin-left: 25px;
+		width: 275px;
+	}
+
+	.nfx-analytics-display-options-download-link {
+		display: none;
+	}
+
+}

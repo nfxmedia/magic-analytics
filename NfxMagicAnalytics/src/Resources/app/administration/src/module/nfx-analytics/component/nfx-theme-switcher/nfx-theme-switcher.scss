@@ -1,0 +1,181 @@
+@import '../../scss/variables';
+
+.nfx-theme-switcher {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    
+    &__button {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        
+        &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+    
+    &__menu {
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        background: var(--nfx-bg-card, #ffffff);
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px) scale(0.95);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        min-width: 240px;
+        border: 1px solid var(--nfx-border-light, #e5e7eb);
+        
+        &.is--open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            background: var(--nfx-bg-card, #ffffff);
+            border-right: 1px solid var(--nfx-border-light, #e5e7eb);
+            border-bottom: 1px solid var(--nfx-border-light, #e5e7eb);
+            transform: rotate(45deg);
+        }
+    }
+    
+    &__option {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        
+        &:hover {
+            background: var(--nfx-bg-hover, #f3f4f6);
+        }
+        
+        &.is--active {
+            background: var(--nfx-primary, #6366F1);
+            color: white;
+            
+            .nfx-theme-switcher__description {
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    }
+    
+    &__preview {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin-right: 12px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 100%;
+        }
+        
+        &::before {
+            left: 0;
+        }
+        
+        &::after {
+            right: 0;
+        }
+        
+        &--dark-violet {
+            &::before {
+                background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+            }
+            &::after {
+                background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            }
+        }
+        
+        &--light-apple {
+            &::before {
+                background: linear-gradient(135deg, #FF9500 0%, #E68900 100%);
+            }
+            &::after {
+                background: linear-gradient(135deg, #FFCC00 0%, #F59E0B 100%);
+            }
+        }
+        
+        &--pastel {
+            &::before {
+                background: linear-gradient(135deg, #B794F4 0%, #9F7AEA 100%);
+            }
+            &::after {
+                background: linear-gradient(135deg, #FBB6CE 0%, #F687B3 100%);
+            }
+        }
+        
+        &--retro-90s {
+            &::before {
+                background: linear-gradient(135deg, #FF006E 0%, #CC0058 100%);
+            }
+            &::after {
+                background: linear-gradient(135deg, #00FFFF 0%, #00D4AA 100%);
+            }
+        }
+    }
+    
+    &__label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--nfx-text-primary, #1f2937);
+        margin-bottom: 2px;
+    }
+    
+    &__description {
+        font-size: 12px;
+        color: var(--nfx-text-tertiary, #6b7280);
+        line-height: 1.3;
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+    .nfx-theme-switcher {
+        bottom: 1rem;
+        right: 1rem;
+        
+        &__button {
+            width: 48px;
+            height: 48px;
+        }
+        
+        &__menu {
+            bottom: 60px;
+            right: -8px;
+            min-width: 200px;
+        }
+    }
+}

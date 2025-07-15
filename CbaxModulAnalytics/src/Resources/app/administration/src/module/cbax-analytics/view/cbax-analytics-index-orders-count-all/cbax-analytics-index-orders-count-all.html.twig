@@ -1,0 +1,92 @@
+{% block cbax_analytics_orders_count_all %}
+    <div>
+
+    	{% block cbax_analytics_orders_count_all_chart %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-chart cbax-analytics-orders-count-all-chart"
+                :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1">
+
+            	{% block cbax_analytics_orders_count_all_chart_data %}
+                    <sw-chart
+                        v-if="isLoading == false"
+                        :type="'line'"
+                        :series="orderCountSeries"
+                        :options="chartOptionsOrderCount"
+                        fillEmptyDates
+                        sort>
+                    </sw-chart>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_orders_count_all_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-orders-count-all-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block cbax_analytics_orders_count_all_grid_sums %}
+                    <sw-alert :appearance="'notification'"
+                              :showIcon="false"
+                              :closable="false"
+                              :variant="'info'"
+                              :title="$tc('cbax-analytics.index.sums')"
+                    >
+                        <div v-if="overallData != null" class="cbax-analytics-grid-sums">
+                            <div class="cbax-analytics-grid-sum">
+                                <div>{{ $tc('cbax-analytics.view.orderCountAll.firstTimeCountColumn') }}:</div>
+                                <div>{{ overallData.firstTimeCount }}</div>
+                            </div>
+                            <div v-if="overallData.count > 0" class="cbax-analytics-grid-sum">
+                                <div>{{ $tc('cbax-analytics.view.orderCountAll.firstTimePart') }}:</div>
+                                <div>{{ overallData.firstTimePart }} %</div>
+                            </div>
+                            <div class="cbax-analytics-grid-sum">
+                                <div>{{ $tc('cbax-analytics.view.orderCountAll.returningCountColumn') }}:</div>
+                                <div>{{ overallData.returningCount }}</div>
+                            </div>
+                            <div v-if="overallData.count > 0" class="cbax-analytics-grid-sum">
+                                <div>{{ $tc('cbax-analytics.view.orderCountAll.returningPart') }}:</div>
+                                <div>{{ overallData.returningPart }} %</div>
+                            </div>
+                            <div class="cbax-analytics-grid-sum">
+                                <div>{{ $tc('cbax-analytics.view.orderCountAll.countColumn') }}:</div>
+                                <div>{{ overallData.count }}</div>
+                            </div>
+                        </div>
+                    </sw-alert>
+
+                {% endblock %}
+
+            	{% block cbax_analytics_orders_count_all_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!orderCountData || (orderCountData && orderCountData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                        :dataSource="orderCountData"
+                        :columns="getGridColumns"
+                        :showSelection="false"
+                        :showActions="false">
+
+                        <template #pagination>
+                            {% block analytics_orders_count_all_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

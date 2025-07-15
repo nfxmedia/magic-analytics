@@ -1,0 +1,109 @@
+{% block cbax_analytics_single_product %}
+    <div>
+
+        {% block cbax_analytics_single_product_head %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-single-product-head" :isLoading="isLoading">
+                {% block cbax_analytics_single_product_select %}
+                    <sw-container columns="repeat(auto-fit, minmax(150px, 1fr))" gap="0px 30px">
+                        <sw-entity-single-select class="cbax-analytics-single-product-select"
+                             :label="$tc('cbax-analytics.view.singleProduct.productSelect.label')"
+                             :placeholder="$tc('cbax-analytics.view.singleProduct.productSelect.placeholder')"
+                             :labelProperty="labelProperty"
+                             valueProperty="id"
+                             :error="errors.productId"
+                            :criteria="singleSelectCriteria"
+                             entity="product"
+                             v-model:value="productId"
+                             @update:value="onChangeProductSelectField">
+                        </sw-entity-single-select>
+                        <sw-entity-multi-id-select
+                                class="cbax-analytics-single-product-compare-select"
+                                v-model:value="compareIds"
+                                :labelProperty="labelProperty"
+                                :label="$tc('cbax-analytics.view.singleProduct.compareSelect.label')"
+                                :placeholder="$tc('cbax-analytics.view.singleProduct.compareSelect.placeholder')"
+                                :repository="productRepository"
+                                :criteria="singleSelectCriteria"
+                                :disabled="compareIdsDisabled"
+                                @update:value="onChangeCompareSelectField">
+                        </sw-entity-multi-id-select>
+                    </sw-container>
+                {% endblock %}
+
+            </sw-card>
+
+        {% endblock %}
+
+        {% block cbax_analytics_variants_compare_content_empty %}
+            <sw-empty-state v-if="productId == '' || !productId" :title="$tc('cbax-analytics.index.emptyProductHeadline')"></sw-empty-state>
+        {% endblock %}
+
+        {% block cbax_analytics_single_product_chart %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-chart cbax-analytics-single-product-chart"
+                     v-if="productId != '' && (!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1)"
+                     :isLoading="isLoading">
+
+                {% block cbax_analytics_single_product_chart_sales %}
+                    <sw-chart
+                            v-if="isLoading == false"
+                            :type="'line'"
+                            :series="chartSeriesData"
+                            :options="chartOptions"
+                            fillEmptyDates
+                            sort>
+                    </sw-chart>
+                {% endblock %}
+
+                {% block cbax_analytics_single_product_chart_clicks %}
+                    <sw-chart
+                        v-if="isLoading == false"
+                        :type="'line'"
+                        :series="chartClickData"
+                        :options="chartClickOptions"
+                        fillEmptyDates
+                        sort>
+                    </sw-chart>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_single_product_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-single-product-grid"
+                     v-if="productId != '' && (!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1)"
+                     :isLoading="isLoading">
+
+                {% block cbax_analytics_single_product_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="false">
+
+                        <template #pagination>
+                            {% block analytics_single_product_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

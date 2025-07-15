@@ -1,0 +1,20 @@
+{% block cbax_analytics_dashboard_statistics %}
+
+    <div class="cbax-analytics-content-dash" v-if="!isLoading && activeStatistics.length > 0">
+
+        <component
+            v-for="(item, index) in activeStatistics"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="item.id"
+            :is="item.parameter.componentName"
+            :activeStatistic="item"
+            :displayOptions="displayOptions"
+            :systemCurrency="systemCurrency"
+            :grossOrNet="grossOrNet"
+            :customOptions="customOptions">
+        </component>
+
+    </div>
+
+{% endblock %}

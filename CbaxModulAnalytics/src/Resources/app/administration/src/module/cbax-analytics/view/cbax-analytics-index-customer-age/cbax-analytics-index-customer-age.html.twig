@@ -1,0 +1,58 @@
+{% block cbax_analytics_customer_age %}
+    <div>
+
+        {% block cbax_analytics_customer_age_chart %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-chart cbax-analytics-customer-age-chart"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showChart == 1">
+
+                {% block cbax_analytics_customer_age_chart_data %}
+                    <sw-chart
+                            v-if="isLoading == false"
+                            :type="'line'"
+                            :series="chartSeriesData"
+                            :options="chartOptions"
+                            sort>
+                    </sw-chart>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block cbax_analytics_customer_age_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-customer-age-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block cbax_analytics_customer_age_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="false">
+
+                        <template #pagination>
+                            {% block analytics_customer_age_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

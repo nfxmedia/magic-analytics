@@ -1,0 +1,66 @@
+{% block cbax_analytics_referer %}
+    <div class="cbax-analytics-referer">
+
+        {% block cbax_analytics_referer_grid %}
+            <sw-card positionIdentifier="'test'" class="cbax-analytics-content-card-grid cbax-analytics-count-by-referer-grid"
+                     :isLoading="isLoading" v-if="!displayOptions.dashboard || activeStatistic.parameter.dashboard.showTable == 1">
+
+                {% block cbax_analytics_referer_grid_data %}
+                    <div v-if="displayOptions.dashboard" class="cbax-analytics-grid-label">
+                        {{ $tc(activeStatistic.label) }}
+                    </div>
+
+                    <div v-if="!gridSeriesData || (gridSeriesData && gridSeriesData.length == 0)" class="cbax-analytics-empty-state-wrapper">
+                        <sw-empty-state :title="$tc('cbax-analytics.index.noData')"></sw-empty-state>
+                    </div>
+
+                    <sw-data-grid v-else
+                            :dataSource="gridSeriesData"
+                            :columns="getGridColumns"
+                            :showSelection="false"
+                            :showActions="false"
+                    >
+                        {% block cbax_analytics_referer_grid_columns_product_number %}
+                            <template #column-number="{ item }">
+                                <router-link
+                                        class="sw-data-grid__cell-value"
+                                        :to="{ name: 'sw.product.detail', params: { id: item.id } }">
+                                    {{ item.number }}
+                                </router-link>
+                            </template>
+                        {% endblock %}
+
+                        <template #pagination>
+                            {% block cbax_analytics_referer_grid_pagination %}
+                                <sw-pagination :page="page"
+                                               :limit="limit"
+                                               :total="total"
+                                               :total-visible="7"
+                                               @page-change="onPageChange">
+                                </sw-pagination>
+                            {% endblock %}
+                        </template>
+
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+
+            {% block cbax_analytics_referer_help %}
+                <sw-alert
+                        v-if="!displayOptions.dashboard"
+                        :appearance="'notification'"
+                        :showIcon="false"
+                        :closable="false"
+                        :variant="'neutral'"
+                        :title="$tc('cbax-analytics.general.help')"
+                >
+                    <div class="cbax-analytics-description">
+                        {{ $tc('cbax-analytics.view.referer.description') }}
+                    </div>
+                </sw-alert>
+            {% endblock %}
+        {% endblock %}
+
+    </div>
+{% endblock %}

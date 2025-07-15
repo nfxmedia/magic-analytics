@@ -1,0 +1,44 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies
+vendor/
+node_modules/
+
+# Build files
+public/bundles/
+var/
+*.cache
+*.log
+
+# Docker volumes (except compose file)
+docker-data/
+
+# Compiled files
+*.pyc
+__pycache__/
+
+# Environment files
+.env
+.env.local
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Lock files (keep composer.lock and package-lock.json)
+# Shopware specific
+/custom/plugins/*/vendor/

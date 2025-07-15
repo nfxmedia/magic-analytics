@@ -1,0 +1,35 @@
+{% block sw_dashboard_statistics %}
+
+    <div>
+        <div v-if="(!nfxActive && !isNfxLoading) || !acl.can('nfxAnalyticsDashboard.viewer')">
+            {% parent %}
+        </div>
+
+        <div v-if="!isNfxLoading && acl.can('nfxAnalyticsDashboard.viewer')">
+            <nfx-analytics-dashboard-settings
+                v-if="nfxActive"
+                @nfx-statistics-settings-modal-closed="resetDashboard($event)"
+                :dateRange="dateRange">
+            </nfx-analytics-dashboard-settings>
+
+            <nfx-analytics-dashboard-statistics
+                v-if="nfxActive && (nfxLocation == 'before' || nfxLocation == 'replace')"
+                :nfxAnalyticsConfig="nfxAnalyticsConfig"
+                :dateRange="dateRange">
+            </nfx-analytics-dashboard-statistics>
+        </div>
+
+        <div v-if="nfxActive && nfxLocation != 'replace'">
+            {% parent %}
+        </div>
+
+        <div v-if="!isNfxLoading && acl.can('nfxAnalyticsDashboard.viewer')">
+            <nfx-analytics-dashboard-statistics
+                v-if="nfxActive && nfxLocation == 'after'"
+                :nfxAnalyticsConfig="nfxAnalyticsConfig"
+                :dateRange="dateRange">
+            </nfx-analytics-dashboard-statistics>
+        </div>
+    </div>
+
+{% endblock %}
