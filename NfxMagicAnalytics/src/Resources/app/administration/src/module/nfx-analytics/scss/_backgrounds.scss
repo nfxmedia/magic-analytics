@@ -1,0 +1,300 @@
+// Background Graphics and Patterns
+// ================================
+
+// Base background mixin
+@mixin theme-background($gradient, $pattern: true) {
+    position: relative;
+    background: $gradient;
+    
+    @if $pattern {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            pointer-events: none;
+        }
+    }
+}
+
+// Geometric shapes mixin
+@mixin floating-shapes($color1, $color2) {
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        overflow: hidden;
+        
+        background-image: 
+            // Large gradient circle
+            radial-gradient(circle 800px at 20% 30%, rgba($color1, 0.1) 0%, transparent 40%),
+            // Medium gradient circle
+            radial-gradient(circle 600px at 80% 60%, rgba($color2, 0.08) 0%, transparent 35%),
+            // Small accent circles
+            radial-gradient(circle 200px at 15% 80%, rgba($color1, 0.12) 0%, transparent 50%),
+            radial-gradient(circle 300px at 85% 20%, rgba($color2, 0.1) 0%, transparent 45%);
+    }
+}
+
+// Theme-specific backgrounds
+// Light Apple Theme
+.theme-light-apple {
+    .nfx-modern-layout {
+        @include theme-background(
+            linear-gradient(135deg, 
+                #ffffff 0%, 
+                #f8f9fa 50%, 
+                #e9ecef 100%)
+        );
+        @include floating-shapes(#007AFF, #5856D6);
+    }
+    
+    .floating-gradient {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.3;
+        animation: float 20s ease-in-out infinite;
+        
+        &.gradient-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #007AFF, #5AC8FA);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        &.gradient-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #5856D6, #AF52DE);
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+    }
+}
+
+// Dark Violet Theme
+.theme-dark-violet {
+    .nfx-modern-layout {
+        @include theme-background(
+            linear-gradient(135deg, 
+                #0F0F1E 0%, 
+                #1A1A2E 50%, 
+                #16213E 100%)
+        );
+        @include floating-shapes(#6366F1, #A855F7);
+    }
+    
+    .floating-gradient {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.2;
+        animation: float 25s ease-in-out infinite;
+        
+        &.gradient-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #6366F1, #4F46E5);
+            top: -10%;
+            right: -5%;
+            animation-delay: 0s;
+        }
+        
+        &.gradient-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #A855F7, #9333EA);
+            bottom: -15%;
+            left: -10%;
+            animation-delay: 8s;
+        }
+    }
+}
+
+// Pastel Theme
+.theme-pastel {
+    .nfx-modern-layout {
+        @include theme-background(
+            linear-gradient(135deg, 
+                #FFF5F5 0%, 
+                #FFF0F6 25%, 
+                #F0F9FF 50%, 
+                #F0FDFA 75%, 
+                #FFFBEB 100%)
+        );
+        @include floating-shapes(#F472B6, #60A5FA);
+    }
+    
+    .floating-gradient {
+        position: absolute;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        filter: blur(40px);
+        opacity: 0.4;
+        animation: float 30s ease-in-out infinite;
+        
+        &.gradient-1 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #F472B6, #FB923C);
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        &.gradient-2 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #60A5FA, #A78BFA);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 10s;
+        }
+        
+        &.gradient-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #34D399, #60A5FA);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 15s;
+        }
+    }
+}
+
+// 90s Retro Theme
+.theme-retro-90s {
+    .nfx-modern-layout {
+        @include theme-background(
+            linear-gradient(135deg, 
+                #FF006E 0%, 
+                #8338EC 25%, 
+                #3A86FF 50%, 
+                #06FFB4 75%, 
+                #FFBE0B 100%),
+            false
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 20s ease infinite;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 255, 255, 0.03) 10px,
+                    rgba(255, 255, 255, 0.03) 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 0, 0, 0.03) 10px,
+                    rgba(0, 0, 0, 0.03) 20px
+                );
+            pointer-events: none;
+        }
+    }
+    
+    .retro-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        
+        .shape {
+            position: absolute;
+            
+            &.triangle {
+                width: 0;
+                height: 0;
+                border-left: 50px solid transparent;
+                border-right: 50px solid transparent;
+                border-bottom: 100px solid rgba(255, 190, 11, 0.2);
+                transform: rotate(45deg);
+                top: 20%;
+                right: 15%;
+                animation: pulse 3s ease-in-out infinite;
+            }
+            
+            &.circle {
+                width: 150px;
+                height: 150px;
+                border: 3px solid rgba(58, 134, 255, 0.3);
+                border-radius: 50%;
+                top: 60%;
+                left: 10%;
+                animation: rotate 10s linear infinite;
+            }
+            
+            &.square {
+                width: 100px;
+                height: 100px;
+                background: rgba(255, 0, 110, 0.1);
+                transform: rotate(45deg);
+                bottom: 20%;
+                right: 25%;
+                animation: float 5s ease-in-out infinite;
+            }
+        }
+    }
+}
+
+// Animation for shapes
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+// Grid pattern overlay
+@mixin grid-pattern($color: rgba(0, 0, 0, 0.03), $size: 40px) {
+    background-image: 
+        linear-gradient($color 1px, transparent 1px),
+        linear-gradient(90deg, $color 1px, transparent 1px);
+    background-size: $size $size;
+}
+
+// Dot pattern overlay
+@mixin dot-pattern($color: rgba(0, 0, 0, 0.05), $size: 20px) {
+    background-image: radial-gradient(circle, $color 1px, transparent 1px);
+    background-size: $size $size;
+}
+
+// Wave pattern
+@mixin wave-pattern() {
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.05)"/></svg>') no-repeat bottom;
+        background-size: cover;
+        pointer-events: none;
+    }
+}

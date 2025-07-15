@@ -1,0 +1,246 @@
+{% block nfx_analytics_index %}
+<div class="nfx-modern-layout nfx-analytics theme-light-apple" :class="'theme-' + currentTheme">
+    <!-- Background Elements -->
+    <div class="floating-gradient gradient-1"></div>
+    <div class="floating-gradient gradient-2"></div>
+    <div class="floating-gradient gradient-3" v-if="currentTheme === 'pastel'"></div>
+    
+    <!-- Retro shapes for 90s theme -->
+    <div class="retro-shapes" v-if="currentTheme === 'retro-90s'">
+        <div class="shape triangle"></div>
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+    </div>
+    
+    <!-- Header with Glass Effect -->
+    <div class="nfx-modern-header glass">
+        <div class="nfx-modern-header__brand">
+            <span class="nfx-modern-header__icon">✨</span>
+            <h1 class="nfx-modern-header__title">Magic Analytics</h1>
+        </div>
+        <div class="nfx-modern-header__info" v-if="!isLoading && displayOptions">
+            <span class="nfx-modern-header__date glass-card" style="padding: 0.5rem 1rem; border-radius: 20px;">
+                📅 {{ startDateHeadline }} - {{ endDateHeadline }}
+            </span>
+        </div>
+        <div class="nfx-modern-header__actions">
+            <button class="glass-button" @click="onRefresh">
+                <sw-icon name="regular-sync" size="16"></sw-icon>
+                {{ $tc('nfx-analytics.component.displayOptions.refreshButton') }}
+            </button>
+            <button class="glass-button" style="background: rgba(var(--nfx-primary-rgb), 0.1); border-color: var(--nfx-primary);" @click="exportCSV">
+                <sw-icon name="regular-download" size="16"></sw-icon>
+                {{ $tc('nfx-analytics.index.labelActionExport') }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="nfx-modern-body">
+        <!-- Sidebar with Glass Effect -->
+        <div class="nfx-modern-sidebar glass-dark">
+            <div class="nfx-modern-sidebar__content">
+                <!-- Quick Stats -->
+                <div class="nfx-metric-card" style="margin-bottom: 1.5rem;">
+                    <div class="nfx-metric-card__icon">📊</div>
+                    <div class="nfx-metric-card__value">{{ activeStatisticName ? '1' : '80+' }}</div>
+                    <div class="nfx-metric-card__label">{{ activeStatisticName || 'Available Statistics' }}</div>
+                </div>
+                
+                <!-- Navigation Tree -->
+                <nfx-analytics-tree
+                    v-if="!modulStarting"
+                    :showTree="true"
+                    :activeStatisticName="activeStatisticName"
+                    @nfx-statistic-selection="changeStatistic"
+                    style="margin-top: 1rem;">
+                </nfx-analytics-tree>
+            </div>
+            <div class="nfx-modern-sidebar__footer glass">
+                <a :href="manualLink" target="_blank" rel="noopener" class="nfx-modern-sidebar__link">
+                    <sw-icon name="regular-external-link" size="14"></sw-icon>
+                    {{ $t('nfx-analytics.general.manualLink') }}
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="nfx-modern-main">
+            <!-- Loading State -->
+            <div v-if="isLoading" class="nfx-loading nfx-loading--centered">
+                <div class="nfx-loading__spinner"></div>
+            </div>
+            
+            <!-- Active Statistic Content -->
+            <div v-else-if="activeStatistic" class="nfx-card-grid nfx-card-grid--features">
+                <!-- Main Statistics Card -->
+                <div class="nfx-chart-card" style="grid-column: span 2;">
+                    <div class="nfx-card__header">
+                        <div>
+                            <h2 class="nfx-card__title">{{ activeStatistic.name }}</h2>
+                            <p class="nfx-card__subtitle">{{ activeStatistic.description }}</p>
+                        </div>
+                        <div class="nfx-card__actions">
+                            <nfx-theme-switcher></nfx-theme-switcher>
+                        </div>
+                    </div>
+                    <div class="nfx-card__body">
+                        <component
+                            v-if="activeComponentName != '' && displayOptions"
+                            :is="activeComponentName"
+                            :activeStatistic="activeStatistic"
+                            :displayOptions="displayOptions"
+                            :systemCurrency="systemCurrency"
+                            :grossOrNet="grossOrNet"
+                            @nfx-statistics-csv_done="downloadCSV"
+                            :format="format"
+                            :customOptions="customOptions">
+                        </component>
+                    </div>
+                </div>
+                
+                <!-- Side Metrics -->
+                <div class="nfx-card-grid nfx-card-grid--metrics" style="grid-column: span 1;">
+                    <div class="nfx-metric-card">
+                        <div class="nfx-metric-card__trend nfx-metric-card__trend--up">
+                            <sw-icon name="regular-arrow-up" size="12"></sw-icon>
+                            +12%
+                        </div>
+                        <div class="nfx-metric-card__icon">💰</div>
+                        <div class="nfx-metric-card__value">€{{ Math.floor(Math.random() * 90000 + 10000).toLocaleString() }}</div>
+                        <div class="nfx-metric-card__label">Total Revenue</div>
+                    </div>
+                    
+                    <div class="nfx-metric-card">
+                        <div class="nfx-metric-card__trend nfx-metric-card__trend--up">
+                            <sw-icon name="regular-arrow-up" size="12"></sw-icon>
+                            +8%
+                        </div>
+                        <div class="nfx-metric-card__icon">🛍️</div>
+                        <div class="nfx-metric-card__value">{{ Math.floor(Math.random() * 900 + 100) }}</div>
+                        <div class="nfx-metric-card__label">Orders Today</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty State -->
+            <div v-else class="glass-card" style="min-height: 600px; display: flex; align-items: center; justify-content: center;">
+                <div class="nfx-empty-state">
+                    <div class="nfx-empty-state__icon">📊</div>
+                    <h3 class="nfx-empty-state__title">{{ $t('nfx-analytics.index.emptyStateHeadline') }}</h3>
+                    <p class="nfx-empty-state__text">Select a statistic from the navigation to view detailed analytics and insights.</p>
+                    
+                    <!-- Quick Action Cards -->
+                    <div class="nfx-card-grid nfx-card-grid--3-col" style="margin-top: 3rem; max-width: 800px;">
+                        <div class="nfx-feature-card" @click="selectPopularStatistic('revenue')">
+                            <div class="nfx-feature-card__badge">Popular</div>
+                            <div class="nfx-feature-card__content">
+                                <div class="nfx-feature-card__icon" style="font-size: 2rem; margin-bottom: 1rem;">💵</div>
+                                <h4 class="nfx-feature-card__title">Revenue Analytics</h4>
+                                <p class="nfx-feature-card__description">Track sales performance and revenue trends</p>
+                            </div>
+                        </div>
+                        
+                        <div class="nfx-feature-card" @click="selectPopularStatistic('customers')">
+                            <div class="nfx-feature-card__badge">Trending</div>
+                            <div class="nfx-feature-card__content">
+                                <div class="nfx-feature-card__icon" style="font-size: 2rem; margin-bottom: 1rem;">👥</div>
+                                <h4 class="nfx-feature-card__title">Customer Insights</h4>
+                                <p class="nfx-feature-card__description">Understand your customer behavior</p>
+                            </div>
+                        </div>
+                        
+                        <div class="nfx-feature-card" @click="selectPopularStatistic('products')">
+                            <div class="nfx-feature-card__badge">New</div>
+                            <div class="nfx-feature-card__content">
+                                <div class="nfx-feature-card__icon" style="font-size: 2rem; margin-bottom: 1rem;">📦</div>
+                                <h4 class="nfx-feature-card__title">Product Performance</h4>
+                                <p class="nfx-feature-card__description">Analyze bestsellers and inventory</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar (Filters) with Glass Effect -->
+        <div class="nfx-modern-filters glass-dark" v-if="activeComponentName">
+            <div class="nfx-modern-filters__section">
+                <h3 class="nfx-modern-filters__title">
+                    <sw-icon name="regular-filter" size="16"></sw-icon>
+                    {{ $tc('nfx-analytics.index.labelSidebarFilterOptions') }}
+                    <span class="nfx-badge" v-if="activeFilterNumber > 1">{{ activeFilterNumber }}</span>
+                </h3>
+                <div class="nfx-modern-filters__content glass">
+                    <nfx-analytics-display-options
+                        :filterOptions="filterOptions">
+                    </nfx-analytics-display-options>
+                </div>
+            </div>
+            
+            <div class="nfx-modern-filters__section" v-if="showMoreFilters">
+                <h3 class="nfx-modern-filters__title">
+                    <sw-icon name="regular-plus-circle" size="16"></sw-icon>
+                    {{ $tc('nfx-analytics.index.labelSidebarMoreFilter') }}
+                    <span class="nfx-badge" v-if="activeMoreFilterNumber > 0">{{ activeMoreFilterNumber }}</span>
+                </h3>
+                <div class="nfx-modern-filters__content glass">
+                    <nfx-analytics-more-filters
+                        :activeMoreFilterNumber="activeMoreFilterNumber"
+                        :activeStatisticName="activeStatisticName"
+                        @filter-changeShowParents="onFilterChangeShowParents"
+                        :filterOptions="filterOptions">
+                    </nfx-analytics-more-filters>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="nfx-modern-filters__section">
+                <div class="glass-card" style="text-align: center; padding: 1.5rem;">
+                    <p style="font-size: 0.875rem; color: var(--nfx-text-secondary); margin-bottom: 1rem;">
+                        Need help with analytics?
+                    </p>
+                    <button class="glass-button" style="width: 100%;">
+                        <sw-icon name="regular-question-circle" size="16"></sw-icon>
+                        View Documentation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Additional inline styles for glass effects */
+.nfx-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background: rgba(var(--nfx-primary-rgb), 0.2);
+    color: var(--nfx-primary);
+    margin-left: 0.5rem;
+}
+
+.nfx-modern-layout {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ensure Shopware navigation stays visible */
+.sw-admin-menu {
+    position: relative;
+    z-index: 100;
+}
+
+.sw-app-bar {
+    position: relative;
+    z-index: 100;
+}
+</style>
+{% endblock %}

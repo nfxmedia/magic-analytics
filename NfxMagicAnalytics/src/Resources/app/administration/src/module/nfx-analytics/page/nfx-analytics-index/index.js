@@ -1,5 +1,5 @@
-// Use modern template
-import template from './nfx-analytics-index-modern.html.twig';
+// Use modern glassmorphism template
+import template from './nfx-analytics-index-modern-glass.html.twig';
 import './nfx-analytics-index.scss';
 
 const { Component, Context, Mixin } = Shopware;
@@ -375,6 +375,18 @@ Component.register('nfx-analytics-index', {
             
             // Update current theme
             this.currentTheme = themeKey;
+        },
+        
+        selectPopularStatistic(type) {
+            // This is a placeholder - in real implementation, you would trigger
+            // the appropriate statistic based on the type
+            this.$nextTick(() => {
+                const treeComponent = this.$refs.statisticsTree;
+                if (treeComponent) {
+                    // Trigger first statistic in the category
+                    // This would need to be implemented based on your tree structure
+                }
+            });
         }
     },
 

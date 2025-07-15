@@ -1,0 +1,327 @@
+// Animations and Micro-interactions
+// =================================
+
+// Hover effects
+@mixin hover-lift() {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.12),
+            0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    }
+}
+
+@mixin hover-glow($color) {
+    transition: all 0.3s ease;
+    
+    &:hover {
+        box-shadow: 
+            0 0 30px rgba($color, 0.3),
+            0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Click effect
+@mixin click-scale() {
+    transition: transform 0.1s ease;
+    
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+// Entrance animations
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+// Pulse animation for badges
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes pulseSoft {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+// Shimmer effect for loading
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+// Rotate animation
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Float animation
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+}
+
+// Wave animation
+@keyframes wave {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    10% {
+        transform: rotate(14deg);
+    }
+    20% {
+        transform: rotate(-8deg);
+    }
+    30% {
+        transform: rotate(14deg);
+    }
+    40% {
+        transform: rotate(-4deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(0deg);
+    }
+}
+
+// Gradient shift
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+// Utility classes
+.animate-slide-up {
+    animation: slideInUp 0.5s ease-out;
+}
+
+.animate-slide-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-slide-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-wave {
+    animation: wave 1s ease-in-out;
+}
+
+// Stagger animation for lists
+.stagger-animation {
+    > * {
+        opacity: 0;
+        animation: slideInUp 0.5s ease-out forwards;
+        
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.05}s;
+            }
+        }
+    }
+}
+
+// Interactive elements
+.interactive {
+    @include hover-lift();
+    @include click-scale();
+    cursor: pointer;
+}
+
+// Loading skeleton
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--nfx-bg-secondary);
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        animation: shimmer 2s infinite;
+    }
+}
+
+// Smooth transitions for theme switching
+.theme-transition {
+    * {
+        transition: 
+            background-color 0.3s ease,
+            color 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease !important;
+    }
+}
+
+// Apply animations to components
+.nfx-modern-layout {
+    // Animate header
+    .nfx-modern-header {
+        animation: slideInUp 0.5s ease-out;
+    }
+    
+    // Animate sidebar
+    .nfx-modern-sidebar {
+        animation: slideInLeft 0.5s ease-out;
+        animation-delay: 0.1s;
+        animation-fill-mode: both;
+    }
+    
+    // Animate main content
+    .nfx-modern-main {
+        animation: fadeIn 0.5s ease-out;
+        animation-delay: 0.2s;
+        animation-fill-mode: both;
+    }
+    
+    // Animate filters
+    .nfx-modern-filters {
+        animation: slideInRight 0.5s ease-out;
+        animation-delay: 0.3s;
+        animation-fill-mode: both;
+    }
+    
+    // Card hover effects
+    .nfx-metric-card,
+    .nfx-feature-card {
+        @include hover-lift();
+        @include click-scale();
+    }
+    
+    // Button hover effects
+    .glass-button {
+        @include click-scale();
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+    }
+    
+    // Icon animations
+    .nfx-metric-card__icon {
+        transition: transform 0.3s ease;
+        
+        .nfx-metric-card:hover & {
+            transform: scale(1.1) rotate(5deg);
+        }
+    }
+    
+    // Trend badge animation
+    .nfx-metric-card__trend {
+        animation: pulse 3s infinite;
+    }
+}
