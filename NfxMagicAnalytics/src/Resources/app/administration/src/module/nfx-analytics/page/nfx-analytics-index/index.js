@@ -1,5 +1,5 @@
-// Use modern glassmorphism template
-import template from './nfx-analytics-index-modern-glass.html.twig';
+// Use new dashboard template with KPIs
+import template from './nfx-analytics-dashboard.html.twig';
 import './nfx-analytics-index.scss';
 
 const { Component, Context, Mixin } = Shopware;

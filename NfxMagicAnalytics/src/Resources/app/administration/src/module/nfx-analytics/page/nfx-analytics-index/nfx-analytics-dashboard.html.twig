@@ -1,0 +1,702 @@
+{% block nfx_analytics_index %}
+<div class="nfx-dashboard-layout nfx-analytics theme-light-apple" :class="'theme-' + currentTheme">
+    <!-- Dynamic Background Elements -->
+    <div class="background-layer">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        <div class="geometric-pattern"></div>
+    </div>
+    
+    <!-- Header Bar -->
+    <header class="nfx-dashboard-header liquid-card">
+        <div class="nfx-dashboard-header__left">
+            <h1 class="nfx-dashboard-header__title">
+                <span class="icon">✨</span>
+                Magic Analytics
+            </h1>
+            <div class="nfx-dashboard-header__subtitle">
+                Real-time eCommerce Insights
+            </div>
+        </div>
+        
+        <div class="nfx-dashboard-header__center">
+            <div class="date-selector liquid-card">
+                <sw-icon name="regular-calendar" size="16"></sw-icon>
+                <span>{{ startDateHeadline }} - {{ endDateHeadline }}</span>
+                <sw-icon name="regular-chevron-down-s" size="12"></sw-icon>
+            </div>
+        </div>
+        
+        <div class="nfx-dashboard-header__right">
+            <button class="liquid-button" @click="onRefresh">
+                <sw-icon name="regular-sync" size="16"></sw-icon>
+                Refresh
+            </button>
+            <button class="liquid-button liquid-button--primary" @click="exportCSV">
+                <sw-icon name="regular-download" size="16"></sw-icon>
+                Export
+            </button>
+            <nfx-theme-switcher></nfx-theme-switcher>
+        </div>
+    </header>
+    
+    <!-- Main Dashboard Content -->
+    <main class="nfx-dashboard-content">
+        <!-- KPI Section -->
+        <section class="dashboard-section">
+            <h2 class="section-title">
+                <span class="icon">📊</span>
+                Key Performance Indicators
+            </h2>
+            
+            <div class="kpi-grid kpi-grid--primary">
+                <!-- Revenue Card -->
+                <div class="kpi-card kpi-card--revenue">
+                    <div class="kpi-card__icon">💰</div>
+                    <div class="kpi-card__change kpi-card__change--positive">
+                        <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                        +23.5%
+                    </div>
+                    <div class="kpi-card__value">€127.4K</div>
+                    <div class="kpi-card__label">Total Revenue</div>
+                    <div class="kpi-card__sparkline">
+                        <svg viewBox="0 0 100 40">
+                            <path class="area" d="M0,30 Q25,20 50,25 T100,15 L100,40 L0,40 Z"/>
+                            <path d="M0,30 Q25,20 50,25 T100,15" stroke="currentColor" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Orders Card -->
+                <div class="kpi-card kpi-card--orders">
+                    <div class="kpi-card__icon">🛍️</div>
+                    <div class="kpi-card__change kpi-card__change--positive">
+                        <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                        +18.2%
+                    </div>
+                    <div class="kpi-card__value">3,847</div>
+                    <div class="kpi-card__label">Total Orders</div>
+                    <div class="kpi-card__sparkline">
+                        <svg viewBox="0 0 100 40">
+                            <path class="area" d="M0,35 L20,30 L40,32 L60,25 L80,28 L100,20 L100,40 L0,40 Z"/>
+                            <path d="M0,35 L20,30 L40,32 L60,25 L80,28 L100,20" stroke="currentColor" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Conversion Rate Card -->
+                <div class="kpi-card kpi-card--conversion">
+                    <div class="kpi-card__icon">📈</div>
+                    <div class="kpi-card__change kpi-card__change--positive">
+                        <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                        +5.3%
+                    </div>
+                    <div class="kpi-card__value">3.42%</div>
+                    <div class="kpi-card__label">Conversion Rate</div>
+                    <div class="kpi-card__sparkline">
+                        <svg viewBox="0 0 100 40">
+                            <path class="area" d="M0,25 C20,25 20,15 40,15 C60,15 60,20 80,20 C90,20 95,10 100,10 L100,40 L0,40 Z"/>
+                            <path d="M0,25 C20,25 20,15 40,15 C60,15 60,20 80,20 C90,20 95,10 100,10" stroke="currentColor" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- AOV Card -->
+                <div class="kpi-card kpi-card--aov">
+                    <div class="kpi-card__icon">💳</div>
+                    <div class="kpi-card__change kpi-card__change--negative">
+                        <sw-icon name="regular-arrow-down" size="12" class="icon"></sw-icon>
+                        -2.1%
+                    </div>
+                    <div class="kpi-card__value">€82.50</div>
+                    <div class="kpi-card__label">Average Order Value</div>
+                    <div class="kpi-card__sparkline">
+                        <svg viewBox="0 0 100 40">
+                            <path class="area" d="M0,20 L25,25 L50,22 L75,28 L100,30 L100,40 L0,40 Z"/>
+                            <path d="M0,20 L25,25 L50,22 L75,28 L100,30" stroke="currentColor" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Charts Section -->
+        <section class="dashboard-section">
+            <div class="charts-grid">
+                <!-- Revenue Trend Chart -->
+                <div class="chart-container chart-container--large">
+                    <div class="chart-container__header">
+                        <h3 class="chart-container__title">
+                            <span class="icon">📊</span>
+                            Revenue Trend
+                        </h3>
+                        <div class="chart-container__actions">
+                            <div class="toggle-group">
+                                <button class="toggle-btn active">Day</button>
+                                <button class="toggle-btn">Week</button>
+                                <button class="toggle-btn">Month</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container__body chart-container__body--tall">
+                        <div class="line-chart">
+                            <svg class="line-chart__svg" viewBox="0 0 800 300">
+                                <!-- Grid -->
+                                <g class="grid">
+                                    <line x1="0" y1="50" x2="800" y2="50"/>
+                                    <line x1="0" y1="100" x2="800" y2="100"/>
+                                    <line x1="0" y1="150" x2="800" y2="150"/>
+                                    <line x1="0" y1="200" x2="800" y2="200"/>
+                                    <line x1="0" y1="250" x2="800" y2="250"/>
+                                </g>
+                                <!-- Area -->
+                                <path class="area area--primary" d="M0,200 C100,180 200,160 300,140 C400,120 500,100 600,80 C700,60 800,40 800,40 L800,300 L0,300 Z"/>
+                                <!-- Line -->
+                                <path class="line line--primary" d="M0,200 C100,180 200,160 300,140 C400,120 500,100 600,80 C700,60 800,40 800,40"/>
+                                <!-- Dots -->
+                                <g class="dots">
+                                    <circle class="dot" cx="100" cy="180" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="200" cy="160" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="300" cy="140" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="400" cy="120" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="500" cy="100" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="600" cy="80" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="700" cy="60" stroke="var(--nfx-primary)"/>
+                                    <circle class="dot" cx="800" cy="40" stroke="var(--nfx-primary)"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sales by Category -->
+                <div class="chart-container">
+                    <div class="chart-container__header">
+                        <h3 class="chart-container__title">
+                            <span class="icon">🏷️</span>
+                            Sales by Category
+                        </h3>
+                    </div>
+                    <div class="chart-container__body">
+                        <div class="donut-chart">
+                            <svg class="donut-chart__svg" viewBox="0 0 200 200">
+                                <circle r="70" cx="100" cy="100" stroke="#e5e7eb" stroke-dasharray="0 440"/>
+                                <circle r="70" cx="100" cy="100" stroke="#6366F1" stroke-dasharray="132 440" stroke-dashoffset="0"/>
+                                <circle r="70" cx="100" cy="100" stroke="#3B82F6" stroke-dasharray="88 440" stroke-dashoffset="-132"/>
+                                <circle r="70" cx="100" cy="100" stroke="#10B981" stroke-dasharray="66 440" stroke-dashoffset="-220"/>
+                                <circle r="70" cx="100" cy="100" stroke="#F59E0B" stroke-dasharray="44 440" stroke-dashoffset="-286"/>
+                                <circle r="70" cx="100" cy="100" stroke="#EF4444" stroke-dasharray="110 440" stroke-dashoffset="-330"/>
+                            </svg>
+                            <div class="donut-chart__center">
+                                <div class="donut-chart__center-value">€127.4K</div>
+                                <div class="donut-chart__center-label">Total Sales</div>
+                            </div>
+                        </div>
+                        <div class="donut-chart__legend">
+                            <div class="donut-chart__legend-item">
+                                <span class="donut-chart__legend-item-color" style="background: #6366F1"></span>
+                                <span class="donut-chart__legend-item-label">Electronics</span>
+                                <span class="donut-chart__legend-item-value">30%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <span class="donut-chart__legend-item-color" style="background: #3B82F6"></span>
+                                <span class="donut-chart__legend-item-label">Fashion</span>
+                                <span class="donut-chart__legend-item-value">20%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <span class="donut-chart__legend-item-color" style="background: #10B981"></span>
+                                <span class="donut-chart__legend-item-label">Home</span>
+                                <span class="donut-chart__legend-item-value">15%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <span class="donut-chart__legend-item-color" style="background: #F59E0B"></span>
+                                <span class="donut-chart__legend-item-label">Sports</span>
+                                <span class="donut-chart__legend-item-value">10%</span>
+                            </div>
+                            <div class="donut-chart__legend-item">
+                                <span class="donut-chart__legend-item-color" style="background: #EF4444"></span>
+                                <span class="donut-chart__legend-item-label">Other</span>
+                                <span class="donut-chart__legend-item-value">25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Secondary KPIs -->
+        <section class="dashboard-section">
+            <h2 class="section-title">
+                <span class="icon">🎯</span>
+                Customer Insights
+            </h2>
+            
+            <div class="kpi-grid kpi-grid--featured">
+                <!-- Customer Overview -->
+                <div class="kpi-hero">
+                    <div class="kpi-hero__content">
+                        <h3 class="kpi-hero__title">
+                            <span class="icon">👥</span>
+                            Customer Overview
+                        </h3>
+                        <div class="kpi-hero__metrics">
+                            <div class="kpi-hero__metric">
+                                <div class="kpi-hero__metric-value">15.2K</div>
+                                <div class="kpi-hero__metric-label">Total Customers</div>
+                            </div>
+                            <div class="kpi-hero__metric">
+                                <div class="kpi-hero__metric-value">847</div>
+                                <div class="kpi-hero__metric-label">New This Month</div>
+                            </div>
+                            <div class="kpi-hero__metric">
+                                <div class="kpi-hero__metric-value">€156</div>
+                                <div class="kpi-hero__metric-label">Avg. CLV</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mini KPIs -->
+                <div class="kpi-grid kpi-grid--compact">
+                    <div class="kpi-mini">
+                        <div class="kpi-mini__icon" style="background: linear-gradient(135deg, #6366F1, #A855F7);">
+                            🔄
+                        </div>
+                        <div class="kpi-mini__content">
+                            <div class="kpi-mini__value">68%</div>
+                            <div class="kpi-mini__label">Retention Rate</div>
+                        </div>
+                        <div class="kpi-mini__trend trend trend--up">
+                            <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                            +5%
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-mini">
+                        <div class="kpi-mini__icon" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
+                            ⏱️
+                        </div>
+                        <div class="kpi-mini__content">
+                            <div class="kpi-mini__value">2.3</div>
+                            <div class="kpi-mini__label">Avg. Orders/Customer</div>
+                        </div>
+                        <div class="kpi-mini__trend trend trend--neutral">
+                            <sw-icon name="regular-minus" size="12" class="icon"></sw-icon>
+                            0%
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-mini">
+                        <div class="kpi-mini__icon" style="background: linear-gradient(135deg, #10B981, #059669);">
+                            📧
+                        </div>
+                        <div class="kpi-mini__content">
+                            <div class="kpi-mini__value">24.8%</div>
+                            <div class="kpi-mini__label">Email Open Rate</div>
+                        </div>
+                        <div class="kpi-mini__trend trend trend--up">
+                            <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                            +2.1%
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-mini">
+                        <div class="kpi-mini__icon" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+                            ⭐
+                        </div>
+                        <div class="kpi-mini__content">
+                            <div class="kpi-mini__value">4.8</div>
+                            <div class="kpi-mini__label">Avg. Rating</div>
+                        </div>
+                        <div class="kpi-mini__trend trend trend--up">
+                            <sw-icon name="regular-arrow-up" size="12" class="icon"></sw-icon>
+                            +0.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Activity Feed -->
+        <section class="dashboard-section">
+            <div class="activity-grid">
+                <!-- Recent Orders -->
+                <div class="chart-container">
+                    <div class="chart-container__header">
+                        <h3 class="chart-container__title">
+                            <span class="icon">🛒</span>
+                            Recent Orders
+                        </h3>
+                        <a href="#" class="link">View All →</a>
+                    </div>
+                    <div class="chart-container__body">
+                        <div class="activity-list">
+                            <div class="activity-item" v-for="i in 5" :key="i">
+                                <div class="activity-item__icon">
+                                    <img :src="'https://ui-avatars.com/api/?name=Customer+' + i + '&background=random'" alt="Customer">
+                                </div>
+                                <div class="activity-item__content">
+                                    <div class="activity-item__title">Order #{{ 10000 + i }}</div>
+                                    <div class="activity-item__subtitle">Customer {{ i }} • 2 items</div>
+                                </div>
+                                <div class="activity-item__value">€{{ (Math.random() * 200 + 50).toFixed(2) }}</div>
+                                <div class="activity-item__time">{{ i * 2 }}m ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top Products -->
+                <div class="chart-container">
+                    <div class="chart-container__header">
+                        <h3 class="chart-container__title">
+                            <span class="icon">🏆</span>
+                            Top Products
+                        </h3>
+                    </div>
+                    <div class="chart-container__body">
+                        <div class="bar-chart" style="height: 200px;">
+                            <div class="bar-chart__bar" v-for="(height, i) in [85, 70, 60, 45, 30]" :key="i" :style="'height: ' + height + '%'">
+                                <div class="bar-chart__value">{{ height }}%</div>
+                                <div class="bar-chart__label">P{{ i + 1 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Sidebar Navigation -->
+    <aside class="nfx-dashboard-sidebar liquid-card">
+        <div class="sidebar-header">
+            <h3>Analytics Menu</h3>
+        </div>
+        <nfx-analytics-tree
+            v-if="!modulStarting"
+            :showTree="true"
+            :activeStatisticName="activeStatisticName"
+            @nfx-statistic-selection="changeStatistic">
+        </nfx-analytics-tree>
+        <div class="sidebar-footer">
+            <a :href="manualLink" target="_blank" rel="noopener" class="help-link">
+                <sw-icon name="regular-question-circle" size="16"></sw-icon>
+                Help & Documentation
+            </a>
+        </div>
+    </aside>
+</div>
+
+<style>
+/* Dashboard Layout Styles */
+.nfx-dashboard-layout {
+    min-height: 100vh;
+    background: var(--nfx-bg-primary);
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr 280px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+/* Background Layer */
+.background-layer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.6;
+    animation: float 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--nfx-primary), transparent);
+    top: -200px;
+    left: -200px;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--nfx-secondary), transparent);
+    bottom: -100px;
+    right: -100px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--nfx-accent), transparent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -10s;
+}
+
+/* Header */
+.nfx-dashboard-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    gap: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.nfx-dashboard-header__left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nfx-dashboard-header__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .icon {
+        font-size: 2rem;
+    }
+}
+
+.nfx-dashboard-header__subtitle {
+    font-size: 0.875rem;
+    color: var(--nfx-text-secondary);
+}
+
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.nfx-dashboard-header__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Main Content */
+.nfx-dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 5;
+    overflow-y: auto;
+}
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .icon {
+        font-size: 1.5rem;
+    }
+}
+
+/* Charts Grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    
+    @media (max-width: 1280px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-container--large {
+    grid-column: span 1;
+}
+
+/* Activity Grid */
+.activity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Activity List */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        background: rgba(var(--nfx-primary-rgb), 0.05);
+    }
+    
+    &__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        overflow: hidden;
+        flex-shrink: 0;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    &__content {
+        flex: 1;
+    }
+    
+    &__title {
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+    
+    &__subtitle {
+        font-size: 0.75rem;
+        color: var(--nfx-text-secondary);
+    }
+    
+    &__value {
+        font-weight: 700;
+        color: var(--nfx-primary);
+    }
+    
+    &__time {
+        font-size: 0.75rem;
+        color: var(--nfx-text-tertiary);
+    }
+}
+
+/* Sidebar */
+.nfx-dashboard-sidebar {
+    position: sticky;
+    top: 1.5rem;
+    height: calc(100vh - 3rem);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    z-index: 5;
+}
+
+.sidebar-header {
+    margin-bottom: 1.5rem;
+    
+    h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--nfx-text-secondary);
+    }
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--nfx-border-light);
+}
+
+.help-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--nfx-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+    
+    &:hover {
+        color: var(--nfx-primary);
+    }
+}
+
+/* Toggle Group */
+.toggle-group {
+    display: flex;
+    background: rgba(var(--nfx-bg-secondary-rgb), 0.5);
+    border-radius: 12px;
+    padding: 4px;
+}
+
+.toggle-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--nfx-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        color: var(--nfx-text-primary);
+    }
+    
+    &.active {
+        background: white;
+        color: var(--nfx-text-primary);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .nfx-dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .nfx-dashboard-sidebar {
+        display: none;
+    }
+}
+</style>
+{% endblock %}

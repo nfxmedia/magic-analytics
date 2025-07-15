@@ -42,10 +42,14 @@ $theme-dark-violet: (
   chart-5: #EF4444,
   chart-6: #EC4899,
   
-  // Gradients
-  gradient-primary: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%),
-  gradient-accent: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%),
-  gradient-bg: radial-gradient(circle at top right, #2A2A4E 0%, #0F0F1E 100%)
+  // Gradients - Bold and vibrant
+  gradient-primary: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%),
+  gradient-accent: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #8B5CF6 100%),
+  gradient-bg: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, #0F0F1E 50%),
+  
+  // Additional properties for bold effects
+  glow-primary: 0 0 40px rgba(139, 92, 246, 0.5),
+  glow-accent: 0 0 30px rgba(236, 72, 153, 0.5)
 );
 
 // Theme 2: Light Apple Style (Based on second sample)

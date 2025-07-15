@@ -1,27 +1,30 @@
-// Background Graphics and Patterns
-// ================================
+// Bold Background Graphics and Patterns
+// =====================================
 
-// Base background mixin
-@mixin theme-background($gradient, $pattern: true) {
+// Bold gradient background mixin
+@mixin bold-theme-background($gradient1, $gradient2: null, $animate: false) {
     position: relative;
-    background: $gradient;
+    background: $gradient1;
     
-    @if $pattern {
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.03;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
-            pointer-events: none;
-        }
+    @if $gradient2 {
+        background-size: 200% 200%;
+        background-image: $gradient1, $gradient2;
+        background-blend-mode: overlay;
+    }
+    
+    @if $animate {
+        animation: gradientShift 20s ease infinite;
+    }
+    
+    // Noise texture overlay
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.02;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        mix-blend-mode: overlay;
     }
 }
 
@@ -48,15 +51,18 @@
     }
 }
 
-// Theme-specific backgrounds
+// Bold Theme-specific backgrounds
 // Light Apple Theme
 .theme-light-apple {
     .nfx-modern-layout {
-        @include theme-background(
+        @include bold-theme-background(
             linear-gradient(135deg, 
                 #ffffff 0%, 
-                #f8f9fa 50%, 
-                #e9ecef 100%)
+                #f3f4f6 25%, 
+                #e5e7eb 50%, 
+                #f9fafb 100%),
+            radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+            true
         );
         @include floating-shapes(#007AFF, #5856D6);
     }
@@ -91,13 +97,15 @@
 // Dark Violet Theme
 .theme-dark-violet {
     .nfx-modern-layout {
-        @include theme-background(
+        @include bold-theme-background(
             linear-gradient(135deg, 
                 #0F0F1E 0%, 
-                #1A1A2E 50%, 
-                #16213E 100%)
+                #1A1A2E 40%, 
+                #252542 100%),
+            radial-gradient(circle at top left, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+            true
         );
-        @include floating-shapes(#6366F1, #A855F7);
+        @include floating-shapes(#8B5CF6, #EC4899);
     }
     
     .floating-gradient {
@@ -130,13 +138,15 @@
 // Pastel Theme
 .theme-pastel {
     .nfx-modern-layout {
-        @include theme-background(
+        @include bold-theme-background(
             linear-gradient(135deg, 
                 #FFF5F5 0%, 
                 #FFF0F6 25%, 
                 #F0F9FF 50%, 
                 #F0FDFA 75%, 
-                #FFFBEB 100%)
+                #FFFBEB 100%),
+            radial-gradient(circle at 60% 40%, rgba(183, 148, 244, 0.08) 0%, transparent 40%),
+            false
         );
         @include floating-shapes(#F472B6, #60A5FA);
     }
@@ -181,17 +191,17 @@
 // 90s Retro Theme
 .theme-retro-90s {
     .nfx-modern-layout {
-        @include theme-background(
+        @include bold-theme-background(
             linear-gradient(135deg, 
                 #FF006E 0%, 
                 #8338EC 25%, 
                 #3A86FF 50%, 
                 #06FFB4 75%, 
                 #FFBE0B 100%),
-            false
+            null,
+            true
         );
         background-size: 400% 400%;
-        animation: gradientShift 20s ease infinite;
         
         &::before {
             content: '';
