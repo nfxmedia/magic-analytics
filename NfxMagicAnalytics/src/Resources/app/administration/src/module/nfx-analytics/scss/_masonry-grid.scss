@@ -1,0 +1,466 @@
+// Masonry Grid Styles
+// ==================
+
+.nfx-masonry-grid {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    
+    .masonry-container {
+        position: relative;
+        min-height: 200px;
+        width: 100%;
+        
+        // Smooth transitions for layout changes
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        
+        // Optimize for performance
+        will-change: transform;
+        transform: translateZ(0);
+        
+        // Handle overflow for drag operations
+        &.dragging {
+            overflow: visible;
+        }
+    }
+    
+    .masonry-item {
+        position: absolute;
+        background: #fff;
+        border: 1px solid #e0e6ed;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        cursor: pointer;
+        overflow: hidden;
+        
+        // Hardware acceleration for smooth animations
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        
+        // Prevent text selection during drag
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        
+        // Hover effects
+        &:hover {
+            transform: translateY(-2px) translateZ(0);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: #d1d9e2;
+            
+            .drag-handle {
+                opacity: 1;
+            }
+        }
+        
+        // Draggable state
+        &.draggable {
+            cursor: grab;
+            
+            &:active {
+                cursor: grabbing;
+            }
+        }
+        
+        // Dragging state
+        &.dragging {
+            opacity: 0.7;
+            transform: scale(1.02) translateZ(0);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            cursor: grabbing;
+            
+            .drag-handle {
+                opacity: 1;
+            }
+        }
+        
+        // Content wrapper
+        .masonry-item-content {
+            padding: 16px;
+            width: 100%;
+            height: 100%;
+            
+            // Prevent content from interfering with drag
+            pointer-events: none;
+            
+            // Re-enable pointer events for interactive elements
+            * {
+                pointer-events: auto;
+            }
+        }
+        
+        // Default item content styling
+        .default-item-content {
+            h3 {
+                margin: 0 0 8px 0;
+                font-size: 16px;
+                font-weight: 600;
+                color: #2d3748;
+                line-height: 1.4;
+            }
+            
+            p {
+                margin: 0;
+                font-size: 14px;
+                color: #718096;
+                line-height: 1.5;
+            }
+        }
+        
+        // Drag handle
+        .drag-handle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e0e6ed;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            cursor: grab;
+            color: #718096;
+            
+            &:hover {
+                background: #f7fafc;
+                border-color: #cbd5e0;
+                color: #4a5568;
+            }
+            
+            &.visible {
+                opacity: 1;
+            }
+        }
+    }
+    
+    // Drop indicator
+    .masonry-drop-indicator {
+        position: absolute;
+        background: rgba(66, 153, 225, 0.1);
+        border: 2px dashed #4299e1;
+        border-radius: 8px;
+        pointer-events: none;
+        z-index: 999;
+        transition: all 0.2s ease;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #4299e1;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: pulse 1s infinite;
+        }
+    }
+    
+    // Empty state
+    .masonry-empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        width: 100%;
+        
+        .empty-state-content {
+            text-align: center;
+            color: #718096;
+            
+            h3 {
+                margin: 16px 0 8px 0;
+                font-size: 18px;
+                font-weight: 600;
+                color: #4a5568;
+            }
+            
+            p {
+                margin: 0;
+                font-size: 14px;
+                max-width: 300px;
+            }
+        }
+    }
+}
+
+// Loading skeleton
+.nfx-masonry-grid-loading {
+    .masonry-skeleton {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        
+        .skeleton-item {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 16px;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+            
+            .skeleton-header {
+                height: 20px;
+                background: #e2e8f0;
+                border-radius: 4px;
+                margin-bottom: 12px;
+                animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            }
+            
+            .skeleton-content {
+                .skeleton-line {
+                    height: 12px;
+                    background: #e2e8f0;
+                    border-radius: 4px;
+                    margin-bottom: 8px;
+                    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+                    
+                    &.short {
+                        width: 60%;
+                    }
+                    
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Responsive breakpoints
+@media (max-width: 1400px) {
+    .nfx-masonry-grid {
+        .masonry-item {
+            .masonry-item-content {
+                padding: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .nfx-masonry-grid {
+        .masonry-item {
+            .masonry-item-content {
+                padding: 12px;
+            }
+            
+            .default-item-content {
+                h3 {
+                    font-size: 15px;
+                }
+                
+                p {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .nfx-masonry-grid {
+        .masonry-container {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        
+        .masonry-item {
+            .drag-handle {
+                width: 28px;
+                height: 28px;
+                top: 12px;
+                right: 12px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .nfx-masonry-grid {
+        .masonry-container {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        .masonry-item {
+            .masonry-item-content {
+                padding: 12px;
+            }
+            
+            .default-item-content {
+                h3 {
+                    font-size: 14px;
+                    margin-bottom: 6px;
+                }
+                
+                p {
+                    font-size: 12px;
+                }
+            }
+            
+            .drag-handle {
+                opacity: 1; // Always visible on mobile
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .nfx-masonry-grid {
+        .masonry-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .masonry-item {
+            .masonry-item-content {
+                padding: 16px;
+            }
+            
+            .default-item-content {
+                h3 {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                }
+                
+                p {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+    .nfx-masonry-grid {
+        .masonry-item {
+            .drag-handle {
+                opacity: 1;
+                width: 32px;
+                height: 32px;
+                top: 8px;
+                right: 8px;
+            }
+            
+            &:hover {
+                transform: none;
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.3;
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background: #e2e8f0;
+    }
+    50% {
+        background: #cbd5e0;
+    }
+    100% {
+        background: #e2e8f0;
+    }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+    .nfx-masonry-grid {
+        .masonry-item {
+            border-color: #000;
+            
+            &:hover {
+                border-color: #000;
+                box-shadow: 0 0 0 2px #000;
+            }
+            
+            &.dragging {
+                border-color: #000;
+                box-shadow: 0 0 0 3px #000;
+            }
+        }
+        
+        .masonry-drop-indicator {
+            border-color: #000;
+            background: rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .nfx-masonry-grid {
+        .masonry-container,
+        .masonry-item {
+            transition: none;
+        }
+        
+        .masonry-drop-indicator {
+            &::before {
+                animation: none;
+            }
+        }
+        
+        .skeleton-item,
+        .skeleton-header,
+        .skeleton-line {
+            animation: none;
+        }
+    }
+}
+
+// Print styles
+@media print {
+    .nfx-masonry-grid {
+        .masonry-container {
+            position: static;
+            height: auto !important;
+        }
+        
+        .masonry-item {
+            position: static;
+            break-inside: avoid;
+            page-break-inside: avoid;
+            margin-bottom: 16px;
+            box-shadow: none;
+            border: 1px solid #ccc;
+            
+            .drag-handle {
+                display: none;
+            }
+        }
+        
+        .masonry-drop-indicator {
+            display: none;
+        }
+    }
+}

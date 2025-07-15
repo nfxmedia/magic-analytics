@@ -870,6 +870,17 @@
 		"data": {
 			"others": "all others"
 		},
+		"animationDemo": {
+			"title": "Animation Demo",
+			"counters": "Animated Counters",
+			"progressRings": "Progress Rings",
+			"morphingNumbers": "Morphing Numbers",
+			"waveProgress": "Wave Progress",
+			"configuration": "Configuration",
+			"waveEffect": "Wave Effect",
+			"morphing": "Morphing Animation",
+			"celebrations": "Celebration Effects"
+		},
 		"weekdays": {
 			"monday": "Monday",
 			"tuesday": "Tuesday",

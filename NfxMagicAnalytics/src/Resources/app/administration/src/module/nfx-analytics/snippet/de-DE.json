@@ -844,6 +844,17 @@
 		"data": {
 			"others": "alle weiteren"
 		},
+		"animationDemo": {
+			"title": "Animation Demo",
+			"counters": "Animierte Zähler",
+			"progressRings": "Fortschrittsringe",
+			"morphingNumbers": "Morphing Nummern",
+			"waveProgress": "Wellen-Fortschritt",
+			"configuration": "Konfiguration",
+			"waveEffect": "Welleneffekt",
+			"morphing": "Morphing Animation",
+			"celebrations": "Feiereffekte"
+		},
 		"weekdays": {
 			"monday": "Montag",
 			"tuesday": "Dienstag",

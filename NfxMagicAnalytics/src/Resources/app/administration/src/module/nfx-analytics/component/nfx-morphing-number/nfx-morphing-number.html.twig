@@ -1,0 +1,18 @@
+{% block nfx_morphing_number %}
+    <div class="nfx-morphing-number" :class="`nfx-morphing-number--${morphStyle}`">
+        <span class="nfx-morphing-number__prefix">{{ prefix }}</span>
+        
+        <div class="nfx-morphing-number__container" ref="digitContainer">
+            <span
+                v-for="(digit, index) in digitArray"
+                :key="`digit-${index}`"
+                class="nfx-morphing-number__digit digit"
+                :style="getDigitStyle(digit, index)"
+            >
+                {{ digit }}
+            </span>
+        </div>
+        
+        <span class="nfx-morphing-number__suffix">{{ suffix }}</span>
+    </div>
+{% endblock %}

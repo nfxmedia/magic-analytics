@@ -1,0 +1,196 @@
+{% block nfx_theme_switcher_advanced %}
+    <div class="nfx-theme-switcher-advanced">
+        <!-- Main Theme Toggle -->
+        <div class="nfx-theme-toggle-container">
+            <div class="nfx-theme-toggle" :class="{ 'is-transitioning': isTransitioning }">
+                <div class="nfx-theme-track">
+                    <div class="nfx-theme-slider" 
+                         :class="{ 'is-dark': currentTheme === 'dark' }"
+                         :style="{ transform: `translateX(${currentTheme === 'dark' ? '100%' : '0'})` }">
+                        <div class="nfx-theme-icon">
+                            <sw-icon :name="themes[currentTheme].icon" size="16"></sw-icon>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Theme Options -->
+                <div class="nfx-theme-options">
+                    <button 
+                        v-for="(theme, key) in themes" 
+                        :key="key"
+                        class="nfx-theme-option"
+                        :class="{ 'is-active': currentTheme === key }"
+                        @click="switchTheme(key, $event)"
+                        :disabled="isTransitioning">
+                        
+                        <div class="nfx-theme-option-icon">
+                            <sw-icon :name="theme.icon" size="16"></sw-icon>
+                        </div>
+                        
+                        <div class="nfx-theme-option-content">
+                            <div class="nfx-theme-option-title">{{ theme.name }}</div>
+                            <div class="nfx-theme-option-description" v-if="theme.description">
+                                {{ theme.description }}
+                            </div>
+                        </div>
+                        
+                        <div class="nfx-theme-option-indicator">
+                            <div class="nfx-theme-option-ring"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auto-Switch Settings -->
+        <div class="nfx-auto-switch-panel" v-if="currentTheme === 'auto' || autoSwitchEnabled">
+            <div class="nfx-auto-switch-header">
+                <div class="nfx-auto-switch-title">
+                    <sw-icon name="regular-clock" size="16"></sw-icon>
+                    Auto-Switch Settings
+                </div>
+                
+                <sw-switch 
+                    v-model="autoSwitchEnabled"
+                    @change="toggleAutoSwitch">
+                </sw-switch>
+            </div>
+            
+            <div class="nfx-auto-switch-content" v-if="autoSwitchEnabled">
+                <div class="nfx-time-settings">
+                    <div class="nfx-time-setting">
+                        <label class="nfx-time-label">
+                            <sw-icon name="regular-sun" size="14"></sw-icon>
+                            Light Mode Start
+                        </label>
+                        <sw-field 
+                            type="time" 
+                            v-model="autoSwitchTimes.lightStart"
+                            @change="saveThemePreference">
+                        </sw-field>
+                    </div>
+                    
+                    <div class="nfx-time-setting">
+                        <label class="nfx-time-label">
+                            <sw-icon name="regular-moon" size="14"></sw-icon>
+                            Dark Mode Start
+                        </label>
+                        <sw-field 
+                            type="time" 
+                            v-model="autoSwitchTimes.darkStart"
+                            @change="saveThemePreference">
+                        </sw-field>
+                    </div>
+                </div>
+                
+                <div class="nfx-auto-switch-preview">
+                    <div class="nfx-timeline">
+                        <div class="nfx-timeline-track">
+                            <div class="nfx-timeline-segment light-segment">
+                                <div class="nfx-timeline-label">Light</div>
+                            </div>
+                            <div class="nfx-timeline-segment dark-segment">
+                                <div class="nfx-timeline-label">Dark</div>
+                            </div>
+                        </div>
+                        <div class="nfx-timeline-indicators">
+                            <div class="nfx-timeline-indicator light-indicator">
+                                {{ autoSwitchTimes.lightStart }}
+                            </div>
+                            <div class="nfx-timeline-indicator dark-indicator">
+                                {{ autoSwitchTimes.darkStart }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Preview -->
+        <div class="nfx-theme-preview" v-if="isTransitioning">
+            <div class="nfx-theme-preview-content">
+                <div class="nfx-preview-card">
+                    <div class="nfx-preview-header">
+                        <div class="nfx-preview-title">Analytics Dashboard</div>
+                        <div class="nfx-preview-actions">
+                            <div class="nfx-preview-dot"></div>
+                            <div class="nfx-preview-dot"></div>
+                            <div class="nfx-preview-dot"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="nfx-preview-chart">
+                        <div class="nfx-preview-chart-line"></div>
+                        <div class="nfx-preview-chart-bars">
+                            <div class="nfx-preview-bar" style="height: 60%"></div>
+                            <div class="nfx-preview-bar" style="height: 80%"></div>
+                            <div class="nfx-preview-bar" style="height: 40%"></div>
+                            <div class="nfx-preview-bar" style="height: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="nfx-preview-stats">
+                        <div class="nfx-preview-stat">
+                            <div class="nfx-preview-stat-value">1,234</div>
+                            <div class="nfx-preview-stat-label">Orders</div>
+                        </div>
+                        <div class="nfx-preview-stat">
+                            <div class="nfx-preview-stat-value">€56,789</div>
+                            <div class="nfx-preview-stat-label">Revenue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transition Effects -->
+        <div class="nfx-transition-effects">
+            <!-- Morphing Overlay -->
+            <div class="nfx-morph-overlay" 
+                 :class="{ 'is-active': isTransitioning }"
+                 :style="{ 
+                     background: `radial-gradient(circle at ${ripplePosition.x}px ${ripplePosition.y}px, var(--nfx-primary) 0%, transparent 70%)`,
+                     opacity: morphProgress * 0.3 
+                 }">
+            </div>
+            
+            <!-- Ripple Effect -->
+            <div class="nfx-theme-ripple" 
+                 v-if="showRipple"
+                 :style="{ 
+                     left: ripplePosition.x + 'px',
+                     top: ripplePosition.y + 'px',
+                     width: '40px',
+                     height: '40px',
+                     marginLeft: '-20px',
+                     marginTop: '-20px'
+                 }">
+            </div>
+            
+            <!-- Particle System -->
+            <div class="nfx-particles" v-if="isTransitioning">
+                <div class="nfx-particle" 
+                     v-for="i in 20" 
+                     :key="i"
+                     :style="{ 
+                         left: Math.random() * 100 + '%',
+                         top: Math.random() * 100 + '%',
+                         animationDelay: Math.random() * 2 + 's'
+                     }">
+                </div>
+            </div>
+        </div>
+
+        <!-- Transition Progress -->
+        <div class="nfx-transition-progress" v-if="isTransitioning">
+            <div class="nfx-progress-bar">
+                <div class="nfx-progress-fill" 
+                     :style="{ width: (morphProgress * 100) + '%' }">
+                </div>
+            </div>
+            <div class="nfx-progress-text">
+                Switching to {{ themes[currentTheme].name }} theme...
+            </div>
+        </div>
+    </div>
+{% endblock %}

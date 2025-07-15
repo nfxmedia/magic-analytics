@@ -1,0 +1,542 @@
+// Analog Clock Component Styles
+.nfx-analog-clock {
+    --clock-size: 240px;
+    --hand-width: 3px;
+    --glow-color: rgba(99, 102, 241, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    
+    position: relative;
+    display: inline-block;
+    
+    &__container {
+        position: relative;
+        width: var(--clock-size);
+        height: calc(var(--clock-size) + 80px);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+    
+    &__background {
+        position: absolute;
+        inset: 0;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50%;
+        border: 1px solid var(--glass-border);
+        box-shadow: 
+            0 8px 32px 0 rgba(31, 38, 135, 0.37),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    
+    &__face {
+        position: relative;
+        width: var(--clock-size);
+        height: var(--clock-size);
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    &__outer-ring {
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        background: radial-gradient(circle, transparent 70%, var(--glow-color) 100%);
+        opacity: calc(var(--glow-intensity, 1) * 0.3);
+        animation: pulse 2s ease-in-out infinite;
+        filter: blur(10px);
+    }
+    
+    &__markers {
+        position: absolute;
+        inset: 10px;
+        
+        .nfx-analog-clock__hour-marker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            
+            &::before {
+                content: '';
+                width: 3px;
+                height: 15px;
+                background: rgba(0, 0, 0, 0.8);
+                border-radius: 2px;
+                margin-top: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        .nfx-analog-clock__hour-number {
+            position: absolute;
+            top: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.7);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+    }
+    
+    &__minute-markers {
+        position: absolute;
+        inset: 5px;
+        
+        .nfx-analog-clock__minute-marker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            
+            &::before {
+                content: '';
+                width: 1px;
+                height: 5px;
+                background: rgba(0, 0, 0, 0.3);
+                margin-top: 10px;
+            }
+            
+            &--major::before {
+                width: 2px;
+                height: 10px;
+                background: rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+    
+    &__hands {
+        position: absolute;
+        inset: 0;
+    }
+    
+    &__hand {
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        transform-origin: center bottom;
+        transition: none;
+        
+        &--hour {
+            width: 6px;
+            height: 35%;
+            margin-left: -3px;
+            
+            .nfx-analog-clock__hand-inner {
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+                border-radius: 3px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+        }
+        
+        &--minute {
+            width: 4px;
+            height: 45%;
+            margin-left: -2px;
+            
+            .nfx-analog-clock__hand-inner {
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+                border-radius: 2px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            }
+        }
+        
+        &--second {
+            width: 2px;
+            height: 48%;
+            margin-left: -1px;
+            
+            .nfx-analog-clock__hand-inner {
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to top, #ef4444, #dc2626);
+                border-radius: 1px;
+                box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            }
+            
+            .nfx-analog-clock__hand-tail {
+                position: absolute;
+                width: 100%;
+                height: 20%;
+                bottom: -20%;
+                background: linear-gradient(to bottom, #ef4444, #dc2626);
+                border-radius: 1px;
+            }
+        }
+    }
+    
+    &__center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 12px;
+        height: 12px;
+        margin: -6px 0 0 -6px;
+        background: radial-gradient(circle, #1a1a1a, #000);
+        border-radius: 50%;
+        box-shadow: 
+            0 0 10px rgba(0, 0, 0, 0.5),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        z-index: 10;
+    }
+    
+    &__digital {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 10px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        margin-top: 10px;
+    }
+    
+    &__digital-time {
+        font-size: 18px;
+        font-weight: 600;
+        font-family: 'Monaco', 'Consolas', monospace;
+        color: rgba(0, 0, 0, 0.8);
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: color 0.2s;
+        
+        &:hover {
+            color: var(--glow-color);
+        }
+    }
+    
+    &__digital-date {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        margin-top: 2px;
+        cursor: pointer;
+        transition: color 0.2s;
+        
+        &:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+    }
+    
+    &__timezone {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+    }
+    
+    &__timezone-button {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.7);
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    }
+    
+    &__timezone-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 8px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        min-width: 200px;
+    }
+    
+    &__timezone-option {
+        padding: 10px 16px;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        
+        &.is--selected {
+            background: #6366f1;
+            color: white;
+        }
+    }
+    
+    // Expanded mode
+    &--expanded {
+        .nfx-analog-clock__container {
+            margin-bottom: 20px;
+        }
+    }
+    
+    &__expanded {
+        padding: 20px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        margin-top: 20px;
+    }
+    
+    &__controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    &__slider {
+        margin-bottom: 15px;
+        
+        label {
+            display: block;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+            margin-bottom: 5px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            outline: none;
+            
+            &::-webkit-slider-thumb {
+                appearance: none;
+                width: 16px;
+                height: 16px;
+                background: #6366f1;
+                border-radius: 50%;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            }
+        }
+    }
+    
+    &__world-clocks {
+        margin-top: 20px;
+        
+        h4 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+    }
+    
+    &__world-clocks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    &__world-clock-item {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    &__world-clock-name {
+        font-size: 11px;
+        color: rgba(0, 0, 0, 0.6);
+        margin-bottom: 4px;
+    }
+    
+    &__world-clock-time {
+        font-size: 16px;
+        font-weight: 600;
+        font-family: 'Monaco', 'Consolas', monospace;
+        color: rgba(0, 0, 0, 0.8);
+    }
+    
+    &__hint {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        pointer-events: none;
+        animation: fadeInOut 2s ease;
+        z-index: 30;
+    }
+    
+    // Theme variations
+    &--theme-neon {
+        --glow-color: rgba(0, 255, 163, 0.6);
+        --glass-bg: rgba(0, 0, 0, 0.2);
+        --glass-border: rgba(0, 255, 163, 0.3);
+        
+        .nfx-analog-clock__hand--second .nfx-analog-clock__hand-inner {
+            background: linear-gradient(to top, #00ff88, #00cc66);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+        }
+    }
+    
+    &--theme-vintage {
+        --glow-color: rgba(139, 69, 19, 0.3);
+        --glass-bg: rgba(245, 222, 179, 0.2);
+        --glass-border: rgba(139, 69, 19, 0.3);
+        
+        .nfx-analog-clock__background {
+            background: 
+                radial-gradient(circle at center, rgba(245, 222, 179, 0.1), rgba(139, 69, 19, 0.1)),
+                repeating-conic-gradient(from 0deg at center, transparent 0deg, rgba(139, 69, 19, 0.05) 30deg);
+        }
+    }
+    
+    &--theme-minimal {
+        --glass-bg: rgba(255, 255, 255, 0);
+        --glass-border: rgba(0, 0, 0, 0.1);
+        
+        .nfx-analog-clock__outer-ring {
+            display: none;
+        }
+        
+        .nfx-analog-clock__background {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+    }
+    
+    &--theme-cyberpunk {
+        --glow-color: rgba(255, 0, 128, 0.6);
+        --glass-bg: rgba(10, 0, 30, 0.3);
+        --glass-border: rgba(255, 0, 128, 0.4);
+        
+        .nfx-analog-clock__hand--second .nfx-analog-clock__hand-inner {
+            background: linear-gradient(to top, #ff0080, #ff00ff);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+        }
+        
+        .nfx-analog-clock__digital-time {
+            text-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+        }
+    }
+    
+    // Pendulum for vintage theme
+    &__pendulum {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform-origin: top center;
+        transition: transform 0.1s linear;
+    }
+    
+    &__pendulum-rod {
+        width: 2px;
+        height: 80px;
+        background: rgba(139, 69, 19, 0.6);
+        margin-left: -1px;
+    }
+    
+    &__pendulum-bob {
+        width: 20px;
+        height: 20px;
+        background: radial-gradient(circle, #8b4513, #654321);
+        border-radius: 50%;
+        margin-left: -10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+}
+
+// Animations
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: calc(var(--glow-intensity, 1) * 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: calc(var(--glow-intensity, 1) * 0.5);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+// Transitions
+.timezone-dropdown-enter-active,
+.timezone-dropdown-leave-active {
+    transition: all 0.3s ease;
+}
+
+.timezone-dropdown-enter-from,
+.timezone-dropdown-leave-to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.expand-enter-active,
+.expand-leave-active {
+    transition: all 0.4s ease;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.world-clocks-enter-active,
+.world-clocks-leave-active,
+.calendar-enter-active,
+.calendar-leave-active {
+    transition: all 0.3s ease;
+}
+
+.world-clocks-enter-from,
+.world-clocks-leave-to,
+.calendar-enter-from,
+.calendar-leave-to {
+    opacity: 0;
+    height: 0;
+}

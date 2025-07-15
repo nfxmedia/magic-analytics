@@ -1,0 +1,98 @@
+{% block nfx_progress_ring %}
+    <div class="nfx-progress-ring" :class="{ 'celebrating': showCelebration }">
+        <svg 
+            :width="size" 
+            :height="size" 
+            :viewBox="viewBox"
+            :style="{ transform: `scale(${pulseScale})` }"
+        >
+            <!-- Gradient definition -->
+            <defs>
+                <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop
+                        v-for="(color, index) in gradientColors"
+                        :key="index"
+                        :offset="`${(index / (gradientColors.length - 1)) * 100}%`"
+                        :stop-color="color"
+                    />
+                </linearGradient>
+                
+                <!-- Wave mask for liquid fill effect -->
+                <mask v-if="showWave" :id="`${gradientId}-mask`">
+                    <rect x="0" y="0" :width="size" :height="size" fill="black"/>
+                    <circle
+                        :cx="center"
+                        :cy="center"
+                        :r="radius"
+                        fill="white"
+                    />
+                </mask>
+            </defs>
+            
+            <!-- Background circle -->
+            <circle
+                class="nfx-progress-ring__background"
+                :cx="center"
+                :cy="center"
+                :r="radius"
+                :stroke="backgroundColor"
+                :stroke-width="strokeWidth"
+                fill="none"
+            />
+            
+            <!-- Progress circle -->
+            <circle
+                class="nfx-progress-ring__progress"
+                :cx="center"
+                :cy="center"
+                :r="radius"
+                :stroke="`url(#${gradientId})`"
+                :stroke-width="strokeWidth"
+                fill="none"
+                :stroke-dasharray="circumference"
+                :stroke-dashoffset="strokeDashoffset"
+                transform-origin="center"
+                :transform="`rotate(-90 ${center} ${center})`"
+            />
+            
+            <!-- Wave fill effect -->
+            <polygon
+                v-if="showWave"
+                class="nfx-progress-ring__wave"
+                :points="wavePoints"
+                :fill="`url(#${gradientId})`"
+                :mask="`url(#${gradientId}-mask)`"
+                opacity="0.3"
+            />
+            
+            <!-- Value text -->
+            <text
+                v-if="showValue"
+                class="nfx-progress-ring__value"
+                :x="center"
+                :y="center"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                <tspan class="value">{{ formattedValue }}</tspan>
+                <tspan class="percent">%</tspan>
+            </text>
+        </svg>
+        
+        <!-- Celebration particles -->
+        <div v-if="showCelebration" class="nfx-progress-ring__particles">
+            <div
+                v-for="particle in particles"
+                :key="particle.id"
+                class="particle"
+                :style="{
+                    transform: `translate(${center + particle.x}px, ${center + particle.y}px) rotate(${particle.rotation}deg)`,
+                    width: `${particle.size}px`,
+                    height: `${particle.size}px`,
+                    backgroundColor: particle.color,
+                    opacity: particle.opacity
+                }"
+            ></div>
+        </div>
+    </div>
+{% endblock %}

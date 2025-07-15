@@ -1,0 +1,443 @@
+{% block nfx_particles_bg %}
+<div class="nfx-particles-bg">
+    <canvas 
+        ref="canvas"
+        :id="canvasId"
+        class="nfx-particles-bg__canvas"
+    ></canvas>
+    
+    <!-- Configuration Panel Toggle -->
+    <button 
+        class="nfx-particles-bg__config-toggle"
+        @click="showConfig = !showConfig"
+        title="Toggle particle configuration"
+    >
+        <sw-icon name="default-cog" size="20px"></sw-icon>
+    </button>
+    
+    <!-- Configuration Panel -->
+    <transition name="slide-in">
+        <div v-if="showConfig" class="nfx-particles-bg__config">
+            <div class="nfx-particles-bg__config-header">
+                <h3>Particle Configuration</h3>
+                <button @click="showConfig = false" class="close-btn">
+                    <sw-icon name="default-x-circle" size="16px"></sw-icon>
+                </button>
+            </div>
+            
+            <div class="nfx-particles-bg__config-content">
+                <!-- Theme Selection -->
+                <div class="config-section">
+                    <label>Theme</label>
+                    <sw-select-field
+                        v-model="currentTheme"
+                        :options="availableThemes"
+                        @change="changeTheme($event)"
+                        size="small"
+                    >
+                        <option v-for="theme in availableThemes" :key="theme" :value="theme">
+                            {{ theme.charAt(0).toUpperCase() + theme.slice(1) }}
+                        </option>
+                    </sw-select-field>
+                </div>
+                
+                <!-- Particle Count -->
+                <div class="config-section">
+                    <label>Particle Count: {{ currentConfig.particleCount }}</label>
+                    <sw-slider-field
+                        v-model="currentConfig.particleCount"
+                        :min="10"
+                        :max="300"
+                        :step="10"
+                        @change="updateConfig"
+                    ></sw-slider-field>
+                </div>
+                
+                <!-- Particle Types -->
+                <div class="config-section">
+                    <label>Particle Types</label>
+                    <div class="particle-types">
+                        <sw-checkbox-field
+                            v-for="type in particleTypes"
+                            :key="type"
+                            :value="currentConfig.activeTypes.includes(type)"
+                            @change="toggleParticleType(type)"
+                            :label="type.charAt(0).toUpperCase() + type.slice(1)"
+                        ></sw-checkbox-field>
+                    </div>
+                </div>
+                
+                <!-- Speed Control -->
+                <div class="config-section">
+                    <label>Speed: {{ currentConfig.speed }}</label>
+                    <sw-slider-field
+                        v-model="currentConfig.speed"
+                        :min="0.1"
+                        :max="2"
+                        :step="0.1"
+                        :digits="1"
+                        @change="updateConfig"
+                    ></sw-slider-field>
+                </div>
+                
+                <!-- Size Control -->
+                <div class="config-section">
+                    <label>Size Range</label>
+                    <div class="size-controls">
+                        <sw-number-field
+                            v-model="currentConfig.size.min"
+                            :min="1"
+                            :max="10"
+                            placeholder="Min"
+                            @change="updateConfig"
+                            size="small"
+                        ></sw-number-field>
+                        <span>-</span>
+                        <sw-number-field
+                            v-model="currentConfig.size.max"
+                            :min="1"
+                            :max="20"
+                            placeholder="Max"
+                            @change="updateConfig"
+                            size="small"
+                        ></sw-number-field>
+                    </div>
+                </div>
+                
+                <!-- Colors -->
+                <div class="config-section">
+                    <label>Particle Color</label>
+                    <sw-colorpicker
+                        v-model="currentConfig.color"
+                        @change="updateConfig"
+                    ></sw-colorpicker>
+                </div>
+                
+                <!-- Connections -->
+                <div class="config-section">
+                    <sw-switch-field
+                        v-model="currentConfig.connections.enabled"
+                        label="Enable Connections"
+                        @change="updateConfig"
+                    ></sw-switch-field>
+                    
+                    <template v-if="currentConfig.connections.enabled">
+                        <label>Connection Distance: {{ currentConfig.connections.distance }}</label>
+                        <sw-slider-field
+                            v-model="currentConfig.connections.distance"
+                            :min="50"
+                            :max="300"
+                            :step="10"
+                            @change="updateConfig"
+                        ></sw-slider-field>
+                        
+                        <label>Connection Color</label>
+                        <sw-colorpicker
+                            v-model="currentConfig.connections.color"
+                            @change="updateConfig"
+                        ></sw-colorpicker>
+                    </template>
+                </div>
+                
+                <!-- Mouse Interaction -->
+                <div class="config-section">
+                    <label>Mouse Interaction</label>
+                    <sw-radio-field
+                        v-model="mouseMode"
+                        :options="[
+                            { value: 'none', label: 'None' },
+                            { value: 'repulse', label: 'Repulse' },
+                            { value: 'attract', label: 'Attract' }
+                        ]"
+                        @change="updateMouseMode"
+                    ></sw-radio-field>
+                    
+                    <template v-if="currentConfig.mouse.repulse || currentConfig.mouse.attract">
+                        <label>Interaction Radius: {{ currentConfig.mouse.radius }}</label>
+                        <sw-slider-field
+                            v-model="currentConfig.mouse.radius"
+                            :min="50"
+                            :max="300"
+                            :step="10"
+                            @change="updateConfig"
+                        ></sw-slider-field>
+                    </template>
+                </div>
+                
+                <!-- Background -->
+                <div class="config-section">
+                    <label>Background Color</label>
+                    <sw-colorpicker
+                        v-model="currentConfig.background.color"
+                        @change="updateConfig"
+                    ></sw-colorpicker>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="config-section quick-actions">
+                    <sw-button
+                        variant="ghost"
+                        size="small"
+                        @click="addParticles(20)"
+                    >
+                        Add 20 Particles
+                    </sw-button>
+                    <sw-button
+                        variant="ghost"
+                        size="small"
+                        @click="removeParticles(20)"
+                    >
+                        Remove 20 Particles
+                    </sw-button>
+                </div>
+                
+                <!-- Import/Export -->
+                <div class="config-section import-export">
+                    <sw-button
+                        variant="primary"
+                        size="small"
+                        @click="exportConfig"
+                    >
+                        Export Config
+                    </sw-button>
+                    <sw-button
+                        variant="ghost"
+                        size="small"
+                        @click="$refs.fileInput.click()"
+                    >
+                        Import Config
+                    </sw-button>
+                    <input
+                        ref="fileInput"
+                        type="file"
+                        accept=".json"
+                        style="display: none"
+                        @change="importConfig"
+                    >
+                </div>
+                
+                <!-- Keyboard Shortcuts -->
+                <div class="config-section shortcuts">
+                    <small>Keyboard Shortcuts:</small>
+                    <ul>
+                        <li><kbd>C</kbd> - Toggle connections</li>
+                        <li><kbd>M</kbd> - Cycle mouse modes</li>
+                        <li><kbd>+</kbd> - Add particles</li>
+                        <li><kbd>-</kbd> - Remove particles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </transition>
+    
+    <!-- Performance Indicator -->
+    <div v-if="currentConfig.performance?.showFps" class="nfx-particles-bg__fps">
+        <!-- FPS is rendered by the particle system -->
+    </div>
+</div>
+{% endblock %}
+
+{% block nfx_particles_bg_styles %}
+<style lang="scss">
+.nfx-particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    
+    &__canvas {
+        width: 100%;
+        height: 100%;
+        pointer-events: auto;
+    }
+    
+    &__config-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+    }
+    
+    &__config {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 320px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        overflow-y: auto;
+        pointer-events: auto;
+        z-index: 999;
+        
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            
+            h3 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            
+            .close-btn {
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+                padding: 4px;
+                
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+        
+        &-content {
+            padding: 20px;
+            
+            .config-section {
+                margin-bottom: 25px;
+                
+                label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-size: 13px;
+                    opacity: 0.8;
+                }
+                
+                &.particle-types {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-top: 8px;
+                }
+                
+                &.size-controls {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    
+                    span {
+                        opacity: 0.5;
+                    }
+                }
+                
+                &.quick-actions {
+                    display: flex;
+                    gap: 10px;
+                }
+                
+                &.import-export {
+                    display: flex;
+                    gap: 10px;
+                    padding-top: 20px;
+                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                }
+                
+                &.shortcuts {
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    
+                    small {
+                        display: block;
+                        margin-bottom: 8px;
+                        opacity: 0.6;
+                    }
+                    
+                    ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                        
+                        li {
+                            margin-bottom: 4px;
+                            font-size: 12px;
+                            
+                            kbd {
+                                display: inline-block;
+                                padding: 2px 6px;
+                                background: rgba(255, 255, 255, 0.1);
+                                border-radius: 3px;
+                                font-family: monospace;
+                                margin-right: 8px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Vue transitions
+    .slide-in-enter-active,
+    .slide-in-leave-active {
+        transition: transform 0.3s ease;
+    }
+    
+    .slide-in-enter-from,
+    .slide-in-leave-to {
+        transform: translateX(100%);
+    }
+}
+
+// Dark theme adjustments for Shopware components
+.nfx-particles-bg__config {
+    .sw-field,
+    .sw-select-field,
+    .sw-number-field,
+    .sw-slider-field,
+    .sw-checkbox-field,
+    .sw-radio-field,
+    .sw-switch-field {
+        --color-text: #ffffff;
+        --color-border: rgba(255, 255, 255, 0.2);
+        --color-background: rgba(255, 255, 255, 0.05);
+        
+        input,
+        select {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+    
+    .sw-button {
+        &.sw-button--ghost {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+}
+</style>
+{% endblock %}

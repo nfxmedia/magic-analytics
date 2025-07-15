@@ -1,0 +1,87 @@
+// Import theme transitions
+@import '../../../scss/theme-transitions';
+
+// Component-specific styles
+.nfx-theme-switcher-advanced {
+    // Animation states
+    &.nfx-morphing {
+        .nfx-theme-options {
+            filter: blur(2px);
+            transform: scale(0.98);
+        }
+        
+        .nfx-auto-switch-panel {
+            opacity: 0.7;
+            transform: translateY(10px);
+        }
+    }
+    
+    // Enhanced hover effects
+    .nfx-theme-option {
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--nfx-shadow);
+            
+            .nfx-theme-option-icon {
+                transform: rotate(10deg) scale(1.1);
+            }
+        }
+        
+        &:active {
+            transform: translateY(0);
+        }
+    }
+    
+    // Smooth field transitions
+    .sw-field {
+        transition: var(--nfx-theme-transition);
+        
+        &:focus-within {
+            transform: scale(1.02);
+        }
+    }
+    
+    // Enhanced switch styling
+    .sw-switch {
+        .sw-switch__slider {
+            transition: var(--nfx-theme-transition);
+        }
+        
+        &.sw-switch--checked .sw-switch__slider {
+            background: var(--nfx-primary);
+        }
+    }
+    
+    // Loading states
+    &.is-loading {
+        .nfx-theme-options {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .nfx-auto-switch-panel {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    }
+    
+    // Error states
+    &.has-error {
+        .nfx-theme-option {
+            border-color: var(--nfx-danger);
+            
+            &:hover {
+                border-color: var(--nfx-danger);
+                box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+            }
+        }
+    }
+    
+    // Success states
+    &.has-success {
+        .nfx-theme-option.is-active {
+            border-color: var(--nfx-success);
+            background: rgba(40, 167, 69, 0.1);
+        }
+    }
+}

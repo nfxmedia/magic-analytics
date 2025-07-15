@@ -1,0 +1,206 @@
+{% block nfx_stock_prediction %}
+    <sw-card class="nfx-stock-prediction" :isLoading="isLoading">
+        <template #header>
+            <div class="nfx-stock-prediction__header">
+                <h2 class="nfx-stock-prediction__title">
+                    {{ $tc('nfx-analytics.stockPrediction.title') }}
+                </h2>
+                <div class="nfx-stock-prediction__actions">
+                    <sw-entity-single-select
+                        v-model="selectedProduct"
+                        entity="product"
+                        labelProperty="name"
+                        @change="onProductSelected"
+                        :placeholder="$tc('nfx-analytics.stockPrediction.selectProduct')">
+                    </sw-entity-single-select>
+                    
+                    <sw-select-field
+                        v-model="timeRange"
+                        :label="$tc('nfx-analytics.stockPrediction.timeRange.label')"
+                        :options="timeRangeOptions"
+                        @change="onTimeRangeChange">
+                    </sw-select-field>
+                    
+                    <sw-button
+                        variant="ghost"
+                        size="small"
+                        @click="exportPredictions">
+                        <sw-icon name="regular-download" size="16"></sw-icon>
+                        {{ $tc('nfx-analytics.stockPrediction.export') }}
+                    </sw-button>
+                </div>
+            </div>
+        </template>
+
+        <template #default>
+            <div class="nfx-stock-prediction__content">
+                <!-- AI Confidence Metrics -->
+                <div class="nfx-stock-prediction__metrics">
+                    <div class="metric-card">
+                        <div class="metric-card__header">
+                            <h3>{{ $tc('nfx-analytics.stockPrediction.overallConfidence') }}</h3>
+                            <span class="metric-card__badge" :style="{ backgroundColor: confidenceColor }">
+                                {{ confidenceMetrics.overall }}%
+                            </span>
+                        </div>
+                        <div class="metric-card__body">
+                            <div class="circular-progress" ref="overallProgress">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle
+                                        class="progress-ring__circle"
+                                        stroke="#e0e0e0"
+                                        stroke-width="8"
+                                        fill="transparent"
+                                        r="52"
+                                        cx="60"
+                                        cy="60"
+                                    />
+                                    <circle
+                                        class="progress-ring__circle"
+                                        :stroke="confidenceColor"
+                                        stroke-width="8"
+                                        fill="transparent"
+                                        r="52"
+                                        cx="60"
+                                        cy="60"
+                                        :style="{
+                                            strokeDasharray: `${2 * Math.PI * 52} ${2 * Math.PI * 52}`,
+                                            strokeDashoffset: `${2 * Math.PI * 52 * (1 - confidenceMetrics.overall / 100)}`
+                                        }"
+                                    />
+                                </svg>
+                                <div class="progress-text">{{ Math.round(confidenceMetrics.overall) }}%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card__header">
+                            <h3>{{ $tc('nfx-analytics.stockPrediction.modelAccuracy') }}</h3>
+                            <sw-icon 
+                                :name="accuracyTrend === 'improving' ? 'regular-trending-up' : 
+                                       accuracyTrend === 'declining' ? 'regular-trending-down' : 
+                                       'regular-minus'"
+                                :color="accuracyTrend === 'improving' ? '#4caf50' : 
+                                        accuracyTrend === 'declining' ? '#f44336' : 
+                                        '#757575'"
+                                size="16">
+                            </sw-icon>
+                        </div>
+                        <div class="metric-card__body">
+                            <div class="metric-value">{{ confidenceMetrics.accuracy }}%</div>
+                            <div class="metric-sublabel">
+                                {{ $tc('nfx-analytics.stockPrediction.last30Days') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card__header">
+                            <h3>{{ $tc('nfx-analytics.stockPrediction.shortTermConfidence') }}</h3>
+                        </div>
+                        <div class="metric-card__body">
+                            <div class="confidence-bar">
+                                <div class="confidence-bar__fill" 
+                                     :style="{ width: `${confidenceMetrics.shortTerm}%` }">
+                                </div>
+                            </div>
+                            <div class="metric-sublabel">
+                                {{ confidenceMetrics.shortTerm }}% (1-7 days)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card__header">
+                            <h3>{{ $tc('nfx-analytics.stockPrediction.longTermConfidence') }}</h3>
+                        </div>
+                        <div class="metric-card__body">
+                            <div class="confidence-bar">
+                                <div class="confidence-bar__fill" 
+                                     :style="{ width: `${confidenceMetrics.longTerm}%` }">
+                                </div>
+                            </div>
+                            <div class="metric-sublabel">
+                                {{ confidenceMetrics.longTerm }}% (8-30 days)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Chart -->
+                <div class="nfx-stock-prediction__chart-container">
+                    <canvas ref="predictionChart"></canvas>
+                </div>
+
+                <!-- Alert System -->
+                <div class="nfx-stock-prediction__alerts" v-if="alerts.length > 0">
+                    <h3 class="alerts-title">
+                        <sw-icon name="regular-exclamation-triangle" size="20"></sw-icon>
+                        {{ $tc('nfx-analytics.stockPrediction.alerts') }}
+                    </h3>
+                    
+                    <div class="alert-list">
+                        <transition-group name="alert-fade">
+                            <div v-for="alert in alerts" 
+                                 :key="alert.id"
+                                 :class="['alert-item', `alert-item--${alert.severity}`]">
+                                <div class="alert-item__icon">
+                                    <sw-icon 
+                                        :name="alert.severity === 'critical' ? 'regular-times-circle' : 'regular-exclamation-circle'"
+                                        size="20">
+                                    </sw-icon>
+                                </div>
+                                <div class="alert-item__content">
+                                    <h4>{{ alert.title }}</h4>
+                                    <p>{{ alert.message }}</p>
+                                    <span class="alert-item__time">{{ alert.timestamp | date }}</span>
+                                </div>
+                                <sw-button
+                                    variant="ghost"
+                                    size="x-small"
+                                    @click="dismissAlert(alert.id)">
+                                    <sw-icon name="regular-times" size="12"></sw-icon>
+                                </sw-button>
+                            </div>
+                        </transition-group>
+                    </div>
+                </div>
+
+                <!-- Prediction Details Table -->
+                <div class="nfx-stock-prediction__details" v-if="predictions.length > 0">
+                    <h3>{{ $tc('nfx-analytics.stockPrediction.detailedPredictions') }}</h3>
+                    <sw-data-grid
+                        :dataSource="predictions"
+                        :columns="predictionColumns"
+                        :showSelection="false"
+                        :showActions="false"
+                        :sortBy="'date'"
+                        :sortDirection="'DESC'">
+                        
+                        <template #column-confidence="{ item }">
+                            <div class="confidence-indicator">
+                                <div class="confidence-bar confidence-bar--small">
+                                    <div class="confidence-bar__fill" 
+                                         :style="{ 
+                                             width: `${item.confidence}%`,
+                                             backgroundColor: item.confidence >= 80 ? '#4caf50' : 
+                                                            item.confidence >= 60 ? '#ff9800' : '#f44336'
+                                         }">
+                                    </div>
+                                </div>
+                                <span>{{ item.confidence }}%</span>
+                            </div>
+                        </template>
+
+                        <template #column-deviation="{ item }">
+                            <span :class="['deviation', item.deviation > 0 ? 'deviation--positive' : 'deviation--negative']">
+                                {{ item.deviation > 0 ? '+' : '' }}{{ item.deviation }}%
+                            </span>
+                        </template>
+                    </sw-data-grid>
+                </div>
+            </div>
+        </template>
+    </sw-card>
+{% endblock %}

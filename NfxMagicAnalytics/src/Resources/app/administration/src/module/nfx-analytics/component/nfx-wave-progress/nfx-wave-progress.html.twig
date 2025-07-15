@@ -1,0 +1,62 @@
+{% block nfx_wave_progress %}
+    <div class="nfx-wave-progress" :style="containerStyle" :class="{ 'celebrating': showCelebration }">
+        <svg :width="width" :height="height" class="nfx-wave-progress__svg">
+            <!-- Wave patterns -->
+            <defs>
+                <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" :stop-color="waveColor" stop-opacity="0.8"/>
+                    <stop offset="100%" :stop-color="waveColor" stop-opacity="1"/>
+                </linearGradient>
+                
+                <linearGradient id="secondaryWaveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" :stop-color="waveColor" stop-opacity="0.4"/>
+                    <stop offset="100%" :stop-color="waveColor" stop-opacity="0.6"/>
+                </linearGradient>
+            </defs>
+            
+            <!-- Secondary wave (background) -->
+            <polygon
+                class="nfx-wave-progress__wave nfx-wave-progress__wave--secondary"
+                :points="secondaryWavePoints"
+                fill="url(#secondaryWaveGradient)"
+            />
+            
+            <!-- Primary wave -->
+            <polygon
+                class="nfx-wave-progress__wave nfx-wave-progress__wave--primary"
+                :points="wavePoints"
+                fill="url(#waveGradient)"
+            />
+            
+            <!-- Bubbles -->
+            <circle
+                v-for="bubble in bubbles"
+                :key="bubble.id"
+                class="nfx-wave-progress__bubble"
+                :cx="bubble.x"
+                :cy="bubble.y"
+                :r="bubble.size"
+                :fill="waveColor"
+                :opacity="bubble.opacity"
+            />
+            
+            <!-- Value text -->
+            <text
+                v-if="showValue"
+                class="nfx-wave-progress__value"
+                :x="width / 2"
+                :y="height / 2"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                <tspan class="value">{{ formattedValue }}</tspan>
+                <tspan class="percent">%</tspan>
+            </text>
+        </svg>
+        
+        <!-- Celebration overlay -->
+        <div v-if="showCelebration" class="nfx-wave-progress__celebration">
+            <div class="sparkle" v-for="n in 10" :key="n"></div>
+        </div>
+    </div>
+{% endblock %}

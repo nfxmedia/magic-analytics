@@ -1,0 +1,498 @@
+// Advanced Animated Backgrounds for NfxMagicAnalytics
+// Performance-optimized particle systems and gradient meshes
+
+// Variables
+$primary-gradient-1: #667eea;
+$primary-gradient-2: #764ba2;
+$secondary-gradient-1: #f093fb;
+$secondary-gradient-2: #f5576c;
+$tertiary-gradient-1: #4facfe;
+$tertiary-gradient-2: #00f2fe;
+$particle-glow: #fff;
+$orb-colors: (#667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #fa709a, #fee140);
+
+// Mixins
+@mixin hardware-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+@mixin glow-effect($color, $size: 20px) {
+  box-shadow: 
+    0 0 $size rgba($color, 0.5),
+    0 0 ($size * 2) rgba($color, 0.3),
+    0 0 ($size * 3) rgba($color, 0.1),
+    inset 0 0 ($size * 0.5) rgba($color, 0.8);
+}
+
+// Base container
+.nfx-animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  @include hardware-accelerate;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 100;
+  }
+}
+
+// Gradient Mesh Background
+.gradient-mesh-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: blur(40px);
+  opacity: 0.8;
+  
+  .gradient-mesh {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    @include hardware-accelerate;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      filter: blur(100px);
+      border-radius: 50%;
+    }
+    
+    &::before {
+      width: 80%;
+      height: 80%;
+      background: linear-gradient(135deg, $primary-gradient-1, $primary-gradient-2);
+      top: -20%;
+      left: -30%;
+      animation: morph-1 20s ease-in-out infinite;
+    }
+    
+    &::after {
+      width: 70%;
+      height: 70%;
+      background: linear-gradient(225deg, $secondary-gradient-1, $secondary-gradient-2);
+      bottom: -30%;
+      right: -20%;
+      animation: morph-2 25s ease-in-out infinite;
+    }
+  }
+  
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.7;
+    @include hardware-accelerate;
+    
+    @for $i from 1 through 5 {
+      &:nth-child(#{$i}) {
+        $size: random(600) + 200px;
+        width: $size;
+        height: $size;
+        top: random(100) * 1%;
+        left: random(100) * 1%;
+        background: linear-gradient(
+          random(360) * 1deg,
+          nth($orb-colors, random(length($orb-colors))),
+          nth($orb-colors, random(length($orb-colors)))
+        );
+        animation: 
+          float-#{$i} #{20 + $i * 5}s ease-in-out infinite,
+          pulse-#{$i} #{8 + $i * 2}s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+// Particle System
+.particle-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  .particle {
+    position: absolute;
+    @include hardware-accelerate;
+    pointer-events: none;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: $particle-glow;
+      @include glow-effect($particle-glow, 3px);
+    }
+    
+    &.particle-small {
+      width: 2px;
+      height: 2px;
+      opacity: 0.8;
+    }
+    
+    &.particle-medium {
+      width: 4px;
+      height: 4px;
+      opacity: 0.6;
+    }
+    
+    &.particle-large {
+      width: 6px;
+      height: 6px;
+      opacity: 0.4;
+    }
+  }
+}
+
+// Floating Orbs with Physics
+.physics-orbs-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  .physics-orb {
+    position: absolute;
+    border-radius: 50%;
+    @include hardware-accelerate;
+    transition: box-shadow 0.3s ease;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 30%;
+      height: 30%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      filter: blur(10px);
+    }
+    
+    @for $i from 1 through 8 {
+      &:nth-child(#{$i}) {
+        $size: random(80) + 40px;
+        width: $size;
+        height: $size;
+        $color: nth($orb-colors, $i);
+        background: radial-gradient(circle at 30% 30%, lighten($color, 20%), $color);
+        @include glow-effect($color, $size * 0.3);
+        animation: physics-float-#{$i} #{15 + $i * 3}s ease-in-out infinite;
+        
+        &:hover {
+          @include glow-effect($color, $size * 0.5);
+        }
+      }
+    }
+  }
+}
+
+// Wave Animations
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+  overflow: hidden;
+  
+  .wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    @include hardware-accelerate;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    
+    &.wave-1 {
+      bottom: -5%;
+      left: -50%;
+      opacity: 0.3;
+      
+      &::before {
+        background: linear-gradient(90deg, $tertiary-gradient-1, $tertiary-gradient-2);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C300,100 900,20 1200,100 L1200,120 L0,120 Z' fill='white'/%3E%3C/svg%3E");
+        mask-size: 100% 100%;
+        animation: wave-move-1 20s linear infinite;
+      }
+    }
+    
+    &.wave-2 {
+      bottom: -10%;
+      left: -25%;
+      opacity: 0.5;
+      
+      &::before {
+        background: linear-gradient(135deg, $secondary-gradient-1, $secondary-gradient-2);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C200,80 800,0 1200,60 L1200,120 L0,120 Z' fill='white'/%3E%3C/svg%3E");
+        mask-size: 100% 100%;
+        animation: wave-move-2 15s linear infinite;
+      }
+    }
+    
+    &.wave-3 {
+      bottom: -15%;
+      left: 0;
+      opacity: 0.7;
+      
+      &::before {
+        background: linear-gradient(45deg, $primary-gradient-1, $primary-gradient-2);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C400,10 800,90 1200,30 L1200,120 L0,120 Z' fill='white'/%3E%3C/svg%3E");
+        mask-size: 100% 100%;
+        animation: wave-move-3 25s linear infinite;
+      }
+    }
+  }
+}
+
+// Liquid Effect Overlay
+.liquid-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: url('#liquid-filter');
+  opacity: 0.8;
+  
+  .liquid-blob {
+    position: absolute;
+    border-radius: 50%;
+    @include hardware-accelerate;
+    
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        $size: random(200) + 100px;
+        width: $size;
+        height: $size;
+        top: random(80) * 1%;
+        left: random(80) * 1%;
+        background: radial-gradient(
+          circle at center,
+          rgba(nth($orb-colors, random(length($orb-colors))), 0.8),
+          rgba(nth($orb-colors, random(length($orb-colors))), 0.4)
+        );
+        animation: 
+          liquid-morph-#{$i} #{10 + $i * 2}s ease-in-out infinite,
+          liquid-float-#{$i} #{15 + $i * 3}s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+// Keyframe Animations
+@keyframes morph-1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(30%, -20%) rotate(90deg) scale(1.2);
+  }
+  50% {
+    transform: translate(-20%, 30%) rotate(180deg) scale(0.8);
+  }
+  75% {
+    transform: translate(40%, 10%) rotate(270deg) scale(1.1);
+  }
+}
+
+@keyframes morph-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate(-40%, 20%) rotate(-120deg) scale(1.3);
+  }
+  66% {
+    transform: translate(20%, -30%) rotate(-240deg) scale(0.9);
+  }
+}
+
+// Float animations for gradient orbs
+@for $i from 1 through 5 {
+  @keyframes float-#{$i} {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(#{random(100) - 50}px, #{random(100) - 50}px) rotate(#{random(360)}deg);
+    }
+    50% {
+      transform: translate(#{random(100) - 50}px, #{random(100) - 50}px) rotate(#{random(360)}deg);
+    }
+    75% {
+      transform: translate(#{random(100) - 50}px, #{random(100) - 50}px) rotate(#{random(360)}deg);
+    }
+  }
+  
+  @keyframes pulse-#{$i} {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Physics orb animations
+@for $i from 1 through 8 {
+  @keyframes physics-float-#{$i} {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    20% {
+      transform: translate(#{random(200) - 100}px, #{random(200) - 100}px);
+    }
+    40% {
+      transform: translate(#{random(200) - 100}px, #{random(200) - 100}px);
+    }
+    60% {
+      transform: translate(#{random(200) - 100}px, #{random(200) - 100}px);
+    }
+    80% {
+      transform: translate(#{random(200) - 100}px, #{random(200) - 100}px);
+    }
+  }
+}
+
+// Wave animations
+@keyframes wave-move-1 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes wave-move-2 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes wave-move-3 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+// Liquid morph animations
+@for $i from 1 through 6 {
+  @keyframes liquid-morph-#{$i} {
+    0%, 100% {
+      border-radius: 50%;
+    }
+    25% {
+      border-radius: #{30 + random(40)}% #{70 - random(40)}% #{30 + random(40)}% #{70 - random(40)}%;
+    }
+    50% {
+      border-radius: #{30 + random(40)}% #{70 - random(40)}% #{30 + random(40)}% #{70 - random(40)}%;
+    }
+    75% {
+      border-radius: #{30 + random(40)}% #{70 - random(40)}% #{30 + random(40)}% #{70 - random(40)}%;
+    }
+  }
+  
+  @keyframes liquid-float-#{$i} {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(#{random(100) - 50}px, #{random(100) - 50}px) scale(#{0.8 + random(40) / 100});
+    }
+    66% {
+      transform: translate(#{random(100) - 50}px, #{random(100) - 50}px) scale(#{0.8 + random(40) / 100});
+    }
+  }
+}
+
+// Performance optimization classes
+.performance-mode {
+  .gradient-mesh-container {
+    filter: blur(20px);
+  }
+  
+  .particle {
+    animation-duration: 30s !important;
+  }
+  
+  .physics-orb,
+  .liquid-blob {
+    transition: none;
+  }
+}
+
+// Dark theme adjustments
+.dark-theme {
+  .nfx-animated-background {
+    &::before {
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%);
+    }
+  }
+  
+  .particle {
+    opacity: 0.6;
+  }
+  
+  .gradient-mesh-container {
+    opacity: 0.6;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .particle-container {
+    .particle-large {
+      display: none;
+    }
+  }
+  
+  .physics-orbs-container {
+    .physics-orb:nth-child(n+5) {
+      display: none;
+    }
+  }
+  
+  .gradient-mesh-container {
+    filter: blur(60px);
+  }
+}
+
+// SVG Filters
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  
+  svg {
+    display: none;
+  }
+}

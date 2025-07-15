@@ -1,0 +1,227 @@
+{% block nfx_analytics_animation_demo %}
+    <sw-page class="nfx-analytics-animation-demo">
+        {% block nfx_analytics_animation_demo_header %}
+            <template #smart-bar-header>
+                <h2>{{ $tc('nfx-analytics.animationDemo.title') }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block nfx_analytics_animation_demo_actions %}
+            <template #smart-bar-actions>
+                <sw-button @click="resetAnimations" variant="ghost">
+                    <sw-icon name="regular-undo" size="16"></sw-icon>
+                    Reset Animations
+                </sw-button>
+                <sw-button @click="randomizeValues" variant="primary">
+                    <sw-icon name="regular-random" size="16"></sw-icon>
+                    Random Values
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        {% block nfx_analytics_animation_demo_content %}
+            <template #content>
+                <sw-card-view>
+                    <!-- Animated Counters Section -->
+                    <sw-card :title="$tc('nfx-analytics.animationDemo.counters')" class="demo-section">
+                        <div class="demo-grid">
+                            <div class="demo-item">
+                                <h4>Orders</h4>
+                                <nfx-animated-counter
+                                    :end-value="orderCount"
+                                    :duration="2000"
+                                    prefix="#"
+                                    :morph-animation="morphingEnabled"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Revenue</h4>
+                                <nfx-animated-counter
+                                    :end-value="revenue"
+                                    :duration="2500"
+                                    :decimals="2"
+                                    prefix="$"
+                                    easing-function="easeOutElastic"
+                                    :morph-animation="morphingEnabled"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Customers</h4>
+                                <nfx-animated-counter
+                                    :end-value="customerCount"
+                                    :duration="2000"
+                                    easing-function="easeOutBounce"
+                                    :morph-animation="morphingEnabled"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Conversion Rate</h4>
+                                <nfx-animated-counter
+                                    :end-value="conversionRate"
+                                    :duration="1800"
+                                    :decimals="2"
+                                    suffix="%"
+                                    easing-function="easeInOutCubic"
+                                    :morph-animation="morphingEnabled"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                        </div>
+                    </sw-card>
+
+                    <!-- Morphing Numbers Section -->
+                    <sw-card :title="$tc('nfx-analytics.animationDemo.morphingNumbers')" class="demo-section">
+                        <div class="demo-grid">
+                            <div class="demo-item">
+                                <h4>Slide Style</h4>
+                                <nfx-morphing-number
+                                    :value="orderCount"
+                                    :digits="6"
+                                    prefix="#"
+                                    morph-style="slide"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Flip Style</h4>
+                                <nfx-morphing-number
+                                    :value="revenue"
+                                    :digits="8"
+                                    prefix="$"
+                                    morph-style="flip"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Fade Style</h4>
+                                <nfx-morphing-number
+                                    :value="customerCount"
+                                    :digits="5"
+                                    morph-style="fade"
+                                />
+                            </div>
+                        </div>
+                    </sw-card>
+
+                    <!-- Wave Progress Section -->
+                    <sw-card :title="$tc('nfx-analytics.animationDemo.waveProgress')" class="demo-section">
+                        <div class="demo-grid">
+                            <div class="demo-item">
+                                <h4>Sales Target</h4>
+                                <nfx-wave-progress
+                                    :value="salesProgress"
+                                    :width="200"
+                                    :height="120"
+                                    wave-color="#4ECDC4"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Customer Satisfaction</h4>
+                                <nfx-wave-progress
+                                    :value="customerSatisfaction"
+                                    :width="200"
+                                    :height="120"
+                                    wave-color="#96CEB4"
+                                    :wave-amplitude="0.2"
+                                    :wave-frequency="3"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Inventory Level</h4>
+                                <nfx-wave-progress
+                                    :value="inventoryLevel"
+                                    :width="200"
+                                    :height="120"
+                                    wave-color="#FF6B6B"
+                                    :wave-amplitude="0.1"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                        </div>
+                    </sw-card>
+
+                    <!-- Progress Rings Section -->
+                    <sw-card :title="$tc('nfx-analytics.animationDemo.progressRings')" class="demo-section">
+                        <div class="demo-grid">
+                            <div class="demo-item">
+                                <h4>Sales Progress</h4>
+                                <nfx-progress-ring
+                                    :value="salesProgress"
+                                    :size="140"
+                                    :gradient-colors="['#4ECDC4', '#45B7D1']"
+                                    :show-wave="showWaveEffect"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Target Achievement</h4>
+                                <nfx-progress-ring
+                                    :value="targetProgress"
+                                    :size="140"
+                                    :gradient-colors="['#FF6B6B', '#FF9FF3']"
+                                    :show-wave="showWaveEffect"
+                                    :wave-height="0.4"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Customer Satisfaction</h4>
+                                <nfx-progress-ring
+                                    :value="customerSatisfaction"
+                                    :size="140"
+                                    :gradient-colors="['#96CEB4', '#FECA57']"
+                                    :stroke-width="12"
+                                    :show-wave="showWaveEffect"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                            
+                            <div class="demo-item">
+                                <h4>Inventory Level</h4>
+                                <nfx-progress-ring
+                                    :value="inventoryLevel"
+                                    :size="140"
+                                    :gradient-colors="['#A8E6CF', '#7FD6C2']"
+                                    :stroke-width="6"
+                                    :duration="2000"
+                                    :show-wave="showWaveEffect"
+                                    :celebrate-on-complete="celebrationsEnabled"
+                                />
+                            </div>
+                        </div>
+                    </sw-card>
+
+                    <!-- Configuration Section -->
+                    <sw-card :title="$tc('nfx-analytics.animationDemo.configuration')" class="demo-section">
+                        <div class="config-options">
+                            <sw-switch-field
+                                v-model="showWaveEffect"
+                                :label="$tc('nfx-analytics.animationDemo.waveEffect')"
+                            />
+                            <sw-switch-field
+                                v-model="morphingEnabled"
+                                :label="$tc('nfx-analytics.animationDemo.morphing')"
+                            />
+                            <sw-switch-field
+                                v-model="celebrationsEnabled"
+                                :label="$tc('nfx-analytics.animationDemo.celebrations')"
+                            />
+                        </div>
+                    </sw-card>
+                </sw-card-view>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

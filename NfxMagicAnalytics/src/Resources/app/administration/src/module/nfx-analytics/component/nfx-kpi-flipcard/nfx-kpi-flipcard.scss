@@ -1,0 +1,76 @@
+// Import the main animated KPI cards styles
+@import '../../scss/animated-kpi-cards';
+
+// Component-specific overrides and additions
+.nfx-kpi-flipcard {
+    // Additional component-specific styles can be added here
+    
+    // Custom color variables for better theme integration
+    --nfx-primary-rgb: 41, 103, 212;
+    
+    // Enhanced shadow effects
+    &__face {
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.1),
+            0 1px 3px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        
+        &:hover {
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 2px 6px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+    }
+    
+    // Shopware-specific icon adjustments
+    .sw-icon {
+        color: inherit;
+    }
+    
+    // Loader positioning
+    .sw-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+    
+    // Theme integration
+    &--primary {
+        --liquid-primary: var(--color-shopware-brand-500);
+        --liquid-secondary: var(--color-shopware-brand-700);
+        --liquid-accent: var(--color-shopware-brand-300);
+    }
+    
+    // Dark mode support
+    @media (prefers-color-scheme: dark) {
+        &__face {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            
+            &--back {
+                background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            }
+        }
+        
+        &__header .title,
+        &__counter,
+        &__details .value {
+            color: #e0e0e0;
+        }
+        
+        &__details .label,
+        &__value .unit {
+            color: #999;
+        }
+        
+        &__details .detail-item {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{% block nfx_apex_chart %}
+    <div class="nfx-apex-chart">
+        <div class="nfx-apex-chart__header" v-if="$slots.header">
+            <slot name="header"></slot>
+        </div>
+
+        <div class="nfx-apex-chart__controls" v-if="realTimeEnabled">
+            <sw-switch-field
+                :label="$tc('nfx-analytics.chart.realTimeUpdates')"
+                :value="realTimeEnabled"
+                @change="$emit('update:realTimeEnabled', $event)"
+                class="nfx-apex-chart__realtime-toggle"
+            />
+            
+            <div class="nfx-apex-chart__status" v-if="realTimeEnabled">
+                <span class="nfx-apex-chart__status-indicator" :class="{ 'is--active': websocketConnection }"></span>
+                <span class="nfx-apex-chart__status-text">
+                    {{ websocketConnection ? $tc('nfx-analytics.chart.connected') : $tc('nfx-analytics.chart.disconnected') }}
+                </span>
+            </div>
+        </div>
+
+        <div class="nfx-apex-chart__container">
+            <sw-loader v-if="isLoading" />
+            
+            <div 
+                :id="chartId" 
+                class="nfx-apex-chart__wrapper"
+                :style="{ minHeight: height + 'px' }"
+            ></div>
+        </div>
+
+        <div class="nfx-apex-chart__footer" v-if="$slots.footer">
+            <slot name="footer"></slot>
+        </div>
+
+        <div class="nfx-apex-chart__actions">
+            <sw-button
+                size="small"
+                variant="ghost"
+                @click="exportChart('png')"
+                class="nfx-apex-chart__export-btn"
+            >
+                <sw-icon name="regular-download" size="16px" />
+                {{ $tc('nfx-analytics.chart.export') }}
+            </sw-button>
+        </div>
+    </div>
+{% endblock %}

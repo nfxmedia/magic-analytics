@@ -1,0 +1,89 @@
+{% block nfx_masonry_grid %}
+    <div class="nfx-masonry-grid">
+        <div 
+            ref="gridContainer" 
+            class="masonry-container"
+            :style="gridStyle"
+            @dragover="handleDragOver"
+        >
+            <div 
+                v-for="(item, index) in items"
+                :key="item.id || index"
+                ref="gridItems"
+                class="masonry-item"
+                :class="{
+                    'dragging': isDragging && draggedItem === item,
+                    'draggable': enableDragDrop
+                }"
+                :draggable="enableDragDrop"
+                @dragstart="handleDragStart($event, item, index)"
+                @dragend="cleanupDrag"
+                @click="handleItemClick(item, index)"
+                @touchstart="handleTouchStart($event, item, index)"
+                @touchmove="handleTouchMove"
+                @touchend="handleTouchEnd"
+            >
+                <div class="masonry-item-content">
+                    <slot 
+                        name="item" 
+                        :item="item" 
+                        :index="index"
+                        :isDragging="isDragging"
+                    >
+                        <!-- Default item content -->
+                        <div class="default-item-content">
+                            <h3>{{ item.title || 'Untitled' }}</h3>
+                            <p>{{ item.description || '' }}</p>
+                        </div>
+                    </slot>
+                </div>
+                
+                <!-- Drag handle -->
+                <div 
+                    v-if="enableDragDrop" 
+                    class="drag-handle"
+                    :class="{ 'visible': isDragging }"
+                >
+                    <sw-icon name="regular-bars" size="16px"></sw-icon>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading state -->
+        <div 
+            v-if="items.length === 0" 
+            class="masonry-empty-state"
+        >
+            <slot name="empty">
+                <div class="empty-state-content">
+                    <sw-icon name="regular-dashboard" size="48px"></sw-icon>
+                    <h3>No items to display</h3>
+                    <p>Add some items to see them arranged in the masonry grid</p>
+                </div>
+            </slot>
+        </div>
+    </div>
+{% endblock %}
+
+{% block nfx_masonry_grid_loading %}
+    <div class="nfx-masonry-grid-loading">
+        <div class="masonry-skeleton">
+            <div 
+                v-for="n in 6" 
+                :key="n"
+                class="skeleton-item"
+                :style="{ 
+                    height: `${Math.random() * 100 + 150}px`,
+                    animationDelay: `${n * 0.1}s`
+                }"
+            >
+                <div class="skeleton-header"></div>
+                <div class="skeleton-content">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

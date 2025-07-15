@@ -1,0 +1,401 @@
+// Glass Morphism Navigation Styles
+.nfx-glass-navigation {
+    --glass-blur: 20px;
+    --glass-opacity: 0.15;
+    --border-opacity: 0.2;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --highlight-color: rgba(255, 255, 255, 0.1);
+    --reflection-opacity: 0.05;
+    --card-depth: 40px;
+    --magnetic-strength: 20;
+    
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 320px;
+    height: 100vh;
+    z-index: 1000;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    
+    &__backdrop {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, var(--glass-opacity)) 0%,
+            rgba(255, 255, 255, calc(var(--glass-opacity) * 0.5)) 100%
+        );
+        backdrop-filter: blur(var(--glass-blur)) saturate(1.8);
+        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.8);
+        border-right: 1px solid rgba(255, 255, 255, var(--border-opacity));
+        box-shadow: 
+            0 8px 32px var(--shadow-color),
+            inset 0 0 0 1px var(--highlight-color);
+        
+        // Animated gradient overlay
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 70%
+            );
+            background-size: 200% 200%;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+        
+        // Reflection effect
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, var(--reflection-opacity)) 0%,
+                transparent 50%
+            );
+            pointer-events: none;
+        }
+    }
+    
+    &__content {
+        position: relative;
+        height: 100%;
+        padding: 2rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transform-style: preserve-3d;
+        
+        // Custom scrollbar
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+    
+    &__header {
+        margin-bottom: 3rem;
+        transform: translateZ(20px);
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        p {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 0.875rem;
+        }
+    }
+    
+    &__card {
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 4px 16px rgba(0, 0, 0, 0.05),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transform-style: preserve-3d;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        will-change: transform;
+        
+        // Depth layers
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        // Glow effect
+        &::before {
+            background: radial-gradient(
+                circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.2) 0%,
+                transparent 60%
+            );
+            z-index: 1;
+        }
+        
+        // Shadow depth
+        &::after {
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                0 16px 64px rgba(0, 0, 0, 0.1);
+            z-index: -1;
+            transform: translateZ(-10px);
+        }
+        
+        &:hover {
+            transform: 
+                translateZ(var(--card-depth))
+                rotateX(var(--rotate-x, 0deg))
+                rotateY(var(--rotate-y, 0deg))
+                scale(1.02);
+            
+            &::before {
+                opacity: 1;
+            }
+            
+            &::after {
+                opacity: 1;
+            }
+            
+            .nfx-glass-navigation__icon {
+                transform: translateZ(20px) scale(1.1);
+                
+                i {
+                    background-position: 100% 50%;
+                }
+            }
+            
+            .nfx-glass-navigation__arrow {
+                transform: translateX(4px);
+                opacity: 1;
+            }
+        }
+        
+        &--active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            
+            &::before {
+                background: radial-gradient(
+                    circle at 50% 50%,
+                    rgba(102, 126, 234, 0.2) 0%,
+                    transparent 70%
+                );
+                opacity: 1;
+            }
+        }
+    }
+    
+    &__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        transform-style: preserve-3d;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        
+        i {
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            transition: background-position 0.4s ease;
+        }
+    }
+    
+    &__title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    &__description {
+        font-size: 0.875rem;
+        color: rgba(0, 0, 0, 0.6);
+        line-height: 1.5;
+    }
+    
+    &__arrow {
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+        opacity: 0.5;
+    }
+    
+    // Parallax sections
+    &__section {
+        position: relative;
+        margin-bottom: 2rem;
+        transform-style: preserve-3d;
+        
+        &--depth-1 {
+            transform: translateZ(10px);
+        }
+        
+        &--depth-2 {
+            transform: translateZ(20px);
+        }
+        
+        &--depth-3 {
+            transform: translateZ(30px);
+        }
+        
+        h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 1rem;
+        }
+    }
+    
+    // Floating particles
+    &__particles {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+            
+            @for $i from 1 through 20 {
+                &:nth-child(#{$i}) {
+                    left: random(100) * 1%;
+                    top: random(100) * 1%;
+                    animation-delay: random(20) * 1s;
+                    animation-duration: (15 + random(10)) * 1s;
+                    opacity: 0.2 + (random(8) * 0.1);
+                }
+            }
+        }
+    }
+    
+    // Magnetic effect container
+    &__magnetic {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        
+        &-cursor {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(102, 126, 234, 0.3) 0%,
+                transparent 70%
+            );
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+            opacity: 0;
+            
+            &--active {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes shimmer {
+    0% {
+        background-position: -100% -100%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px);
+    }
+    50% {
+        transform: translateY(10px) translateX(-10px);
+    }
+    75% {
+        transform: translateY(-10px) translateX(20px);
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+    .nfx-glass-navigation {
+        width: 280px;
+        
+        &__card {
+            padding: 1.25rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .nfx-glass-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        
+        &__content {
+            max-height: 500px;
+        }
+    }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+    .nfx-glass-navigation {
+        --glass-opacity: 0.1;
+        --border-opacity: 0.3;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --highlight-color: rgba(255, 255, 255, 0.05);
+        
+        &__title {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        &__description {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        &__section h3 {
+            color: rgba(255, 255, 255, 0.4);
+        }
+    }
+}

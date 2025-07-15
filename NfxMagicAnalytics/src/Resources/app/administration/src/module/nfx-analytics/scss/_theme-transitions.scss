@@ -1,0 +1,662 @@
+// Theme Transitions and Animations
+// Advanced theme switching with morphing effects and smooth transitions
+
+// Base theme transition variables
+:root {
+    --nfx-transition-duration: 0.8s;
+    --nfx-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --nfx-morph-intensity: 1;
+    --nfx-ripple-duration: 1.2s;
+    --nfx-reveal-stagger: 0.1s;
+}
+
+// Theme Switcher Advanced Component
+.nfx-theme-switcher-advanced {
+    position: relative;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--nfx-surface);
+    border: 1px solid var(--nfx-border);
+    box-shadow: 0 2px 8px var(--nfx-shadow);
+    transition: var(--nfx-theme-transition);
+
+    // Main Toggle Container
+    .nfx-theme-toggle-container {
+        margin-bottom: 1rem;
+    }
+
+    .nfx-theme-toggle {
+        position: relative;
+        
+        &.is-transitioning {
+            pointer-events: none;
+            
+            .nfx-theme-track {
+                filter: blur(1px);
+            }
+        }
+    }
+
+    // Theme Track (Toggle Switch)
+    .nfx-theme-track {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        background: var(--nfx-surface-alt);
+        border-radius: 15px;
+        border: 1px solid var(--nfx-border);
+        margin-bottom: 1rem;
+        transition: var(--nfx-theme-transition);
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 49%, var(--nfx-primary) 50%, transparent 51%);
+            opacity: 0;
+            transition: opacity var(--nfx-transition-duration) var(--nfx-transition-timing);
+        }
+
+        &:hover::before {
+            opacity: 0.1;
+        }
+    }
+
+    .nfx-theme-slider {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 26px;
+        height: 26px;
+        background: var(--nfx-primary);
+        border-radius: 50%;
+        transition: transform var(--nfx-transition-duration) var(--nfx-transition-timing);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(var(--nfx-primary-rgb), 0.3);
+
+        &.is-dark {
+            background: var(--nfx-text-primary);
+            
+            .nfx-theme-icon {
+                color: var(--nfx-background);
+            }
+        }
+
+        .nfx-theme-icon {
+            color: var(--nfx-background);
+            transition: var(--nfx-theme-transition);
+        }
+    }
+
+    // Theme Options
+    .nfx-theme-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .nfx-theme-option {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: var(--nfx-surface);
+        border: 1px solid var(--nfx-border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--nfx-theme-transition);
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--nfx-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        &:hover::before {
+            opacity: 0.05;
+        }
+
+        &.is-active {
+            border-color: var(--nfx-primary);
+            background: rgba(var(--nfx-primary-rgb), 0.05);
+
+            .nfx-theme-option-indicator .nfx-theme-option-ring {
+                border-color: var(--nfx-primary);
+                background: var(--nfx-primary);
+                transform: scale(1);
+            }
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .nfx-theme-option-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: var(--nfx-surface-alt);
+        border-radius: 50%;
+        color: var(--nfx-text-secondary);
+        position: relative;
+        z-index: 2;
+        transition: var(--nfx-theme-transition);
+
+        .nfx-theme-option.is-active & {
+            background: var(--nfx-primary);
+            color: var(--nfx-background);
+        }
+    }
+
+    .nfx-theme-option-content {
+        flex: 1;
+        position: relative;
+        z-index: 2;
+    }
+
+    .nfx-theme-option-title {
+        font-weight: 600;
+        color: var(--nfx-text-primary);
+        margin-bottom: 0.25rem;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-theme-option-description {
+        font-size: 0.875rem;
+        color: var(--nfx-text-secondary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-theme-option-indicator {
+        position: relative;
+        z-index: 2;
+    }
+
+    .nfx-theme-option-ring {
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--nfx-border);
+        border-radius: 50%;
+        background: transparent;
+        transform: scale(0);
+        transition: all 0.3s ease;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--nfx-background);
+            border-radius: 50%;
+        }
+    }
+
+    // Auto-Switch Panel
+    .nfx-auto-switch-panel {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--nfx-surface-alt);
+        border-radius: 8px;
+        border: 1px solid var(--nfx-border);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-auto-switch-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .nfx-auto-switch-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: var(--nfx-text-primary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-time-settings {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .nfx-time-setting {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .nfx-time-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--nfx-text-secondary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    // Timeline Preview
+    .nfx-auto-switch-preview {
+        margin-top: 1rem;
+    }
+
+    .nfx-timeline {
+        position: relative;
+        height: 60px;
+        background: var(--nfx-surface);
+        border-radius: 8px;
+        border: 1px solid var(--nfx-border);
+        overflow: hidden;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-timeline-track {
+        display: flex;
+        height: 100%;
+    }
+
+    .nfx-timeline-segment {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: var(--nfx-theme-transition);
+
+        &.light-segment {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.2));
+        }
+
+        &.dark-segment {
+            background: linear-gradient(45deg, rgba(108, 117, 125, 0.1), rgba(108, 117, 125, 0.2));
+        }
+    }
+
+    .nfx-timeline-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--nfx-text-secondary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-timeline-indicators {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0.5rem;
+    }
+
+    .nfx-timeline-indicator {
+        background: var(--nfx-primary);
+        color: var(--nfx-background);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        position: relative;
+        transition: var(--nfx-theme-transition);
+
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 8px solid var(--nfx-primary);
+        }
+    }
+
+    // Theme Preview
+    .nfx-theme-preview {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        opacity: 0;
+        animation: nfx-preview-fade-in 0.3s ease forwards;
+    }
+
+    .nfx-theme-preview-content {
+        background: var(--nfx-surface);
+        border-radius: 12px;
+        border: 1px solid var(--nfx-border);
+        box-shadow: 0 8px 32px var(--nfx-shadow);
+        padding: 1rem;
+        min-width: 250px;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-card {
+        background: var(--nfx-background);
+        border-radius: 8px;
+        border: 1px solid var(--nfx-border);
+        overflow: hidden;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid var(--nfx-border);
+        background: var(--nfx-surface);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-title {
+        font-weight: 600;
+        color: var(--nfx-text-primary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-actions {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .nfx-preview-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--nfx-text-muted);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-chart {
+        padding: 1rem;
+        height: 80px;
+        position: relative;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-chart-line {
+        position: absolute;
+        top: 20px;
+        left: 1rem;
+        right: 1rem;
+        height: 2px;
+        background: var(--nfx-primary);
+        border-radius: 1px;
+        opacity: 0.7;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-chart-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.5rem;
+        height: 100%;
+        padding-top: 1rem;
+    }
+
+    .nfx-preview-bar {
+        flex: 1;
+        background: var(--nfx-primary);
+        border-radius: 2px;
+        opacity: 0.6;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-stats {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--nfx-surface);
+        border-top: 1px solid var(--nfx-border);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-stat {
+        text-align: center;
+        flex: 1;
+    }
+
+    .nfx-preview-stat-value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--nfx-text-primary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-preview-stat-label {
+        font-size: 0.75rem;
+        color: var(--nfx-text-secondary);
+        transition: var(--nfx-theme-transition);
+    }
+
+    // Transition Effects
+    .nfx-transition-effects {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 999;
+    }
+
+    .nfx-morph-overlay {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity var(--nfx-transition-duration) var(--nfx-transition-timing);
+        mix-blend-mode: overlay;
+
+        &.is-active {
+            opacity: 1;
+        }
+    }
+
+    .nfx-theme-ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--nfx-primary);
+        opacity: 0.3;
+        animation: nfx-ripple-expand var(--nfx-ripple-duration) ease-out;
+    }
+
+    // Particle System
+    .nfx-particles {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+
+    .nfx-particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--nfx-primary);
+        border-radius: 50%;
+        opacity: 0.6;
+        animation: nfx-particle-float 3s ease-in-out infinite;
+    }
+
+    // Transition Progress
+    .nfx-transition-progress {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--nfx-surface);
+        border-radius: 24px;
+        border: 1px solid var(--nfx-border);
+        padding: 1rem 1.5rem;
+        box-shadow: 0 4px 16px var(--nfx-shadow);
+        z-index: 1001;
+        min-width: 200px;
+        text-align: center;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-progress-bar {
+        height: 4px;
+        background: var(--nfx-surface-alt);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        transition: var(--nfx-theme-transition);
+    }
+
+    .nfx-progress-fill {
+        height: 100%;
+        background: var(--nfx-primary);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .nfx-progress-text {
+        font-size: 0.875rem;
+        color: var(--nfx-text-secondary);
+        font-weight: 500;
+        transition: var(--nfx-theme-transition);
+    }
+}
+
+// Keyframe Animations
+@keyframes nfx-ripple-expand {
+    0% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(30);
+        opacity: 0;
+    }
+}
+
+@keyframes nfx-particle-float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes nfx-preview-fade-in {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes nfx-morph-wave {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+// Global Theme-Aware Transitions
+[data-nfx-theme="light"] {
+    .nfx-theme-switcher-advanced {
+        --nfx-morph-intensity: 0.8;
+    }
+}
+
+[data-nfx-theme="dark"] {
+    .nfx-theme-switcher-advanced {
+        --nfx-morph-intensity: 1.2;
+    }
+}
+
+// Progressive Reveal Effects
+.nfx-analytics-content {
+    > * {
+        transition: opacity 0.4s ease var(--nfx-reveal-stagger), 
+                    transform 0.4s ease var(--nfx-reveal-stagger);
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .nfx-theme-switcher-advanced {
+        .nfx-time-settings {
+            grid-template-columns: 1fr;
+        }
+        
+        .nfx-theme-preview-content {
+            min-width: 200px;
+            padding: 0.75rem;
+        }
+        
+        .nfx-transition-progress {
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            transform: none;
+            min-width: auto;
+        }
+    }
+}
+
+// Accessibility
+@media (prefers-reduced-motion: reduce) {
+    .nfx-theme-switcher-advanced {
+        --nfx-transition-duration: 0.2s;
+        --nfx-ripple-duration: 0.3s;
+        --nfx-reveal-stagger: 0s;
+        
+        .nfx-theme-ripple,
+        .nfx-particles,
+        .nfx-morph-overlay {
+            display: none;
+        }
+    }
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+    .nfx-theme-switcher-advanced {
+        .nfx-theme-option {
+            border-width: 2px;
+        }
+        
+        .nfx-theme-slider {
+            box-shadow: 0 0 0 2px var(--nfx-background);
+        }
+    }
+}

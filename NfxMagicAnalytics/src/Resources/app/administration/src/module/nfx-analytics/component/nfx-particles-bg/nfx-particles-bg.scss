@@ -1,0 +1,125 @@
+// Additional SCSS styles for the particle background component
+// This file is imported in the index.js
+
+.nfx-particles-bg {
+    // Ensure the component doesn't interfere with page scrolling
+    &.is-interactive {
+        .nfx-particles-bg__canvas {
+            pointer-events: auto;
+        }
+    }
+    
+    // Responsive adjustments
+    @media (max-width: 768px) {
+        &__config {
+            width: 100% !important;
+            
+            &-content {
+                .config-section {
+                    &.quick-actions,
+                    &.import-export {
+                        flex-direction: column;
+                        
+                        .sw-button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Animation performance optimizations
+    &__canvas {
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+    
+    // Custom scrollbar for config panel
+    &__config {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.5);
+            }
+        }
+    }
+    
+    // Loading state
+    &--loading {
+        .nfx-particles-bg__canvas {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            margin: -20px 0 0 -20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    }
+    
+    // Ready state
+    &--ready {
+        .nfx-particles-bg__canvas {
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Theme-specific styles
+.theme-light {
+    .nfx-particles-bg {
+        &__config-toggle {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
+            
+            &:hover {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        &__config {
+            background: rgba(255, 255, 255, 0.95);
+            border-left-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+            
+            &-header {
+                border-bottom-color: rgba(0, 0, 0, 0.1);
+                
+                .close-btn {
+                    color: #333;
+                }
+            }
+        }
+    }
+}

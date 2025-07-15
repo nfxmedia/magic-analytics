@@ -1,0 +1,109 @@
+.nfx-morphing-number {
+    display: inline-flex;
+    align-items: center;
+    font-family: $font-family-default;
+    font-weight: 700;
+    font-size: 2rem;
+    color: $color-darkgray-900;
+    
+    &__prefix,
+    &__suffix {
+        opacity: 0.7;
+        margin: 0 4px;
+    }
+    
+    &__container {
+        display: flex;
+        align-items: center;
+        perspective: 1000px;
+    }
+    
+    &__digit {
+        display: inline-block;
+        min-width: 0.6em;
+        text-align: center;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    
+    // Slide animation style
+    &--slide {
+        .nfx-morphing-number__digit {
+            &:nth-child(odd) {
+                animation: slideUpDown 0.6s ease-in-out var(--animation-delay, 0s);
+            }
+            
+            &:nth-child(even) {
+                animation: slideDownUp 0.6s ease-in-out var(--animation-delay, 0s);
+            }
+        }
+    }
+    
+    // Flip animation style
+    &--flip {
+        .nfx-morphing-number__digit {
+            animation: flip 0.8s ease-in-out var(--animation-delay, 0s);
+        }
+    }
+    
+    // Fade animation style
+    &--fade {
+        .nfx-morphing-number__digit {
+            animation: fadeScale 0.5s ease-in-out var(--animation-delay, 0s);
+        }
+    }
+}
+
+@keyframes slideUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes slideDownUp {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+@keyframes flip {
+    0%, 100% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+}
+
+@keyframes fadeScale {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .nfx-morphing-number {
+        font-size: 1.5rem;
+        
+        &__digit {
+            min-width: 0.5em;
+        }
+    }
+}

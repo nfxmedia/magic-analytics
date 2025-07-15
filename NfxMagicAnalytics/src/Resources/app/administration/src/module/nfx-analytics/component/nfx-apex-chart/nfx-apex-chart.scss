@@ -1,0 +1,44 @@
+// Component-specific styles for nfx-apex-chart
+// This file is imported by the component's index.js
+
+@import '../../scss/apex-charts-theme';
+
+// Additional component-specific overrides can be added here
+.nfx-apex-chart {
+    // Transition effects for real-time updates
+    .apexcharts-series path {
+        transition: d 0.35s ease-in-out;
+    }
+    
+    // Smooth data point transitions
+    .apexcharts-marker {
+        transition: transform 0.35s ease-in-out;
+    }
+    
+    // Enhanced hover effects
+    &:hover {
+        .apexcharts-toolbar {
+            opacity: 1 !important;
+        }
+    }
+    
+    // Hide toolbar by default, show on hover
+    .apexcharts-toolbar {
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
+    
+    // Loading overlay
+    &.is--loading {
+        .nfx-apex-chart__container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 5;
+        }
+    }
+}

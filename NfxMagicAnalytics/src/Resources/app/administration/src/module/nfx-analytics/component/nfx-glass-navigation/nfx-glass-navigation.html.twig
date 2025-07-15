@@ -1,0 +1,219 @@
+{% block nfx_glass_navigation %}
+    <div class="nfx-glass-navigation">
+        <!-- Glass backdrop with blur effects -->
+        <div class="nfx-glass-navigation__backdrop"></div>
+        
+        <!-- Floating particles for ambient effect -->
+        <div class="nfx-glass-navigation__particles">
+            <span v-for="particle in particles" :key="particle" class="particle"></span>
+        </div>
+        
+        <!-- Magnetic cursor effect -->
+        <div class="nfx-glass-navigation__magnetic">
+            <div class="nfx-glass-navigation__magnetic-cursor"
+                 :class="{ 'nfx-glass-navigation__magnetic-cursor--active': isMagneticActive }">
+            </div>
+        </div>
+        
+        <!-- Main content with parallax sections -->
+        <div class="nfx-glass-navigation__content">
+            <!-- Header with gradient text -->
+            <div class="nfx-glass-navigation__header">
+                <h2>Analytics</h2>
+                <p>Explore your shop insights</p>
+            </div>
+            
+            <!-- Dashboard section with depth -->
+            <div class="nfx-glass-navigation__section nfx-glass-navigation__section--depth-1">
+                <h3>Dashboard</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'dashboard')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sales Analytics section with different depth -->
+            <div class="nfx-glass-navigation__section nfx-glass-navigation__section--depth-2">
+                <h3>Sales Analytics</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'sales')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customer Insights section with maximum depth -->
+            <div class="nfx-glass-navigation__section nfx-glass-navigation__section--depth-3">
+                <h3>Customer Insights</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'customers')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products & Inventory section -->
+            <div class="nfx-glass-navigation__section nfx-glass-navigation__section--depth-2">
+                <h3>Products & Inventory</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'products')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marketing Performance section -->
+            <div class="nfx-glass-navigation__section nfx-glass-navigation__section--depth-1">
+                <h3>Marketing Performance</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'marketing')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings section -->
+            <div class="nfx-glass-navigation__section">
+                <h3>Settings</h3>
+                
+                <div v-for="(item, index) in navigationItems.filter(i => i.category === 'settings')"
+                     :key="item.id"
+                     class="nfx-glass-navigation__card"
+                     :class="{ 'nfx-glass-navigation__card--active': item.isActive }"
+                     @click="onCardClick(item)">
+                    
+                    <div class="nfx-glass-navigation__icon">
+                        <i :class="item.icon"></i>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__title">
+                        {{ item.title }}
+                        <span class="nfx-glass-navigation__arrow">→</span>
+                    </div>
+                    
+                    <div class="nfx-glass-navigation__description">
+                        {{ item.description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<style>
+/* Ripple effect for card clicks */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* In-view animation for cards */
+.nfx-glass-navigation__card {
+    opacity: 0;
+    transform: translateY(30px) translateZ(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.nfx-glass-navigation__card.in-view {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+}
+
+/* Stagger animation delay */
+.nfx-glass-navigation__section .nfx-glass-navigation__card {
+    transition-delay: calc(var(--index, 0) * 0.05s);
+}
+
+.nfx-glass-navigation__section .nfx-glass-navigation__card:nth-child(2) { --index: 0; }
+.nfx-glass-navigation__section .nfx-glass-navigation__card:nth-child(3) { --index: 1; }
+.nfx-glass-navigation__section .nfx-glass-navigation__card:nth-child(4) { --index: 2; }
+.nfx-glass-navigation__section .nfx-glass-navigation__card:nth-child(5) { --index: 3; }
+.nfx-glass-navigation__section .nfx-glass-navigation__card:nth-child(6) { --index: 4; }
+</style>

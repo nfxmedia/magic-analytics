@@ -1,6 +1,18 @@
-// Use new dashboard template with KPIs
-import template from './nfx-analytics-dashboard.html.twig';
+// Use ultimate dashboard template with all advanced features
+import template from './nfx-analytics-ultimate.html.twig';
 import './nfx-analytics-index.scss';
+
+// Import all advanced components
+import '../component/nfx-particles-bg';
+import '../component/nfx-glass-navigation';
+import '../component/nfx-theme-switcher-advanced';
+import '../component/nfx-analog-clock';
+import '../component/nfx-stock-prediction';
+import '../component/nfx-masonry-grid';
+import '../component/nfx-kpi-flipcard';
+import '../component/nfx-apex-chart';
+import '../component/nfx-animated-counter';
+import '../component/nfx-progress-ring';
 
 const { Component, Context, Mixin } = Shopware;
 
@@ -49,7 +61,7 @@ Component.register('nfx-analytics-index', {
             format: '',
             grossOrNet: 'gross',
             chartType: 'pie',
-            currentTheme: 'light-apple',
+            currentTheme: 'dark-violet',
             dashboard: false,
             customOptions: null,
             salesChannelIds: [],
@@ -58,7 +70,195 @@ Component.register('nfx-analytics-index', {
             salesChannnelFilterData: {},
             customerGroupFilterdata: {},
             config: {},
-            statesFilterData: {}
+            statesFilterData: {},
+            
+            // Advanced Dashboard Data
+            navigationItems: [
+                {
+                    id: 'overview',
+                    title: 'Dashboard Overview',
+                    description: 'Real-time analytics overview',
+                    icon: 'icons-regular-dashboard',
+                    category: 'dashboard'
+                },
+                {
+                    id: 'revenue',
+                    title: 'Revenue Analytics',
+                    description: 'Sales performance tracking',
+                    icon: 'icons-regular-chart-line',
+                    category: 'analytics'
+                },
+                {
+                    id: 'customers',
+                    title: 'Customer Insights',
+                    description: 'Customer behavior analysis',
+                    icon: 'icons-regular-users',
+                    category: 'analytics'
+                },
+                {
+                    id: 'products',
+                    title: 'Product Performance',
+                    description: 'Product analytics and trends',
+                    icon: 'icons-regular-package',
+                    category: 'analytics'
+                },
+                {
+                    id: 'predictions',
+                    title: 'Stock Predictions',
+                    description: 'AI-powered stock forecasting',
+                    icon: 'icons-regular-brain',
+                    category: 'ai'
+                }
+            ],
+            
+            kpiItems: [
+                {
+                    title: 'Total Revenue',
+                    value: 127456,
+                    previousValue: 98234,
+                    icon: 'icons-regular-money',
+                    unit: '€',
+                    percentage: 75,
+                    theme: 'success',
+                    details: [
+                        { label: 'Orders', value: 1247 },
+                        { label: 'Avg. Order Value', value: '€102.15' },
+                        { label: 'Growth Rate', value: '+29.8%' }
+                    ]
+                },
+                {
+                    title: 'Active Customers',
+                    value: 8934,
+                    previousValue: 7821,
+                    icon: 'icons-regular-users',
+                    unit: '',
+                    percentage: 68,
+                    theme: 'primary',
+                    details: [
+                        { label: 'New Customers', value: 234 },
+                        { label: 'Returning', value: 8700 },
+                        { label: 'Churn Rate', value: '3.2%' }
+                    ]
+                },
+                {
+                    title: 'Conversion Rate',
+                    value: 3.42,
+                    previousValue: 2.98,
+                    icon: 'icons-regular-percentage',
+                    unit: '%',
+                    percentage: 82,
+                    theme: 'warning',
+                    details: [
+                        { label: 'Visitors', value: 45234 },
+                        { label: 'Conversions', value: 1547 },
+                        { label: 'Bounce Rate', value: '42.1%' }
+                    ]
+                },
+                {
+                    title: 'Avg. Order Value',
+                    value: 89.50,
+                    previousValue: 76.23,
+                    icon: 'icons-regular-shopping-cart',
+                    unit: '€',
+                    percentage: 67,
+                    theme: 'info',
+                    details: [
+                        { label: 'Items/Order', value: 2.3 },
+                        { label: 'Shipping', value: '€4.99' },
+                        { label: 'Tax Rate', value: '19%' }
+                    ]
+                }
+            ],
+            
+            revenueData: {
+                series: [{
+                    name: 'Revenue',
+                    data: Array.from({ length: 30 }, (_, i) => ({
+                        x: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000),
+                        y: Math.floor(Math.random() * 5000) + 2000
+                    }))
+                }]
+            },
+            
+            advancedMetrics: [
+                {
+                    title: 'Page Views',
+                    value: 245678,
+                    trend: 'up',
+                    trendValue: '+12.5%',
+                    trendIcon: 'icons-regular-arrow-up',
+                    progress: 78,
+                    color: 'var(--nfx-primary)',
+                    prefix: '',
+                    suffix: '',
+                    decimals: 0,
+                    sparklineData: 'M0,20 L20,15 L40,18 L60,12 L80,8 L100,5'
+                },
+                {
+                    title: 'Session Duration',
+                    value: 4.35,
+                    trend: 'up',
+                    trendValue: '+8.2%',
+                    trendIcon: 'icons-regular-arrow-up',
+                    progress: 65,
+                    color: 'var(--nfx-success)',
+                    prefix: '',
+                    suffix: 'min',
+                    decimals: 2,
+                    sparklineData: 'M0,25 L20,20 L40,15 L60,18 L80,12 L100,10'
+                },
+                {
+                    title: 'Cart Abandonment',
+                    value: 32.1,
+                    trend: 'down',
+                    trendValue: '-5.7%',
+                    trendIcon: 'icons-regular-arrow-down',
+                    progress: 45,
+                    color: 'var(--nfx-warning)',
+                    prefix: '',
+                    suffix: '%',
+                    decimals: 1,
+                    sparklineData: 'M0,15 L20,18 L40,20 L60,16 L80,14 L100,12'
+                }
+            ],
+            
+            activityFeed: [],
+            totalDataPoints: 1567890,
+            lastUpdated: new Date().toLocaleTimeString(),
+            performanceScore: 94,
+            
+            // Chart options
+            chartOptions: {
+                chart: {
+                    type: 'area',
+                    height: 350,
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    },
+                    background: 'transparent'
+                },
+                theme: {
+                    mode: 'dark'
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.1
+                    }
+                },
+                stroke: {
+                    width: 3,
+                    curve: 'smooth'
+                },
+                colors: ['#8B5CF6'],
+                tooltip: {
+                    theme: 'dark'
+                }
+            }
         };
     },
 
@@ -387,6 +587,95 @@ Component.register('nfx-analytics-index', {
                     // This would need to be implemented based on your tree structure
                 }
             });
+        },
+        
+        // Advanced Dashboard Methods
+        handleKPIReorder(newOrder) {
+            this.kpiItems = newOrder;
+            // Save to localStorage for persistence
+            localStorage.setItem('nfx-kpi-order', JSON.stringify(newOrder));
+        },
+        
+        generateActivityFeed() {
+            const activities = [
+                { type: 'order', message: 'New order received', value: '€89.50' },
+                { type: 'customer', message: 'New customer registration', value: '+1' },
+                { type: 'payment', message: 'Payment processed', value: '€156.00' },
+                { type: 'shipment', message: 'Order shipped', value: 'Tracking: DHL123' },
+                { type: 'return', message: 'Return requested', value: '€45.00' },
+                { type: 'review', message: 'New product review', value: '⭐⭐⭐⭐⭐' }
+            ];
+            
+            const users = ['John Doe', 'Jane Smith', 'Mike Johnson', 'Sarah Wilson', 'Tom Brown'];
+            const locations = ['Berlin', 'Munich', 'Hamburg', 'Cologne', 'Frankfurt'];
+            
+            return {
+                id: Date.now() + Math.random(),
+                ...activities[Math.floor(Math.random() * activities.length)],
+                user: users[Math.floor(Math.random() * users.length)],
+                location: locations[Math.floor(Math.random() * locations.length)],
+                timestamp: new Date(),
+                avatar: `https://ui-avatars.com/api/?name=${users[Math.floor(Math.random() * users.length)]}&background=random`
+            };
+        },
+        
+        startActivityFeed() {
+            // Add initial activities
+            for (let i = 0; i < 5; i++) {
+                this.activityFeed.push(this.generateActivityFeed());
+            }
+            
+            // Start real-time activity generation
+            this.activityInterval = setInterval(() => {
+                this.activityFeed.unshift(this.generateActivityFeed());
+                // Keep only last 20 activities
+                if (this.activityFeed.length > 20) {
+                    this.activityFeed.pop();
+                }
+            }, 3000);
+        },
+        
+        pauseActivity() {
+            if (this.activityInterval) {
+                clearInterval(this.activityInterval);
+                this.activityInterval = null;
+            }
+        },
+        
+        clearActivity() {
+            this.activityFeed = [];
+        },
+        
+        formatTime(timestamp) {
+            const now = new Date();
+            const diff = now - timestamp;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            
+            if (seconds < 60) return `${seconds}s ago`;
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return timestamp.toLocaleDateString();
+        },
+        
+        updateLastUpdated() {
+            this.lastUpdated = new Date().toLocaleTimeString();
+        },
+        
+        startRealTimeUpdates() {
+            // Update metrics periodically
+            setInterval(() => {
+                this.updateLastUpdated();
+                this.performanceScore = Math.min(100, this.performanceScore + Math.random() * 2 - 1);
+                this.totalDataPoints += Math.floor(Math.random() * 10);
+                
+                // Update KPI values slightly
+                this.kpiItems.forEach(item => {
+                    const change = Math.random() * 200 - 100;
+                    item.value = Math.max(0, item.value + change);
+                });
+            }, 5000);
         }
     },
 
@@ -404,10 +693,29 @@ Component.register('nfx-analytics-index', {
                 analyticsElement.classList.add(`theme-${this.currentTheme}`);
             }
         });
+        
+        // Initialize advanced features
+        this.startActivityFeed();
+        this.startRealTimeUpdates();
+        
+        // Load saved KPI order
+        const savedOrder = localStorage.getItem('nfx-kpi-order');
+        if (savedOrder) {
+            try {
+                this.kpiItems = JSON.parse(savedOrder);
+            } catch (e) {
+                console.warn('Failed to load saved KPI order');
+            }
+        }
     },
 
     beforeDestroy() {
         // Clean up theme classes
         document.body.classList.remove('nfx-analytics');
+        
+        // Clean up intervals
+        if (this.activityInterval) {
+            clearInterval(this.activityInterval);
+        }
     }
 });

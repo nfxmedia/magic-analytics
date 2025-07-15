@@ -1,0 +1,431 @@
+.nfx-stock-prediction {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+
+        .sw-entity-single-select {
+            width: 250px;
+        }
+
+        .sw-select-field {
+            width: 150px;
+        }
+    }
+
+    &__content {
+        padding: 24px;
+    }
+
+    &__metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+    }
+
+    &__chart-container {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        margin-bottom: 32px;
+        height: 400px;
+        position: relative;
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+
+    &__alerts {
+        background: #fff3e0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 32px;
+
+        .alerts-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #e65100;
+            margin: 0 0 16px 0;
+        }
+    }
+
+    &__details {
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 16px 0;
+        }
+    }
+}
+
+// Metric Cards
+.metric-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666666;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    &__body {
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .metric-sublabel {
+            font-size: 13px;
+            color: #999999;
+            margin-top: 8px;
+        }
+    }
+}
+
+// Circular Progress
+.circular-progress {
+    position: relative;
+    display: inline-block;
+
+    .progress-ring {
+        transform: rotate(-90deg);
+        
+        &__circle {
+            transition: stroke-dashoffset 0.75s ease-in-out;
+        }
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+}
+
+// Confidence Bar
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+
+    &--small {
+        height: 4px;
+        margin: 4px 0;
+    }
+
+    &__fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
+        border-radius: 4px;
+        transition: width 0.5s ease-in-out;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 2s infinite;
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+// Alert System
+.alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 8px;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+
+    &--critical {
+        border-left-color: #f44336;
+        background: #ffebee;
+
+        .alert-item__icon {
+            color: #f44336;
+        }
+    }
+
+    &--warning {
+        border-left-color: #ff9800;
+        background: #fff3e0;
+
+        .alert-item__icon {
+            color: #ff9800;
+        }
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    &__content {
+        flex: 1;
+
+        h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 4px 0;
+        }
+
+        p {
+            font-size: 13px;
+            color: #666666;
+            margin: 0 0 8px 0;
+            line-height: 1.5;
+        }
+    }
+
+    &__time {
+        font-size: 11px;
+        color: #999999;
+    }
+}
+
+// Alert animations
+.alert-fade-enter-active,
+.alert-fade-leave-active {
+    transition: all 0.3s ease;
+}
+
+.alert-fade-enter-from {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.alert-fade-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+// Confidence Indicator
+.confidence-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .confidence-bar {
+        flex: 1;
+        max-width: 60px;
+    }
+
+    span {
+        font-size: 12px;
+        font-weight: 500;
+        color: #666666;
+    }
+}
+
+// Deviation
+.deviation {
+    font-weight: 600;
+    font-size: 13px;
+
+    &--positive {
+        color: #4caf50;
+    }
+
+    &--negative {
+        color: #f44336;
+    }
+}
+
+// Responsive
+@media (max-width: 1200px) {
+    .nfx-stock-prediction {
+        &__metrics {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .nfx-stock-prediction {
+        &__header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        &__actions {
+            width: 100%;
+            flex-wrap: wrap;
+
+            .sw-entity-single-select,
+            .sw-select-field {
+                width: 100%;
+            }
+        }
+
+        &__metrics {
+            grid-template-columns: 1fr;
+        }
+
+        &__chart-container {
+            height: 300px;
+            padding: 16px;
+        }
+    }
+
+    .metric-card {
+        &__body {
+            .metric-value {
+                font-size: 28px;
+            }
+        }
+    }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+    .nfx-stock-prediction {
+        &__title {
+            color: #ffffff;
+        }
+
+        &__chart-container,
+        .metric-card,
+        .alert-item {
+            background: #2a2a2a;
+        }
+
+        &__alerts {
+            background: #3a3a3a;
+        }
+
+        &__details h3,
+        .alerts-title {
+            color: #ffffff;
+        }
+    }
+
+    .metric-card {
+        &__header h3 {
+            color: #cccccc;
+        }
+
+        &__body {
+            .metric-value {
+                color: #ffffff;
+            }
+
+            .metric-sublabel {
+                color: #aaaaaa;
+            }
+        }
+    }
+
+    .alert-item {
+        &__content {
+            h4 {
+                color: #ffffff;
+            }
+
+            p {
+                color: #cccccc;
+            }
+        }
+
+        &__time {
+            color: #888888;
+        }
+    }
+
+    .confidence-bar {
+        background: #3a3a3a;
+    }
+
+    .progress-text {
+        color: #ffffff;
+    }
+}

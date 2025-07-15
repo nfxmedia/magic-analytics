@@ -1,0 +1,22 @@
+{% block nfx_animated_counter %}
+    <div class="nfx-animated-counter" :class="{ 'celebrating': showCelebration }">
+        <div class="nfx-animated-counter__value" :style="morphStyle">
+            {{ formattedValue }}
+        </div>
+        
+        <div v-if="showCelebration" class="nfx-animated-counter__particles">
+            <div
+                v-for="particle in particles"
+                :key="particle.id"
+                class="particle"
+                :style="{
+                    transform: `translate(${particle.x}px, ${particle.y}px) rotate(${particle.rotation}deg)`,
+                    width: `${particle.size}px`,
+                    height: `${particle.size}px`,
+                    backgroundColor: particle.color,
+                    opacity: particle.opacity
+                }"
+            ></div>
+        </div>
+    </div>
+{% endblock %}

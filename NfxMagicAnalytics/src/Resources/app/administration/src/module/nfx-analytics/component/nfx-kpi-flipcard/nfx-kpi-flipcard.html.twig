@@ -1,0 +1,174 @@
+{% block nfx_kpi_flipcard %}
+    <div :class="componentClasses"
+         :style="liquidStyle"
+         @mouseenter="onMouseEnter"
+         @mouseleave="onMouseLeave">
+        
+        <div class="nfx-kpi-flipcard__inner">
+            <!-- Front Face -->
+            <div class="nfx-kpi-flipcard__face nfx-kpi-flipcard__face--front">
+                <!-- SVG Background Animations -->
+                <div class="nfx-kpi-flipcard__svg-container">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient :id="liquidGradientId" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--liquid-primary);stop-opacity:0.8" />
+                                <stop offset="50%" style="stop-color:var(--liquid-secondary);stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:var(--liquid-accent);stop-opacity:0.4" />
+                            </linearGradient>
+                            
+                            <linearGradient :id="progressGradientId" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--liquid-primary)" />
+                                <stop offset="100%" style="stop-color:var(--liquid-accent)" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Animated Wave Path -->
+                        <path class="wave-path" :d="morphPath || 'M0,100 C50,100 50,0 100,0 L100,100 Z'" />
+                        
+                        <!-- Floating Particles -->
+                        <g v-for="particle in particles" :key="`particle-${particle.id}`">
+                            <circle class="particle"
+                                    :cx="particle.cx"
+                                    :cy="particle.cy"
+                                    :r="particle.r" />
+                        </g>
+                    </svg>
+                </div>
+                
+                <!-- Morphing Shape Background -->
+                <div class="nfx-kpi-flipcard__morph"></div>
+                
+                <!-- Liquid Fill Animation -->
+                <div class="nfx-kpi-flipcard__liquid" v-if="liquidPercentage > 0">
+                    <div v-for="bubble in bubbles"
+                         :key="`bubble-${bubble.id}`"
+                         class="bubble"
+                         :style="{
+                             width: `${bubble.size}px`,
+                             height: `${bubble.size}px`,
+                             left: `${bubble.x}%`,
+                             animationDelay: `${bubble.delay}s`,
+                             animationDuration: `${bubble.duration}s`
+                         }">
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="nfx-kpi-flipcard__content">
+                    <!-- Header -->
+                    <div class="nfx-kpi-flipcard__header">
+                        <div class="icon">
+                            <sw-icon :name="icon" size="20px"></sw-icon>
+                        </div>
+                        <div class="title">{{ title }}</div>
+                    </div>
+                    
+                    <!-- Value with Counter Animation -->
+                    <div class="nfx-kpi-flipcard__value">
+                        <div class="nfx-kpi-flipcard__counter">
+                            <span v-for="(digit, index) in formattedValue.toString().split('')"
+                                  :key="`digit-${index}`"
+                                  class="digit">
+                                <span class="digit__inner">{{ digit }}</span>
+                            </span>
+                        </div>
+                        <span class="unit" v-if="unit">{{ unit }}</span>
+                    </div>
+                    
+                    <!-- Trend Indicator -->
+                    <div class="nfx-kpi-flipcard__trend" v-if="previousValue !== null">
+                        <div class="trend-icon" :class="{ 'is--up': isTrendUp, 'is--down': !isTrendUp }">
+                            <sw-icon :name="isTrendUp ? 'default-arrow-circle-up' : 'default-arrow-circle-down'"
+                                     size="16px">
+                            </sw-icon>
+                        </div>
+                        <div class="trend-value" :class="{ 'text-success': isTrendUp, 'text-danger': !isTrendUp }">
+                            {{ Math.abs(trendPercentage) }}%
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Ring -->
+                <div class="nfx-kpi-flipcard__progress-ring" v-if="liquidPercentage > 0">
+                    <svg width="120" height="120" :style="progressStyle">
+                        <defs>
+                            <linearGradient :id="`${progressGradientId}-ring`" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--liquid-primary);stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:var(--liquid-accent);stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <circle class="background"
+                                cx="60"
+                                cy="60"
+                                r="50">
+                        </circle>
+                        
+                        <circle class="progress"
+                                cx="60"
+                                cy="60"
+                                r="50"
+                                :stroke="`url(#${progressGradientId}-ring)`">
+                        </circle>
+                    </svg>
+                    <div class="percentage">{{ liquidPercentage }}%</div>
+                </div>
+            </div>
+            
+            <!-- Back Face -->
+            <div class="nfx-kpi-flipcard__face nfx-kpi-flipcard__face--back">
+                <div class="nfx-kpi-flipcard__content">
+                    <!-- Header -->
+                    <div class="nfx-kpi-flipcard__header">
+                        <div class="icon">
+                            <sw-icon name="default-chart-bar" size="20px"></sw-icon>
+                        </div>
+                        <div class="title">{{ $tc('nfx-analytics.kpi.details') }}</div>
+                    </div>
+                    
+                    <!-- Details List -->
+                    <div class="nfx-kpi-flipcard__details">
+                        <div v-for="(detail, index) in details"
+                             :key="`detail-${index}`"
+                             class="detail-item">
+                            <span class="label">{{ detail.label }}</span>
+                            <span class="value">{{ getDetailValue(detail) }}</span>
+                        </div>
+                        
+                        <!-- Default details if none provided -->
+                        <template v-if="!details.length">
+                            <div class="detail-item">
+                                <span class="label">{{ $tc('nfx-analytics.kpi.currentValue') }}</span>
+                                <span class="value">{{ formattedValue }} {{ unit }}</span>
+                            </div>
+                            <div class="detail-item" v-if="previousValue !== null">
+                                <span class="label">{{ $tc('nfx-analytics.kpi.previousValue') }}</span>
+                                <span class="value">{{ formatNumber(previousValue) }} {{ unit }}</span>
+                            </div>
+                            <div class="detail-item" v-if="previousValue !== null">
+                                <span class="label">{{ $tc('nfx-analytics.kpi.change') }}</span>
+                                <span class="value" :class="{ 'text-success': isTrendUp, 'text-danger': !isTrendUp }">
+                                    {{ isTrendUp ? '+' : '' }}{{ trendPercentage }}%
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">{{ $tc('nfx-analytics.kpi.fillLevel') }}</span>
+                                <span class="value">{{ liquidPercentage }}%</span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading Overlay -->
+        <sw-loader v-if="loading" size="40px"></sw-loader>
+    </div>
+{% endblock %}
+
+{% block nfx_kpi_flipcard_styles %}
+    <style lang="scss">
+        @import '../scss/animated-kpi-cards';
+    </style>
+{% endblock %}

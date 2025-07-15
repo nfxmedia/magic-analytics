@@ -10,10 +10,15 @@ import './component/nfx-analytics-summery';
 import './component/nfx-analytics-ip-select';
 import './component/nfx-analytics-order-profit';
 import './component/nfx-theme-switcher';
+import './component/nfx-animated-counter';
+import './component/nfx-progress-ring';
+import './component/nfx-wave-progress';
+import './component/nfx-morphing-number';
 
 import './page/nfx-analytics-order';
 import './page/nfx-analytics-index';
 import './page/nfx-analytics-product';
+import './page/nfx-analytics-animation-demo';
 
 import './view/nfx-analytics-index-sales-by-payment-method';
 import './view/nfx-analytics-index-sales-by-manufacturer';
@@ -131,6 +136,16 @@ Shopware.Module.register('nfx-analytics', {
                 default: 'nfx-analytics-product'
             },
             path: 'product',
+            meta: {
+                parentPath: 'nfx.analytics.index',
+                privilege: 'nfxAnalytics.viewer'
+            }
+        },
+        animationDemo: {
+            components: {
+                default: 'nfx-analytics-animation-demo'
+            },
+            path: 'animation-demo',
             meta: {
                 parentPath: 'nfx.analytics.index',
                 privilege: 'nfxAnalytics.viewer'

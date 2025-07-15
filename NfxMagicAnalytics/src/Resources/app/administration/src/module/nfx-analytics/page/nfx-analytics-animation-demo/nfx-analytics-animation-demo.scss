@@ -1,0 +1,35 @@
+.nfx-analytics-animation-demo {
+    .demo-section {
+        margin-bottom: 30px;
+    }
+    
+    .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        padding: 20px 0;
+    }
+    
+    .demo-item {
+        text-align: center;
+        
+        h4 {
+            margin: 0 0 20px 0;
+            color: $color-darkgray-700;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+    
+    .config-options {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        
+        .sw-field {
+            margin-bottom: 0;
+        }
+    }
+}

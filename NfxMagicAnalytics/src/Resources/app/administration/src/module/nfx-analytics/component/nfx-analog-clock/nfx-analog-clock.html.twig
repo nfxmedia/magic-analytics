@@ -1,0 +1,178 @@
+{% block nfx_analog_clock %}
+<div class="nfx-analog-clock" :class="clockClasses">
+    <div class="nfx-analog-clock__container" @click="handleClockClick">
+        <!-- Glass morphism background -->
+        <div class="nfx-analog-clock__background"></div>
+        
+        <!-- Main clock face -->
+        <div class="nfx-analog-clock__face">
+            <!-- Outer ring with glow -->
+            <div class="nfx-analog-clock__outer-ring" :style="{ '--glow-intensity': glowIntensity }"></div>
+            
+            <!-- Hour markers -->
+            <div class="nfx-analog-clock__markers">
+                <div v-for="hour in 12" 
+                     :key="`hour-${hour}`" 
+                     class="nfx-analog-clock__hour-marker"
+                     :style="{ transform: `rotate(${hour * 30}deg)` }">
+                    <span class="nfx-analog-clock__hour-number" 
+                          :style="{ transform: `rotate(-${hour * 30}deg)` }">
+                        {{ hour }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Minute markers -->
+            <div class="nfx-analog-clock__minute-markers">
+                <div v-for="minute in 60" 
+                     :key="`minute-${minute}`" 
+                     class="nfx-analog-clock__minute-marker"
+                     :class="{ 'nfx-analog-clock__minute-marker--major': minute % 5 === 0 }"
+                     :style="{ transform: `rotate(${minute * 6}deg)` }">
+                </div>
+            </div>
+            
+            <!-- Clock hands -->
+            <div class="nfx-analog-clock__hands">
+                <!-- Hour hand -->
+                <div class="nfx-analog-clock__hand nfx-analog-clock__hand--hour" 
+                     :style="{ transform: `rotate(${hourDegrees}deg)` }">
+                    <div class="nfx-analog-clock__hand-inner"></div>
+                </div>
+                
+                <!-- Minute hand -->
+                <div class="nfx-analog-clock__hand nfx-analog-clock__hand--minute" 
+                     :style="{ transform: `rotate(${minuteDegrees}deg)` }">
+                    <div class="nfx-analog-clock__hand-inner"></div>
+                </div>
+                
+                <!-- Second hand -->
+                <div class="nfx-analog-clock__hand nfx-analog-clock__hand--second" 
+                     :style="{ transform: `rotate(${secondDegrees}deg)` }">
+                    <div class="nfx-analog-clock__hand-inner"></div>
+                    <div class="nfx-analog-clock__hand-tail"></div>
+                </div>
+            </div>
+            
+            <!-- Center dot -->
+            <div class="nfx-analog-clock__center"></div>
+            
+            <!-- Pendulum (vintage theme) -->
+            <div v-if="theme === 'vintage'" 
+                 class="nfx-analog-clock__pendulum"
+                 :style="{ transform: `rotate(${pendulumAngle}deg)` }">
+                <div class="nfx-analog-clock__pendulum-rod"></div>
+                <div class="nfx-analog-clock__pendulum-bob"></div>
+            </div>
+        </div>
+        
+        <!-- Digital display -->
+        <div class="nfx-analog-clock__digital">
+            <div class="nfx-analog-clock__digital-time" @click="toggleDigitalFormat">
+                {{ digitalTime }}
+            </div>
+            <div class="nfx-analog-clock__digital-date" @click="toggleDateCalendar">
+                {{ dateString }}
+            </div>
+        </div>
+        
+        <!-- Timezone selector -->
+        <div class="nfx-analog-clock__timezone">
+            <button class="nfx-analog-clock__timezone-button" @click.stop="toggleTimezoneSelector">
+                <sw-icon name="regular-clock" size="14px"></sw-icon>
+                {{ currentTimezoneName }}
+            </button>
+            
+            <transition name="timezone-dropdown">
+                <div v-if="showTimezoneSelector" class="nfx-analog-clock__timezone-dropdown">
+                    <div v-for="timezone in timezones" 
+                         :key="timezone.id"
+                         class="nfx-analog-clock__timezone-option"
+                         :class="{ 'is--selected': timezone.id === selectedTimezone }"
+                         @click.stop="selectTimezone(timezone.id)">
+                        {{ timezone.name }}
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+    
+    <!-- Expanded mode features -->
+    <transition name="expand">
+        <div v-if="isExpanded" class="nfx-analog-clock__expanded">
+            <!-- Theme selector -->
+            <div class="nfx-analog-clock__controls">
+                <sw-button size="small" @click="changeTheme">
+                    <sw-icon name="regular-paint-brush" size="14px"></sw-icon>
+                    Theme: {{ theme }}
+                </sw-button>
+                
+                <sw-button size="small" @click="toggleWorldClocks">
+                    <sw-icon name="regular-globe" size="14px"></sw-icon>
+                    World Clocks
+                </sw-button>
+                
+                <sw-button size="small" @click="setAlarm">
+                    <sw-icon name="regular-bell" size="14px"></sw-icon>
+                    Set Alarm
+                </sw-button>
+                
+                <sw-button size="small" @click="exportTime">
+                    <sw-icon name="regular-download" size="14px"></sw-icon>
+                    Export
+                </sw-button>
+            </div>
+            
+            <!-- Glow intensity slider -->
+            <div class="nfx-analog-clock__slider">
+                <label>Glow Intensity</label>
+                <input type="range" 
+                       min="0" 
+                       max="3" 
+                       step="0.1" 
+                       :value="glowIntensity"
+                       @input="adjustGlow($event.target.value)">
+            </div>
+            
+            <!-- Alarm setting -->
+            <div v-if="showAlarm" class="nfx-analog-clock__alarm">
+                <sw-field type="time" 
+                          v-model="alarmTime" 
+                          label="Alarm Time"
+                          size="small">
+                </sw-field>
+            </div>
+            
+            <!-- World clocks -->
+            <transition name="world-clocks">
+                <div v-if="showWorldClocks" class="nfx-analog-clock__world-clocks">
+                    <h4>World Clocks</h4>
+                    <div class="nfx-analog-clock__world-clocks-grid">
+                        <div v-for="clock in worldClocks" 
+                             :key="clock.id"
+                             class="nfx-analog-clock__world-clock-item">
+                            <div class="nfx-analog-clock__world-clock-name">{{ clock.name }}</div>
+                            <div class="nfx-analog-clock__world-clock-time">{{ clock.time }}</div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+            
+            <!-- Calendar view -->
+            <transition name="calendar">
+                <div v-if="showDateCalendar" class="nfx-analog-clock__calendar">
+                    <sw-calendar :value="adjustedTime" 
+                                 :allow-edit="false"
+                                 size="small">
+                    </sw-calendar>
+                </div>
+            </transition>
+        </div>
+    </transition>
+    
+    <!-- Easter egg hint -->
+    <div class="nfx-analog-clock__hint" v-if="clickCount === 2">
+        One more click for magic... ✨
+    </div>
+</div>
+{% endblock %}
